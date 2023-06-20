@@ -3,7 +3,7 @@ import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 
 interface SidebarItemProps {
-    icon: IconType;
+    icon?: IconType;
     label: string;
     active?: boolean;
     href: string;
@@ -28,15 +28,15 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
             text-md
             font-medium
             cursor-pointer
-            hover:text-indigo-700
+            hover:text-black
             transition
             text-neutral-400
             py-1
             `,
-            active && "text-indigo-700"
+            active && "text-black"
             )}
             >
-                <Icon size={26}></Icon>
+                {Icon&&<Icon size={27}></Icon>}
                 <p className="truncate w-full">{label}</p>
             </Link>
         </div>

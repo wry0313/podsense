@@ -16,12 +16,12 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
 
   const routes = useMemo(
     () => [
-      {
-        icon: HiHome,
-        label: "Home",
-        active: pathname !== "/search",
-        href: "/",
-      },
+      // {
+      //   icon: HiHome,
+      //   label: "Home",
+      //   active: pathname !== "/search",
+      //   href: "/",
+      // },
       {
         icon: BiSearch,
         label: "Search",
@@ -40,12 +40,15 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
         md:flex
         flex-col
         gap-y-2
-        
         h-full
-        w-[300px]
+        w-[220px]
         p-2
+        bg-neutral-50
         "
       >
+        <Box className="text-3xl font-bold flex items-center justify-center">
+          Chat with 🎙️
+        </Box>
         <Box>
             <div
             className="
@@ -68,7 +71,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
             <Library />
         </Box>
       </div>
-      <main className="h-full flex-1 overflow-y-auto py-2">
+      <main className="h-full flex-1 overflow-y-auto m-2">
         {children}
       </main>
     </div>
