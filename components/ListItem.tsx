@@ -26,9 +26,9 @@ const ListItem = ({image, name, href}:{
             rounded-md
             overflow-hidden
             gap-x-4
-            bg-neutral-100
-            hover:bg-neutral-200
-            transition
+            bg-neutral-400/5
+            hover:bg-neutral-400/10
+        transition
             pr-4
             "
         >

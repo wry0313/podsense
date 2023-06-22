@@ -1,7 +1,13 @@
+import getPodcasts from "@/actions/getPodcasts";
 import Header from "@/components/Header";
 import ListItem from "@/components/ListItem";
+import PageContent from "./components/PageContent";
 
-export default function Home() {
+
+export const revalidate = 0; // this means the page will be regenerated on every request & not be cached
+
+export default async function Home() {
+  const podcasts = await getPodcasts();
   return (
     <div
       className="
@@ -34,15 +40,11 @@ export default function Home() {
           </div>
         </div>
       </Header>
-      <div className="mt-2 mb-7 px-6">
+      <div className="mt-10 mb-7 px-6">
         <div className="flex justify-between items-center">
-          <h1 className="text-black text-2xl font-semibold">
-            Newest Podcasts
-          </h1>
+          <h1 className="text-black text-2xl font-semibold">Newest Podcasts</h1>
         </div>
-        <div>
-          List of songs
-        </div>
+        <PageContent podcasts={podcasts}/>
       </div>
     </div>
   );
