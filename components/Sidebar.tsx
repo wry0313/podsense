@@ -56,7 +56,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         </Box>
         
         <Box>
-          <div className="flex flex-col gap-y-4 py-4 px-5">
+          <div className="flex flex-col gap-y-4 py-4 px-4">
             {routes.map((item) => (
               <SidebarItem key={item.label} {...item} />
             ))}
@@ -67,7 +67,7 @@ const Sidebar: React.FC<SidebarProps> = ({
           <Library podcasts={podcasts}/>
         </Box>
       </div>
-      <main className="h-full flex-1 overflow-y-auto m-2">{children}</main>
+      <main className="h-full flex-1">{children}</main>
     </div>
   );
 };

@@ -40,10 +40,12 @@ export const MyUserContextProvider = (props: Props) => {
     useEffect(()=> {
         if (user && !isLoadingData && !userDetails && !subscription) {
             setIsLoadingData(true);
+            console.log("fetch user details")
             Promise.allSettled([getUserDetails(), getSubscription()]).then(
                 (results) => {
                     const userDetailsPromise = results[0];
                     const subscriptionPromise = results[1];
+                    console.log("finished fetching")
 
                     if (userDetailsPromise.status === "fulfilled") {
                         setUserDetails(userDetailsPromise.value.data as UserDetails);

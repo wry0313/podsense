@@ -89,6 +89,37 @@ export interface Database {
         }
         Relationships: []
       }
+      liked_podcasts: {
+        Row: {
+          created_at: string | null
+          podcast_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          podcast_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          podcast_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "liked_podcasts_podcast_id_fkey"
+            columns: ["podcast_id"]
+            referencedRelation: "podcasts"
+            referencedColumns: ["title"]
+          },
+          {
+            foreignKeyName: "liked_podcasts_user_id_fkey"
+            columns: ["user_id"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       podcasts: {
         Row: {
           cover_image_path: string | null

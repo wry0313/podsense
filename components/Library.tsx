@@ -2,7 +2,6 @@
 import { TbPlaylist } from "react-icons/tb";
 import { AiOutlinePlus } from "react-icons/ai";
 
-
 import useAuthModal from "@/hooks/useAuthModal";
 import { useUser } from "@/hooks/useUser";
 import useUploadModal from "@/hooks/useUploadModal";
@@ -11,24 +10,22 @@ import { Podcast } from "@/types";
 import MediaItem from "./MediaItem";
 
 interface LibraryProps {
-  podcasts: Podcast[]
+  podcasts: Podcast[];
 }
-const Library = ({
-  podcasts
-}:LibraryProps) => {
+const Library = ({ podcasts }: LibraryProps) => {
   const authModal = useAuthModal();
   const uploadModal = useUploadModal();
 
   const { user } = useUser();
-  
+
   const onClick = () => {
     if (!user) {
-      return authModal.onOpen()
+      return authModal.onOpen();
     }
     return uploadModal.onOpen();
   };
   return (
-    <div className="flex flex-col">
+    <div className="h-full flex flex-col">
       <div
         className="
              flex
@@ -38,8 +35,9 @@ const Library = ({
             "
       >
         <div className="inline-flex items-center gap-x-4 text-neutral-400 hover:text-black transition duration-200 cursor-pointer">
-          <TbPlaylist  size={22} />
-          <p className="
+          <TbPlaylist size={22} />
+          <p
+            className="
                     font-medium
                     text-md
                     "
@@ -66,15 +64,13 @@ const Library = ({
             flex-col
             gap-y-2
             mt-4
-            px-5
-            " // px-3
+            px-3
+            h-full
+            overflow-y-auto
+            "
       >
-        {podcasts.map((item)=> (
-          <MediaItem 
-            data={item}
-            onClick={() => {}}
-            key={item.title}
-          />
+        {podcasts.map((item) => (
+          <MediaItem data={item} onClick={() => {}} key={item.title} />
         ))}
       </div>
     </div>

@@ -4,7 +4,7 @@ import SupabaseProvider from "@/providers/SupabaseProvider";
 import UserProvider from "@/providers/UserProvider";
 import ModelProvider from "@/providers/ModalProvider";
 import ToasterProvider from "@/providers/ToasterProvider";
-import getPodcasts from "@/actions/getPodcasts";
+import getLikdPodcasts from "@/actions/getLikdPodcasts";
 
 // import { Inter } from "next/font/google";
 // const font = Inter({  subsets: ["latin"] });
@@ -21,7 +21,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const userPodcasts = await getPodcasts();
+  const userPodcasts = await getLikdPodcasts();
   return (
     <html lang="en">
       <body className={

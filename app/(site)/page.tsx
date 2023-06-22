@@ -15,7 +15,7 @@ export default async function Home() {
     h-full
     w-full
     overflow-hidden
-    overflow-y-auo
+    overflow-y-auto
     "
     >
       <Header>
@@ -34,7 +34,12 @@ export default async function Home() {
           >
             <ListItem
               image="/images/liked.png"
-              name="Liked Podcasts"
+              name="Podcasts Library"
+              href="liked"
+            />
+            <ListItem
+              image="/images/liked.png"
+              name="Episode Queue"
               href="liked"
             />
           </div>
@@ -42,7 +47,7 @@ export default async function Home() {
       </Header>
       <div className="mt-10 mb-7 px-6">
         <div className="flex justify-between items-center">
-          <h1 className="text-black text-2xl font-semibold">Newest Podcasts</h1>
+          <h1 className="text-black text-2xl font-semibold">Discover New Podcasts</h1>
         </div>
         <PageContent podcasts={podcasts}/>
       </div>

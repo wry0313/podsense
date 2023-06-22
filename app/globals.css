@@ -9,3 +9,5 @@ body,
   background-color: white;
   color-scheme: light;
 }
+
+body { min-height: 100vh; }
