@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 
 import { Episode } from "@/types";
 
-const getEpisodesById = async (
+const getEpisodeByPodcastId = async (
   podcast_id: string
 ): Promise<Episode[]> => {
   const supabase = createServerComponentClient({
@@ -22,4 +22,4 @@ const getEpisodesById = async (
   return (data as Episode[]) || [];
 };
 
-export default getEpisodesById;
+export default getEpisodeByPodcastId;

@@ -21,7 +21,7 @@ export default async function Home() {
     >
 
       <div className="px-6 mb-2">
-          <h1 className=" text-black text-3xl font-semibold">Welcome Back 💜</h1>
+          <h1 className=" text-black text-3xl font-semibold">Welcome Back ❤️‍🔥</h1>
           <div
             className="
           grid

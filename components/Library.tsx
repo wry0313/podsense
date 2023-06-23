@@ -8,7 +8,6 @@ import useUploadModal from "@/hooks/useUploadModal";
 import { Podcast } from "@/types";
 
 import MiniPodcastItem from "./MiniPodcastItem";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import SidebarItem from "./SidebarItem";
 

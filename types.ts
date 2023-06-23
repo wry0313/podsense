@@ -10,17 +10,17 @@ export interface Podcast {
 }
 
 export interface Episode {
-  audio_path: string;
-  cover_image_path: string;
-  created_at: string;
-  description: string;
-  guest: string;
-  host: string;
-  id: string;
-  podcast_id: string;
-  podcast_title: string;
-  released_date: string;
-  title: string;
+  audio_path: string 
+  cover_image_path: string 
+  created_at: string 
+  description: string 
+  duration: number 
+  host: string 
+  id: string
+  podcast_id: string 
+  podcast_title: string 
+  released_date: string | null
+  title: string 
 }
 
 export interface Product {

@@ -37,7 +37,7 @@ export interface Database {
           cover_image_path: string | null
           created_at: string | null
           description: string | null
-          guest: string | null
+          duration: number | null
           host: string | null
           id: string
           podcast_id: string | null
@@ -50,7 +50,7 @@ export interface Database {
           cover_image_path?: string | null
           created_at?: string | null
           description?: string | null
-          guest?: string | null
+          duration?: number | null
           host?: string | null
           id: string
           podcast_id?: string | null
@@ -63,7 +63,7 @@ export interface Database {
           cover_image_path?: string | null
           created_at?: string | null
           description?: string | null
-          guest?: string | null
+          duration?: number | null
           host?: string | null
           id?: string
           podcast_id?: string | null
@@ -104,17 +104,17 @@ export interface Database {
       liked_podcasts: {
         Row: {
           created_at: string | null
-          podcast_id: string | null
+          podcast_id: string
           user_id: string
         }
         Insert: {
           created_at?: string | null
-          podcast_id?: string | null
+          podcast_id: string
           user_id: string
         }
         Update: {
           created_at?: string | null
-          podcast_id?: string | null
+          podcast_id?: string
           user_id?: string
         }
         Relationships: [

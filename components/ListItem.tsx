@@ -64,7 +64,7 @@ const ListItem = ({image, name, href}:{
             flex
             items-center
             justify-center
-            bg-amber-300
+            bg-amber-100
             p-3
             drop-shadow-md
             right-5
