@@ -1,4 +1,3 @@
-
 import getPodcastsByTitle from "@/actions/getPodcastsByTitle";
 import SearchContent from "./SearchContent";
 

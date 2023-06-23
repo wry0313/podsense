@@ -3,25 +3,18 @@
 import useLoadImage from "@/hooks/useLoadImage";
 import { Podcast } from "@/types";
 import Image from "next/image";
+import Link from "next/link";
 
-interface MediaItemProps {
-  data: Podcast;
-  onClick?: (title: string) => void;
+interface MiniPodcastItemProps {
+  podcast: Podcast;
 }
 
-const MediaItem = ({ data, onClick }: MediaItemProps) => {
-  const imageUrl = useLoadImage(data);
+const MiniPodcastItemProps = ({ podcast }: MiniPodcastItemProps) => {
+  const imageUrl = useLoadImage(podcast);
 
-  const handleClick = () => {
-    if (onClick) {
-      onClick(data.title);
-    }
-    
-    // TODO: Default turn on player
-  };
   return (
-    <div
-      onClick={handleClick}
+    <Link
+      href={`/podcast/${podcast.id}`}
       className="
     flex
     items-center
@@ -50,13 +43,13 @@ const MediaItem = ({ data, onClick }: MediaItemProps) => {
         />
       </div>
       <div className="flex flex-col w-full">
-        <p className="font-semibold truncate w-full">{data.title}</p>
+        <p className="font-semibold truncate w-full">{podcast.title}</p>
         <p className="text-neutral-400 text-sm w-full truncate">
-          By {data.host}
+          By {podcast.host}
         </p>
-    </div>
-    </div>
+      </div>
+    </Link>
   );
 };
 
-export default MediaItem;
+export default MiniPodcastItemProps;

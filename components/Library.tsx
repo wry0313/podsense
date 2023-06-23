@@ -7,7 +7,7 @@ import { useUser } from "@/hooks/useUser";
 import useUploadModal from "@/hooks/useUploadModal";
 import { Podcast } from "@/types";
 
-import MediaItem from "./MediaItem";
+import MiniPodcastItem from "./MiniPodcastItem";
 import Link from "next/link";
 
 interface LibraryProps {
@@ -86,8 +86,8 @@ const Library = ({ podcasts }: LibraryProps) => {
             overflow-y-auto
             "
       >
-        {podcasts.map((item) => (
-          <MediaItem data={item} onClick={() => {}} key={item.title} />
+        {podcasts.map((podcast) => (
+          <MiniPodcastItem podcast={podcast} key={podcast.id} />
         ))}
       </div>
     </div>

@@ -72,7 +72,7 @@ const LikeButton = ({
             });
 
             if (error) {
-                toast.error("Something went wrong.")
+                toast.error("Something went wrong.");
             } else {
                 setIsLiked(true);
                 toast.success('Saved to your Library');

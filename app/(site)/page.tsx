@@ -12,16 +12,16 @@ export default async function Home() {
     <div
       className="
     rounded-lg
-    h-full
+    h-fit
     w-full
     overflow-hidden
     overflow-y-auto
     bg-white
     "
     >
-      <Header>
-        <div className="mb-2">
-          <h1 className=" text-black text-3xl font-semibold">Welcome Back</h1>
+
+      <div className="px-6 mb-2">
+          <h1 className=" text-black text-3xl font-semibold">Welcome Back 💜</h1>
           <div
             className="
           grid
@@ -45,7 +45,6 @@ export default async function Home() {
             />
           </div>
         </div>
-      </Header>
       <div className="mt-10 mb-7 px-6">
         <div className="flex justify-between items-center">
           <h1 className="text-black text-2xl font-semibold">Discover New Podcasts</h1>

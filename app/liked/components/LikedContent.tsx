@@ -1,7 +1,7 @@
 "use client";
 
 import LikeButton from "@/components/LikeButton";
-import MediaItem from "@/components/MediaItem";
+import MiniPodcastItem from "@/components/MiniPodcastItem";
 import useAuthModal from "@/hooks/useAuthModal";
 import { useUser } from "@/hooks/useUser";
 import { Podcast } from "@/types";
@@ -46,9 +46,9 @@ const LikedContent = ({ podcasts }: LikedContentProps) => {
             className="flex items-center gap-x-4 w-full"
         >
             <div className="flex-1">
-                <MediaItem 
-                    data={podcast}
-                    onClick={()=>{}}
+                <MiniPodcastItem 
+                    podcast={podcast}
+
                 />
             </div>
             <LikeButton 

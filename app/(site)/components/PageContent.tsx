@@ -30,10 +30,10 @@ const PageContent: React.FC<PageContentProps> = ({
         mt-4
       "
     >
-      {podcasts.map((item) => (
+      {podcasts.map((podcast) => (
         <PodcastItem
-          key={item.title} 
-          podcast={item}
+          key={podcast.id} 
+          podcast={podcast}
         />
       ))}
     </div>

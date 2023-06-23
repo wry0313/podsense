@@ -5,6 +5,7 @@ import UserProvider from "@/providers/UserProvider";
 import ModelProvider from "@/providers/ModalProvider";
 import ToasterProvider from "@/providers/ToasterProvider";
 import getLikdPodcasts from "@/actions/getLikdPodcasts";
+import Header from "@/components/Header";
 
 // import { Inter } from "next/font/google";
 // const font = Inter({  subsets: ["latin"] });
@@ -26,14 +27,15 @@ export default async function RootLayout({
     <html lang="en">
       <body className={
         // font.className
-        "bg-neutral-100"
+        ""
         }>
         <ToasterProvider/>
         <SupabaseProvider>
           <UserProvider>
             <ModelProvider />
-            <Sidebar podcasts={userPodcasts}
-            >{children}</Sidebar>
+            <Sidebar podcasts={userPodcasts}>
+            <Header />
+            {children}</Sidebar>
           </UserProvider>
         </SupabaseProvider>
       </body>
