@@ -34,7 +34,8 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
             transition
             text-neutral-400
             py-1
-            pl-1
+            pl-5    
+            mt-4
             `,
             active && "text-black bg-neutral-400/5"
             )}

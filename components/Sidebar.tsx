@@ -46,7 +46,6 @@ const Sidebar: React.FC<SidebarProps> = ({
         hidden
         md:flex
         flex-col
-        gap-y-2
         h-full
         w-[300px]
         p-2
@@ -69,7 +68,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         </Link>
         
 
-          <div className="flex flex-col gap-y-4 pt-4 px-4">
+          <div className="flex flex-col pt-1">
             {routes.map((item) => (
               <SidebarItem key={item.label} {...item} />
             ))}

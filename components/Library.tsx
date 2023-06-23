@@ -34,8 +34,8 @@ const Library = ({ podcasts }: LibraryProps) => {
     <div className="h-full flex flex-col">
       <div
         className="
-             px-4
-             mt-2
+
+
              w-[300px]
             "
       >
