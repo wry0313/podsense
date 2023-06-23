@@ -9,6 +9,8 @@ import { Podcast } from "@/types";
 
 import MiniPodcastItem from "./MiniPodcastItem";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import SidebarItem from "./SidebarItem";
 
 interface LibraryProps {
   podcasts: Podcast[];
@@ -18,6 +20,9 @@ const Library = ({ podcasts }: LibraryProps) => {
   const uploadModal = useUploadModal();
 
   const { user } = useUser();
+
+  const pathname = usePathname();
+
 
   const onClick = () => {
     if (!user) {
@@ -29,14 +34,12 @@ const Library = ({ podcasts }: LibraryProps) => {
     <div className="h-full flex flex-col">
       <div
         className="
-             flex
-             items-center
-             justify-between
              px-4
              mt-2
+             w-[300px]
             "
       >
-        <div className="
+        {/* <div className="
         items-center 
         gap-x-4
         flex
@@ -73,8 +76,10 @@ const Library = ({ podcasts }: LibraryProps) => {
                     hover:bg-neutral-100
                     rounded-full
                     "
-        />
-      </div>
+        />*/}
+        <SidebarItem icon={TbPlaylist} label={"Library"} href={"/liked"} active={pathname == '/liked'}/>
+      </div> 
+
       <div
         className="
             flex
