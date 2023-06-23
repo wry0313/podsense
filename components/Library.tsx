@@ -34,49 +34,10 @@ const Library = ({ podcasts }: LibraryProps) => {
     <div className="h-full flex flex-col">
       <div
         className="
-
-
              w-[300px]
             "
       >
-        {/* <div className="
-        items-center 
-        gap-x-4
-        flex
-        flex-row
-        text-neutral-400 
-        hover:text-black 
-        w-full
-        py-1
-        pl-1
-        hover:bg-neutral-400/5
-        rounded-md
-        transition 
-        cursor-pointer">
-          <TbPlaylist size={30} />
-          <Link
-            className="
-                    font-medium
-                    text-md
-                    w-full
-                    "
-            href="/liked"
-          >
-            Library
-          </Link>
-        </div>
-        <AiOutlinePlus
-          onClick={onClick}
-          size={20}
-          className="
-                    text-neutral-400
-                    cursor-pointer
-                    hover:text-black
-                    transition
-                    hover:bg-neutral-100
-                    rounded-full
-                    "
-        />*/}
+        <SidebarItem icon={AiOutlinePlus} label={"Upload"} onClick={onClick} href={pathname} />
         <SidebarItem icon={TbPlaylist} label={"Library"} href={"/liked"} active={pathname == '/liked'}/>
       </div> 
 

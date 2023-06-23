@@ -7,15 +7,17 @@ interface SidebarItemProps {
     label: string;
     active?: boolean;
     href: string;
+    onClick?: () => void;
 }
 const SidebarItem: React.FC<SidebarItemProps> = ({
     icon: Icon,
     label,
     active,
-    href
+    href,
+    onClick
 }) => {
     return ( 
-        <div>
+        <div onClick={onClick}>
             <Link
             href={href}
             className={twMerge(`
