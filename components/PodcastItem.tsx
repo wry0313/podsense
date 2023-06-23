@@ -1,11 +1,12 @@
 "use client"
 
-import useLoadImage from "@/hooks/useLoadImage";
-import { Podcast } from "@/types"
 import Image from "next/image";
-import PlayButton from "./PlayButton";
 import Link from "next/link";
 
+import { Podcast } from "@/types"
+
+import useLoadImage from "@/hooks/useLoadImage";
+import PlayButton from "./PlayButton";
 
 interface PodcastItemProps {
     podcast: Podcast;

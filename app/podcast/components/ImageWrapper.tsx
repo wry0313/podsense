@@ -15,7 +15,7 @@ const ImageWrapper = async ({
         <Image
               src={imageUrl}
               alt="Liked"
-              className="object-cover shadow-2xl"
+              className="object-cover rounded-md"
               fill
         />
     )
