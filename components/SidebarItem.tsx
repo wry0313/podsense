@@ -39,7 +39,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
             active && "text-black bg-neutral-400/5"
             )}
             >
-                {Icon&&<Icon size={27}></Icon>}
+                {Icon&&<Icon size={30}></Icon>}
                 <p className="truncate w-full">{label}</p>
             </Link>
         </div>

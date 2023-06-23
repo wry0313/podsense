@@ -8,6 +8,7 @@ import useUploadModal from "@/hooks/useUploadModal";
 import { Podcast } from "@/types";
 
 import MediaItem from "./MediaItem";
+import Link from "next/link";
 
 interface LibraryProps {
   podcasts: Podcast[];
@@ -31,19 +32,35 @@ const Library = ({ podcasts }: LibraryProps) => {
              flex
              items-center
              justify-between
-             px-5
+             px-4
+             mt-2
             "
       >
-        <div className="inline-flex items-center gap-x-4 text-neutral-400 hover:text-black transition duration-200 cursor-pointer">
-          <TbPlaylist size={22} />
-          <p
+        <div className="
+        items-center 
+        gap-x-4
+        flex
+        flex-row
+        text-neutral-400 
+        hover:text-black 
+        w-full
+        py-1
+        pl-1
+        hover:bg-neutral-400/5
+        rounded-md
+        transition 
+        cursor-pointer">
+          <TbPlaylist size={30} />
+          <Link
             className="
                     font-medium
                     text-md
+                    w-full
                     "
+            href="/liked"
           >
             Library
-          </p>
+          </Link>
         </div>
         <AiOutlinePlus
           onClick={onClick}

@@ -13,7 +13,7 @@ const liked = async () => {
     return ( 
         <div
         className="
-        //bg-neutral-100
+        bg-white
         rounded-lg
         h-full
         w-full
@@ -21,10 +21,12 @@ const liked = async () => {
         overflow-y-auto
         "
         >
-            <Header>
+
+                <Header>
                
-            </Header>
-            <div className="mt-20 px-6 mb-5">
+               </Header>
+
+            <div className="px-6 mb-5">
                     <div className="
                         flex
                         flex-col
@@ -43,7 +45,7 @@ const liked = async () => {
                                 fill
                                 src="/images/liked.png"
                                 alt="Liked"
-                                className="object-cover"
+                                className="object-cover shadow-2xl"
                                 />
                             </div>
                             <div className="

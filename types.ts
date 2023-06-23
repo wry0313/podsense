@@ -1,22 +1,26 @@
-import Stripe from 'stripe';
-
+import Stripe from "stripe";
 
 export interface Podcast {
-  title: string;
-  host: string;
   cover_image_path: string;
+  created_at: string;
   description: string;
+  host: string;
+  id: string;
+  title: string;
 }
 
 export interface Episode {
-    id: string;
-    host: string;
-    title: string;
-    audio_path: string;
-    cover_image_path: string;
-    description: string;
-    episode_number: number;
-    podcast: string;
+  audio_path: string;
+  cover_image_path: string;
+  created_at: string;
+  description: string;
+  guest: string;
+  host: string;
+  id: string;
+  podcast_id: string;
+  podcast_title: string;
+  released_date: string;
+  title: string;
 }
 
 export interface Product {

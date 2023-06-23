@@ -1,9 +1,9 @@
 import Header from "@/components/Header";
 import SearchInput from "@/components/SearchInput";
-import SearchContent from "./components/SearchContent";
-import getPodcastsByTitle from "@/actions/getPodcastsByTitle";
+
 import { Suspense } from "react";
-import Loading from "./loading";
+import { BounceLoader } from "react-spinners";
+import SearchContentWrapper from "./components/SearchContextWrapper";
 
 interface SearchProps {
     searchParams: {
@@ -13,12 +13,12 @@ interface SearchProps {
 
 export const revalidate = 0;
 
-const Search = async ({ searchParams }: SearchProps) => {
-    const podcasts = await getPodcastsByTitle(searchParams.title)
+const Search =  ({ searchParams }: SearchProps) => {
+
     return (
         <div
             className="
-                bg-neutral-100
+                bg-white
                 rounded-lg
                 h-full
                 w-full
@@ -37,8 +37,14 @@ const Search = async ({ searchParams }: SearchProps) => {
                 </div>
             </Header>
 
-
-            <SearchContent podcasts={podcasts} />
+        <Suspense fallback={
+            <div className="h-full flex items-center justify-center">
+            <BounceLoader color="gray" size={100} />
+          </div>
+        }>
+        <SearchContentWrapper title={searchParams.title} />
+        </Suspense>
+            
 
         </div>
     )

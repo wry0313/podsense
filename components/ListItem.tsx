@@ -4,15 +4,24 @@ import { useRouter } from "next/navigation";
 import Image from "next/image"; 
 import { FaPlay } from "react-icons/fa";
 
+import useAuthModal from "@/hooks/useAuthModal";
+import { useUser } from "@/hooks/useUser";
+
+
 const ListItem = ({image, name, href}:{
     image: string,
     name: string,
     href: string
 }) => {
     const router = useRouter();
+    const authModal = useAuthModal();
+    const { user } = useUser();  
      
     const onClick= () => {
-        // Add authenication before push
+        if (!user) {
+            return authModal.onOpen();
+        }
+      
         router.push(href);
     }
     return ( 
@@ -26,9 +35,9 @@ const ListItem = ({image, name, href}:{
             rounded-md
             overflow-hidden
             gap-x-4
-            bg-neutral-400/5
-            hover:bg-neutral-400/10
-        transition
+            bg-neutral-400/10
+            hover:bg-neutral-400/20
+            transition
             pr-4
             "
         >

@@ -32,7 +32,7 @@ const SearchContent = ({
         >
             {podcasts.map((podcast) => (
                 <div
-                    key={podcast.title}
+                    key={podcast.id}
                     className="flex items-center gap-x-4 w-full"
                 >
                     <div className="flex-1">
@@ -41,7 +41,7 @@ const SearchContent = ({
                             data={podcast}
                         />
                     </div>
-                    <LikeButton podcastTitle={podcast.title}/>
+                    <LikeButton podcast_id={podcast.id}/>
                 </div>
             ))}
         </div>

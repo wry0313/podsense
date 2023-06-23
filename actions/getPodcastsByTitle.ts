@@ -12,6 +12,7 @@ const getPodcastsByTitle = async (title: string): Promise<Podcast[]> => {
     
     if (!title) {
         const allPodcasts = await getPodcasts();
+        return allPodcasts;
     }
 
     const { data, error } = await supabase
@@ -24,7 +25,7 @@ const getPodcastsByTitle = async (title: string): Promise<Podcast[]> => {
             console.log(error);
         }
 
-        return (data as any) || [];
+        return (data as Podcast[]) || [];
 }
 
 export default getPodcastsByTitle;

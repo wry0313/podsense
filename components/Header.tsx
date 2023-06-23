@@ -14,7 +14,7 @@ import useAuthModal from "@/hooks/useAuthModal";
 import { useUser } from "@/hooks/useUser";
 
 interface HeaderProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   className?: string;
 }
 
@@ -87,7 +87,7 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
           </button>
         </div>
 
-        <div className="flex justify-between items-center gap-x-4">
+        <div className="flex justify-between items-center gap-x-4 min-h-[5rem]">
           {!isLoading && (
              user ? (
               <div

@@ -26,7 +26,7 @@ export default async function RootLayout({
     <html lang="en">
       <body className={
         // font.className
-        ""
+        "bg-neutral-100"
         }>
         <ToasterProvider/>
         <SupabaseProvider>

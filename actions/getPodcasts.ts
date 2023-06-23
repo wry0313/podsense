@@ -1,6 +1,7 @@
-import { Podcast } from "@/types";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
+
+import { Podcast } from "@/types";
 
 const getPodcasts = async (): Promise<Podcast[]> => {
     const supabase = createServerComponentClient({
@@ -16,7 +17,7 @@ const getPodcasts = async (): Promise<Podcast[]> => {
             console.log(error);
         }
 
-        return (data as any) || [];
+        return (data as Podcast[]) || [];
 }
 
 export default getPodcasts;

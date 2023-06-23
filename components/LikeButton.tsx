@@ -10,11 +10,11 @@ import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { toast } from "react-hot-toast";
 
 interface LikeButtonProps {
-    podcastTitle: string;
+    podcast_id: string;
 }
 
 const LikeButton = ({
-    podcastTitle
+    podcast_id
 }:LikeButtonProps) => {
     const router = useRouter();
     const { supabaseClient} = useSessionContext();
@@ -32,7 +32,7 @@ const LikeButton = ({
                 .from('liked_podcasts')
                 .select('*')
                 .eq('user_id', user.id)
-                .eq('podcast_title', podcastTitle)
+                .eq('podcast_id', podcast_id)
                 .single();
                 
             if (!error && data) {
@@ -41,7 +41,7 @@ const LikeButton = ({
         }
 
         fetchData()
-    }, [podcastTitle, supabaseClient, user?.id])
+    }, [podcast_id, supabaseClient, user?.id])
 
     const Icon = isLiked ? AiFillHeart : AiOutlineHeart
 
@@ -55,7 +55,7 @@ const LikeButton = ({
             .from('liked_podcasts')
             .delete()
             .eq('user_id', user.id)
-            .eq('podcast_title', podcastTitle)
+            .eq('podcast_id', podcast_id)
 
             if (error) {
                 toast.error("Something went wrong.");
@@ -67,7 +67,7 @@ const LikeButton = ({
             const { error } = await supabaseClient
             .from('liked_podcasts')
             .insert({
-                podcast_title: podcastTitle,
+                podcast_id: podcast_id,
                 user_id: user.id
             });
 

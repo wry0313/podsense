@@ -1,11 +1,12 @@
 "use client";
 
-import uniqid from "uniqid";
 import React, { useState } from "react";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
+
+import { nanoid } from "nanoid";
 
 import useUploadModal from "@/hooks/useUploadModal";
 import { useUser } from "@/hooks/useUser";
@@ -13,6 +14,7 @@ import { useUser } from "@/hooks/useUser";
 import Modal from "./Modal";
 import Input from "./Input";
 import Button from "./Button";
+import slugify from "slugify";
 
 const UploadModal = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -50,83 +52,87 @@ const UploadModal = () => {
         return;
       }
 
-      const uniqueID = uniqid();
+      const cover_image_path = "cover_image_" + slugify(values.title);
 
-      // Upload podcast
-      // const { data: podcastData, error: podcastError } =
-      //   await supabaseClient.storage
-      //     .from("podcasts")
-      //     .upload(`podcast-${values.title}-${uniqueID}`, podcastFile, {
-      //       cacheControl: "3600",
-      //       upsert: false,
-      //     });
+      // check if podcast exists
+      const { data: podcast_data, error } = await supabaseClient
+        .from("podcasts")
+        .select("*")
+        .eq("title", values.title)
+        .single();
 
-      // if (podcastError) {
-      //   setIsLoading(false);
-      //   return toast.error("Failed podcast upload");
-      // }
+      // console.log(podcast_data?.id);
+      const podcast_id = podcast_data ? podcast_data.id : nanoid();
 
-      // Upload image
-      const { data: imageData, error: imageError } =
-        await supabaseClient.storage
-          .from("images")
-          .upload(`image-${values.title}-${uniqueID}`, imageFile, {
-            cacheControl: "3600",
-            upsert: false,
-          });
+      // if podcast record doesn't exist
+      if (!podcast_data) {
+        // Upload cover image for podcast
+        const { data: imageData, error: imageError } =
+          await supabaseClient.storage
+            .from("images")
+            .upload(cover_image_path, imageFile, {
+              cacheControl: "3600",
+              upsert: false,
+            });
 
-      if (imageError) {
-        setIsLoading(false);
-        return toast.error("Failed image upload");
+        // if image upload fails, stop and show error
+        if (imageError) {
+          setIsLoading(false);
+          return toast.error("Failed image upload");
+        } else {
+          // if image upload succeeds, continue
+          setIsLoading(false);
+          toast.success("Image uploaded!");
+        }
+
+        // upload host 
+        const { error: hostError } = await supabaseClient
+          .from("hosts")
+          .upsert({ name: values.host }, { ignoreDuplicates: true });
+
+        if (hostError) {
+          return toast.error(hostError.message);
+        }
+        // upload podcast
+        const { error: podcastuploaderror } = await supabaseClient
+          .from("podcasts")
+          .upsert(
+            {
+              id: podcast_id,
+              title: values.title,
+              host: values.host,
+              cover_image_path: cover_image_path,
+              description: values.description,
+            },
+            {
+              ignoreDuplicates: true,
+            }
+          );
+
+        if (podcastuploaderror) {
+          return toast.error(podcastuploaderror.message);
+        }
+      } else {
+        toast.success("Podcast already exists!")
       }
 
-      // Create record
-      const { error: hostError } = await supabaseClient.from("hosts").upsert(
-        {
-          name: values.host,
-        },
-        {
-          ignoreDuplicates: true,
-        }
-      );
-      const { error: podcastuploaderror } = await supabaseClient
-        .from("podcasts")
-        .upsert(
-          {
-            title: values.title,
-            host: values.host,
-            description: values.description,
-            cover_image_path: imageData.path,
-          },
-          {
-            ignoreDuplicates: true,
-          }
-        );
+      const episode_id = nanoid();
+      // now at this point we know that the podcast either already exist or is uploaded, so we can upload the episode
       const { error: songuploaderror } = await supabaseClient
         .from("episodes")
-        .upsert(
-          {
-            title: values.episodeTitle,
-            host: values.host,
-            podcast: values.title,
-            episode_number: values.episodeNumber,
-            audio_path: values.audioLink,
-            cover_image_path: imageData.path,
-            description: values.episodeDescription,
-          },
-          {
-            ignoreDuplicates: true,
-          }
-        );
+        .upsert({
+          id: episode_id,
+          title: values.episode_title,
+          host: values.host,
+          podcast_id: podcast_id,
+          audio_path: values.audio_link,
+          cover_image_path: cover_image_path,
+          description: values.episode_description,
+          podcast_title: values.title,
+        });
 
-      if (podcastuploaderror) {
-        return toast.error(podcastuploaderror.message);
-      }
       if (songuploaderror) {
         return toast.error(songuploaderror.message);
-      }
-      if (hostError) {
-        return toast.error(hostError.message);
       }
 
       router.refresh();
@@ -135,7 +141,7 @@ const UploadModal = () => {
       reset();
       uploadModal.onClose();
     } catch (error) {
-      toast.error("Something went wrong");
+      throw error;
     } finally {
       setIsLoading(false);
     }
@@ -168,28 +174,28 @@ const UploadModal = () => {
           placeholder="Podcast description"
         />
         <Input
-          id="episodeTitle"
+          id="episode_title"
           disabled={isLoading}
-          {...register("episodeTitle", { required: true })}
+          {...register("episode_title", { required: true })}
           placeholder="Episode title"
         />
-        <Input
+        {/* <Input
           id="episodeNumber"
           disabled={isLoading}
-          {...register("episodeNumber", { required: true })}
-          placeholder="Episode number"
-        />
+          {...register("released_date", { required: true })}
+          placeholder="released date"
+        /> */}
         <Input
-          id="episodeDescription"
+          id="episode_description"
           disabled={isLoading}
-          {...register("episodeDescription", { required: true })}
+          {...register("episode_description", { required: true })}
           placeholder="Episode description"
         />
         <div>
           <Input
-            id="audioLink"
+            id="audio_link"
             disabled={isLoading}
-            {...register("audioLink", { required: true })}
+            {...register("audio_link", { required: true })}
             placeholder="Audio Link"
           />
         </div>

@@ -37,10 +37,12 @@ export interface Database {
           cover_image_path: string | null
           created_at: string | null
           description: string | null
-          episode_number: number | null
+          guest: string | null
           host: string | null
-          id: number
-          podcast: string | null
+          id: string
+          podcast_id: string | null
+          podcast_title: string | null
+          released_date: string | null
           title: string | null
         }
         Insert: {
@@ -48,10 +50,12 @@ export interface Database {
           cover_image_path?: string | null
           created_at?: string | null
           description?: string | null
-          episode_number?: number | null
+          guest?: string | null
           host?: string | null
-          id?: number
-          podcast?: string | null
+          id: string
+          podcast_id?: string | null
+          podcast_title?: string | null
+          released_date?: string | null
           title?: string | null
         }
         Update: {
@@ -59,16 +63,24 @@ export interface Database {
           cover_image_path?: string | null
           created_at?: string | null
           description?: string | null
-          episode_number?: number | null
+          guest?: string | null
           host?: string | null
-          id?: number
-          podcast?: string | null
+          id?: string
+          podcast_id?: string | null
+          podcast_title?: string | null
+          released_date?: string | null
           title?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "episodes_podcast_fkey"
-            columns: ["podcast"]
+            foreignKeyName: "episodes_podcast_id_fkey"
+            columns: ["podcast_id"]
+            referencedRelation: "podcasts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "episodes_podcast_title_fkey"
+            columns: ["podcast_title"]
             referencedRelation: "podcasts"
             referencedColumns: ["title"]
           }
@@ -92,17 +104,17 @@ export interface Database {
       liked_podcasts: {
         Row: {
           created_at: string | null
-          podcast_id: string
+          podcast_id: string | null
           user_id: string
         }
         Insert: {
           created_at?: string | null
-          podcast_id: string
+          podcast_id?: string | null
           user_id: string
         }
         Update: {
           created_at?: string | null
-          podcast_id?: string
+          podcast_id?: string | null
           user_id?: string
         }
         Relationships: [
@@ -110,7 +122,7 @@ export interface Database {
             foreignKeyName: "liked_podcasts_podcast_id_fkey"
             columns: ["podcast_id"]
             referencedRelation: "podcasts"
-            referencedColumns: ["title"]
+            referencedColumns: ["id"]
           },
           {
             foreignKeyName: "liked_podcasts_user_id_fkey"
@@ -126,30 +138,26 @@ export interface Database {
           created_at: string | null
           description: string | null
           host: string | null
-          title: string
+          id: string
+          title: string | null
         }
         Insert: {
           cover_image_path?: string | null
           created_at?: string | null
           description?: string | null
           host?: string | null
-          title: string
+          id: string
+          title?: string | null
         }
         Update: {
           cover_image_path?: string | null
           created_at?: string | null
           description?: string | null
           host?: string | null
-          title?: string
+          id?: string
+          title?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "podcasts_host_fkey"
-            columns: ["host"]
-            referencedRelation: "hosts"
-            referencedColumns: ["name"]
-          }
-        ]
+        Relationships: []
       }
       prices: {
         Row: {

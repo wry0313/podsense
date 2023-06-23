@@ -2,6 +2,7 @@
 
 import LikeButton from "@/components/LikeButton";
 import MediaItem from "@/components/MediaItem";
+import useAuthModal from "@/hooks/useAuthModal";
 import { useUser } from "@/hooks/useUser";
 import { Podcast } from "@/types";
 import { useRouter } from "next/navigation";
@@ -13,9 +14,11 @@ interface LikedContentProps {
 const LikedContent = ({ podcasts }: LikedContentProps) => {
   const router = useRouter();
   const { isLoading, user } = useUser();
+  const authModal = useAuthModal();
 
   useEffect(() => {
     if (!isLoading && !user) {
+      authModal.onOpen();
       router.replace("/");
     }
   }, [isLoading, user, router]);
@@ -39,7 +42,7 @@ const LikedContent = ({ podcasts }: LikedContentProps) => {
   return (
     <div className="flex flex-col gap-y-2 w-full p-6">
       {podcasts.map((podcast) => (
-        <div key={podcast.title}
+        <div key={podcast.id}
             className="flex items-center gap-x-4 w-full"
         >
             <div className="flex-1">
@@ -49,7 +52,7 @@ const LikedContent = ({ podcasts }: LikedContentProps) => {
                 />
             </div>
             <LikeButton 
-                podcastTitle={podcast.title}
+                podcast_id={podcast.id}
                 />
 
         </div>
