@@ -4,20 +4,19 @@ import useLoadImage from "@/hooks/useLoadImage";
 import { Podcast } from "@/types"
 import Image from "next/image";
 import PlayButton from "./PlayButton";
+import Link from "next/link";
 
 
 interface PodcastItemProps {
-    data: Podcast;
-    onClick: (title:string) => void;
+    podcast: Podcast;
 }
 const PodcastItem: React.FC<PodcastItemProps> = ({
-    data,
-    onClick
+    podcast,
 }) => {
-    const imagePath = useLoadImage(data);
+    const imagePath = useLoadImage(podcast);
     return ( 
-        <div
-            onClick={()=> onClick(data.title)}
+        <Link
+            href={`/podcast/${podcast.id}`}
             className="
                 relative
                 group
@@ -54,16 +53,16 @@ const PodcastItem: React.FC<PodcastItemProps> = ({
            </div>
            <div className=" flex flex-col items-start w-full pt-2 gap-y-1">
                 <p className="font-semibold truncate w-full">
-                    {data.title}
+                    {podcast.title}
                 </p>
                 <p className="text-neutral-400 text-sm  w-full truncate">
-                    By {data.host}
+                    By {podcast.host}
                 </p>
            </div>
            <div className="absolute bottom-[4.7rem] right-5">
                 <PlayButton/>
            </div>
-        </div>
+        </Link>
      );
 }
  

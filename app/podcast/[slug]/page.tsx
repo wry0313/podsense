@@ -8,12 +8,13 @@ import getEpisodeByTitle from "@/actions/getEpisodesById";
 // TODO: for generate static page: you can use suapabase admin: https://nesin.io/blog/check-if-file-exists-supabase-storage
 
 export default async function Page({ params }: { params: { slug: string } }) {
-  const podcast_id = params.slug;
+  const podcast_id = params.slug; 
 
   // TODO: this can be optimized by concurrent fetching
-  const podcast = await getPodcastById(podcast_id);
-  const episodes = await getEpisodeByTitle(podcast.title);
+  const podcastData = getPodcastById(podcast_id);
+  const episodesData = getEpisodeByTitle(podcast_id);
 
+  const [podcast, episodes] = await Promise.all([podcastData, episodesData]);
   console.log(episodes);
 
   if (!podcast) {
@@ -40,8 +41,32 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
         </div>
 
-        efeijf
+        {/* using map to map out all the episodes */}
+        {episodes.map((episode) => (
+          <div key={episode.id} className="flex flex-row items-center mt-5">
+             {episode.title}
+             {episode.description}
+             {episode.host}
+            </div>
+            )
+        )}
+                
       </div>
     </div>
   );
 }
+
+/**
+ * 
+ *   audio_path: string;
+  cover_image_path: string;
+  created_at: string;
+  description: string;
+  guest: string;
+  host: string;
+  id: string;
+  podcast_id: string;
+  podcast_title: string;
+  released_date: string;
+  title: string;
+ */

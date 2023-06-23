@@ -32,9 +32,8 @@ const PageContent: React.FC<PageContentProps> = ({
     >
       {podcasts.map((item) => (
         <PodcastItem
-          onClick={() => {}} 
           key={item.title} 
-          data={item}
+          podcast={item}
         />
       ))}
     </div>

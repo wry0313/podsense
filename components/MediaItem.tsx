@@ -16,7 +16,7 @@ const MediaItem = ({ data, onClick }: MediaItemProps) => {
     if (onClick) {
       onClick(data.title);
     }
-
+    
     // TODO: Default turn on player
   };
   return (
