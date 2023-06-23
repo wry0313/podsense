@@ -1,6 +1,6 @@
 "use client"
 import LikeButton from "@/components/LikeButton";
-import MiniPodcastItem from "@/components/MiniPodcastItem";
+import MediaItem from "@/components/MediaItem";
 import { Podcast } from "@/types";
 
 const SearchContent = ({ 
@@ -36,8 +36,8 @@ const SearchContent = ({
                     className="flex items-center gap-x-4 w-full"
                 >
                     <div className="flex-1">
-                        <MiniPodcastItem
-                            podcast={podcast}
+                        <MediaItem
+                            data={podcast}
                         />
                     </div>
                     <LikeButton podcast_id={podcast.id}/>

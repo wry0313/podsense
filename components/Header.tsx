@@ -22,7 +22,9 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
   const authModal = useAuthModal();
   const router = useRouter();
 
-  const supabaseClient = useSupabaseClient();
+  const supabaseClient = useSupabaseClient(); 
+  // IMPORTANT: we use useSupabaseClient when everything we read are public to read for everyone (unathenticated users)
+  // however if something can only be read with authenticated user, we use useSessionContext instead    
   const { user, isLoading } = useUser();
 
 

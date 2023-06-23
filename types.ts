@@ -10,7 +10,7 @@ export interface Podcast {
 }
 
 export interface Episode {
-  audio_path: string 
+  audio_url: string 
   cover_image_path: string 
   created_at: string 
   description: string 

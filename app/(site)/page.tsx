@@ -1,5 +1,4 @@
 import getPodcasts from "@/actions/getPodcasts";
-import Header from "@/components/Header";
 import ListItem from "@/components/ListItem";
 import PageContent from "./components/PageContent";
 
@@ -35,13 +34,13 @@ export default async function Home() {
           >
             <ListItem
               image="/images/liked.png"
-              name="Podcasts Library"
-              href="liked"
+              name="Liked Podcasts"
+              href="/library"
             />
             <ListItem
-              image="/images/liked.png"
+              image="/images/listen_later.png"
               name="Episode Queue"
-              href="liked"
+              href="/library"
             />
           </div>
         </div>

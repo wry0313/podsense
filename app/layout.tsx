@@ -6,6 +6,7 @@ import ModelProvider from "@/providers/ModalProvider";
 import ToasterProvider from "@/providers/ToasterProvider";
 import getLikdPodcasts from "@/actions/getLikdPodcasts";
 import Header from "@/components/Header";
+import Player from "@/components/Player";
 
 // import { Inter } from "next/font/google";
 // const font = Inter({  subsets: ["latin"] });
@@ -36,6 +37,7 @@ export default async function RootLayout({
             <Sidebar podcasts={userPodcasts}>
             <Header />
             {children}</Sidebar>
+            <Player />
           </UserProvider>
         </SupabaseProvider>
       </body>

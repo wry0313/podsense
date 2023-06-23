@@ -33,7 +33,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
   }
 
   return (
-    <div className="px-6 bg-white rounded-lg h-fit w-full overflow-hidden overflow-y-auto">
+    <div className="px-6 bg-white rounded-lg  w-full overflow-hidden overflow-y-auto h-[calc(100%-96px)]">
 
         <div className="flex flex-col">
           <div className="flex flex-col md:flex-row items-center gap-x-5">
@@ -74,17 +74,3 @@ export default async function Page({ params }: { params: { slug: string } }) {
   );
 }
 
-/**
- * 
- * audio_path: string;
-  cover_image_path: string;
-  created_at: string;
-  description: string;
-  guest: string;
-  host: string;
-  id: string;
-  podcast_id: string;
-  podcast_title: string;
-  released_date: string;
-  title: string;
- */

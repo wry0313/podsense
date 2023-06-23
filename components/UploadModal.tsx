@@ -125,7 +125,7 @@ const UploadModal = () => {
           title: values.episode_title,
           host: values.host,
           podcast_id: podcast_id,
-          audio_path: values.audio_link,
+          audio_url: values.audio_url,
           cover_image_path: cover_image_path,
           description: values.episode_description,
           podcast_title: values.title,
@@ -193,9 +193,9 @@ const UploadModal = () => {
         />
         <div>
           <Input
-            id="audio_link"
+            id="audio_url"
             disabled={isLoading}
-            {...register("audio_link", { required: true })}
+            {...register("audio_url", { required: true })}
             placeholder="Audio Link"
           />
         </div>

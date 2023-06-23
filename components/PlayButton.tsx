@@ -3,12 +3,15 @@ import { twMerge } from "tailwind-merge"
 
 
 const PlayButton = ({
-    className
+    className,
+    onClick
 } : {
     className?: string
+    onClick?: () => void
 }) => {
     return (
         <button
+        onClick={onClick}
         className={twMerge(`
         transition
         opacity-0

@@ -1,20 +1,21 @@
 "use client";
 
 import useLoadImage from "@/hooks/useLoadImage";
-import { Podcast } from "@/types";
+import { Episode, Podcast } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 
-interface MiniPodcastItemProps {
-  podcast: Podcast;
+interface MediaItemProps {
+  data: Podcast | Episode;
+  isPodcast?: boolean;
 }
 
-const MiniPodcastItemProps = ({ podcast }: MiniPodcastItemProps) => {
-  const imageUrl = useLoadImage(podcast);
-
+const MediaItem = ({ data, isPodcast = true }: MediaItemProps) => {
+  const imageUrl = useLoadImage(data);
+  const link = isPodcast ? `/podcast/${data.id}` : `/episode/${data.id}`;
   return (
     <Link
-      href={`/podcast/${podcast.id}`}
+      href={link}
       className="
     flex
     items-center
@@ -38,18 +39,18 @@ const MiniPodcastItemProps = ({ podcast }: MiniPodcastItemProps) => {
         <Image
           fill
           src={imageUrl || "/images/liked.png"}
-          alt="Media Item"
+          alt="Cover Image"
           className="object-cover"
         />
       </div>
       <div className="flex flex-col w-full">
-        <p className="font-semibold truncate w-full">{podcast.title}</p>
+        <p className="font-semibold truncate w-full">{data.title}</p>
         <p className="text-neutral-400 text-sm w-full truncate">
-          By {podcast.host}
+          By {data.host}
         </p>
       </div>
     </Link>
   );
 };
 
-export default MiniPodcastItemProps;
+export default MediaItem;

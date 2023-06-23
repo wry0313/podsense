@@ -7,9 +7,9 @@ import { useUser } from "@/hooks/useUser";
 import useUploadModal from "@/hooks/useUploadModal";
 import { Podcast } from "@/types";
 
-import MiniPodcastItem from "./MiniPodcastItem";
 import { usePathname } from "next/navigation";
 import SidebarItem from "./SidebarItem";
+import MediaItem from "./MediaItem";
 
 interface LibraryProps {
   podcasts: Podcast[];
@@ -37,7 +37,7 @@ const Library = ({ podcasts }: LibraryProps) => {
             "
       >
         <SidebarItem icon={AiOutlinePlus} label={"Upload"} onClick={onClick} href={pathname} />
-        <SidebarItem icon={TbPlaylist} label={"Library"} href={"/liked"} active={pathname == '/liked'}/>
+        <SidebarItem icon={TbPlaylist} label={"Library"} href={"/library"} active={pathname == '/library'}/>
       </div> 
 
       <div
@@ -52,7 +52,7 @@ const Library = ({ podcasts }: LibraryProps) => {
             "
       >
         {podcasts.map((podcast) => (
-          <MiniPodcastItem podcast={podcast} key={podcast.id} />
+          <MediaItem data={podcast} key={podcast.id} />
         ))}
       </div>
     </div>
