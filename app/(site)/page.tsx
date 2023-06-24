@@ -37,11 +37,6 @@ export default async function Home() {
               name="Liked Podcasts"
               href="/library"
             />
-            <ListItem
-              image="/images/listen_later.png"
-              name="Episode Queue"
-              href="/library"
-            />
           </div>
         </div>
       <div className="mt-10 mb-7 px-6">

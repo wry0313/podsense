@@ -8,7 +8,7 @@ import { AiFillStepBackward, AiFillStepForward } from "react-icons/ai";
 import { HiSpeakerWave, HiSpeakerXMark } from "react-icons/hi2";
 import Slider from "./Slider";
 import usePlayer from "@/hooks/usePlayer";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import useSound from "use-sound";
 import useDebounce from "@/hooks/useDebounce";
 
@@ -22,19 +22,14 @@ const PlayerContent = ({
   const player = usePlayer();
   const [volume, setVolume] = useState(1);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [currTime, setCurrTime] = useState({
-    min: "",
-    sec: "",
-  }); // current position of the audio in minutes and seconds
-  const [currSeconds, setCurrSeconds] = useState(0); // current position 0
 
   const [value, setValue] = useState(0);
-  const debouncedValue = useDebounce(value, 200);
+  const [barValue, setBarValue] = useState(0);
+  const debouncedValue = useDebounce(value, 10);
+  const [currTime, setCurrTime] = useState("00:00");
 
   useEffect(()=>{
-
     sound?.seek(debouncedValue);
-
 }, [debouncedValue]);
 
 
@@ -49,26 +44,29 @@ const PlayerContent = ({
     format: ["mp3"],
   });
 
-  const sec = duration! / 1000;
-  const min = Math.floor(sec / 60);
-  const secRemain = Math.floor(sec % 60);
-  const time = {
-    min: min,
-    sec: secRemain,
-  };
+  const fullTime = useMemo(() => {
+    return convertSecondsToHMS(episode.duration);
+  },[])
+
+  function convertSecondsToHMS(seconds : number) {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const remainingSeconds = Math.floor(seconds % 60);
+    const formattedHours = hours > 0 ? hours.toString().padStart(1, '0') + ':' : '';
+    const formattedMinutes = minutes.toString().padStart(2, '0');
+    const formattedSeconds = remainingSeconds.toString().padStart(2, '0');
+    return formattedHours + formattedMinutes + ':' + formattedSeconds;
+  }
+
+  useEffect(() => {
+    setCurrTime(convertSecondsToHMS(value));
+  }, [value]);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (sound) {
-        setCurrSeconds(sound.seek([])); // setting the seconds state with the current state
-
-        const min = "" + Math.floor(sound.seek([]) / 60);
-        const sec = "" + Math.floor(sound.seek([]) % 60);
-        setCurrTime({
-          min,
-          sec,
-        });
-      }
+      const curSec = (sound?.seek([]) || 0);
+      setBarValue(curSec);
+      if (typeof curSec === 'number') setCurrTime(convertSecondsToHMS(curSec));
     }, 1000);
     return () => clearInterval(interval);
   }, [sound]);
@@ -98,6 +96,7 @@ const PlayerContent = ({
 
   const Icon = isPlaying ? BsPauseFill : BsPlayFill;
   const VolumeIcon = volume === 0 ? HiSpeakerXMark : HiSpeakerWave;
+  
 
   const onPlayNext = () => {
     if (player.ids.length === 0) return;
@@ -188,7 +187,6 @@ const PlayerContent = ({
                         bg-amber-200
                         p-1
                         cursor-pointer
-
                     "
         >
           <Icon size={30} className="text-black" />
@@ -200,18 +198,25 @@ const PlayerContent = ({
         />
       </div>
 
+      <div className="flex flex-row gap-x-2 items-center text-sm text-neutral-600">
+
+        {currTime}
 
         <Slider
-            value={currSeconds}
+            value={barValue}
             onChange={(value) => {
-                setCurrSeconds(value);
                 setValue(value);
+                setBarValue(value)
             }}
             defaultValue={[0]}
             max={duration ? duration / 1000 : 0}
             ariaLabel="Timeline Slider"
             step={1}
         />
+
+        {fullTime }
+      </div>
+        
 
       </div>
 

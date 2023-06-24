@@ -54,7 +54,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       >
         <Link 
         className="
-        text-4xl 
+        text-3xl 
         font-bold 
         flex 
         items-center 
@@ -64,7 +64,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         "
         href="/"
         >
-          Chat with 🎙️
+          Podsense🎙️.net
         </Link>
         
 

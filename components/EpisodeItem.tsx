@@ -5,6 +5,7 @@ import { Episode } from "@/types";
 import useLoadImage from "@/hooks/useLoadImage";
 import PlayButton from "./PlayButton";
 import Link from "next/link";
+import useOnPlay from "@/hooks/useOnPlay";
 
 
 interface EpisodeItemProps {
@@ -29,6 +30,7 @@ function convertDuration(minutes: number) {
 
 const EpisodeItem = ({ episode }: EpisodeItemProps) => {
     const imagePath = useLoadImage(episode)
+    const onPlay = useOnPlay([episode])
   return (
     <Link 
     href={'/episode/' + episode.id}
@@ -49,8 +51,9 @@ const EpisodeItem = ({ episode }: EpisodeItemProps) => {
         alt={episode.title}
         fill
       />
-        <PlayButton className="backdrop-blur-lg backdrop-brightness-200 bg-transparent translate-x-8 group-hover:translate-y-9 translate-y-12"/>
-
+        <PlayButton 
+        onClick={() => onPlay(episode.id)}
+        className="backdrop-blur-lg backdrop-brightness-200 bg-transparent translate-x-8 group-hover:translate-y-9 translate-y-12"/>
       </div>
       <div className="flex-1">
         <h3 className="text-lg font-semibold">{episode.title}</h3>

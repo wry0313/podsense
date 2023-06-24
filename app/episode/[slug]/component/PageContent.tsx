@@ -8,14 +8,16 @@ interface PageContentProps {
   episode: Episode;
 }
 const PageContent: React.FC<PageContentProps> = ({ episode }) => {
-    const onPlay = useOnPlay([episode]);
-    
-  return (
-<div>
-<PlayButton onClick={() => onPlay(episode.id)} className="opacity-100 w-fit m-20"/>
+  const onPlay = useOnPlay([episode]);
 
-</div>
-    )
+  return (
+    <div>
+      <PlayButton
+        onClick={() => onPlay(episode.id)}
+        className="opacity-100 w-fit "
+      />
+    </div>
+  );
 };
 
 export default PageContent;
