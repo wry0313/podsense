@@ -46,7 +46,7 @@ const PlayerContent = ({
 
   const fullTime = useMemo(() => {
     return convertSecondsToHMS(episode.duration);
-  },[])
+  },[episode.duration])
 
   function convertSecondsToHMS(seconds : number) {
     const hours = Math.floor(seconds / 3600);

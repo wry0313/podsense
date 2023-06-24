@@ -16,7 +16,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
   const [podcast, episodes] = await Promise.all([podcastData, episodesData]);
   // console.log(episodes);
   // console.log("podcast", podcast.id)
-  if (!podcast.id) {
+  if (!podcast || !podcast.id) {
     return (
       <div
         className="
@@ -27,7 +27,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
       px-6
     "
       >
-        This podcast doesn't exist... 😣
+        This podcast doesn&apos;t exist... 😣
       </div>
     );
   }

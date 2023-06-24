@@ -9,7 +9,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   const episode = await getEpisodeByEpisodeId(episode_id);
 
-  if (!episode.id) {
+  if (!episode || !episode.id) {
     return (
       <div
         className="
@@ -20,7 +20,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
       px-6
     "
       >
-        This episode doesn't exist... 😭
+        This episode doesn&apos;t exist... 😭
       </div>
     );
   }
