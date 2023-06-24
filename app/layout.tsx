@@ -12,8 +12,8 @@ import Player from "@/components/Player";
 // const font = Inter({  subsets: ["latin"] });
 
 export const metadata = {
-  title: "Podcast",
-  description: "Listen to podcast!",
+  title: "Podsense.net",
+  description: "Listen to podcasts!",
 };
 
 export const revalidate = 0; // this means the page will be regenerated on every request & not be cached

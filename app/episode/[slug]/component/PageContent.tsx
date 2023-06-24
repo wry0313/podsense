@@ -14,7 +14,7 @@ const PageContent: React.FC<PageContentProps> = ({ episode }) => {
     <div>
       <PlayButton
         onClick={() => onPlay(episode.id)}
-        className="opacity-100 w-fit "
+        className="opacity-100 w-fit mb-10"
       />
     </div>
   );

@@ -8,7 +8,7 @@ import SidebarItem from "./SidebarItem";
 import Library from "./Library";
 import { Podcast } from "@/types";
 import Link from "next/link";
-
+import usePlayer from "@/hooks/usePlayer";
 
 
 interface SidebarProps {
@@ -39,8 +39,12 @@ const Sidebar: React.FC<SidebarProps> = ({
     [pathname]
   );
 
+  const player = usePlayer();
+  console.log(player)
+  const height = player?.activeId ? "h-[calc(100%-90px)]" : "h-full";
+
   return (
-    <div className="flex h-full">
+    <div className={"flex " + height}>
       <div
         className="
         hidden
