@@ -24,9 +24,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
       </div>
     );
   }
-
+  
   return (
-    <div className="h-[calc(100%-96px)] px-6 bg-white rounded-lg  w-full overflow-hidden overflow-y-auto ">
+    <div className="h-full px-6 bg-white rounded-lg  w-full overflow-hidden overflow-y-auto ">
       <div className="flex flex-col border-b-2">
         <div className="flex flex-col md:flex-row items-center gap-x-5">
           <div className="relative h-32 w-32 lg:h-56 lg:w-56 shadow-2xl flex-none">

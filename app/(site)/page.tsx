@@ -8,7 +8,7 @@ export default async function Home() {
     <div
       className="
     rounded-lg
-    h-[calc(100%-96px)]
+    h-full
     w-full
     overflow-hidden
     overflow-y-auto

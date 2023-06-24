@@ -35,7 +35,11 @@ export default async function RootLayout({
             <ModelProvider />
             <Sidebar podcasts={userPodcasts}>
             <Header />
-            {children}</Sidebar>
+            
+            <div className="h-[calc(100%-96px)]">
+            {children}
+            </div>
+            </Sidebar>
             <Player />
           </UserProvider>
         </SupabaseProvider>
