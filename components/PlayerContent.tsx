@@ -10,6 +10,7 @@ import Slider from "./Slider";
 import usePlayer from "@/hooks/usePlayer";
 import { useEffect, useState } from "react";
 import useSound from "use-sound";
+import useDebounce from "@/hooks/useDebounce";
 
 const PlayerContent = ({
   episode,
@@ -21,7 +22,23 @@ const PlayerContent = ({
   const player = usePlayer();
   const [volume, setVolume] = useState(1);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [play, { pause, sound }] = useSound(episodeUrl, {
+  const [currTime, setCurrTime] = useState({
+    min: "",
+    sec: "",
+  }); // current position of the audio in minutes and seconds
+  const [currSeconds, setCurrSeconds] = useState(0); // current position 0
+
+  const [value, setValue] = useState(0);
+  const debouncedValue = useDebounce(value, 200);
+
+  useEffect(()=>{
+
+    sound?.seek(debouncedValue);
+
+}, [debouncedValue]);
+
+
+  const [play, { pause, duration, sound }] = useSound(episodeUrl, {
     volume: volume,
     onplay: () => setIsPlaying(true),
     onend: () => {
@@ -31,6 +48,30 @@ const PlayerContent = ({
     onpause: () => setIsPlaying(false),
     format: ["mp3"],
   });
+
+  const sec = duration! / 1000;
+  const min = Math.floor(sec / 60);
+  const secRemain = Math.floor(sec % 60);
+  const time = {
+    min: min,
+    sec: secRemain,
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (sound) {
+        setCurrSeconds(sound.seek([])); // setting the seconds state with the current state
+
+        const min = "" + Math.floor(sound.seek([]) / 60);
+        const sec = "" + Math.floor(sound.seek([]) % 60);
+        setCurrTime({
+          min,
+          sec,
+        });
+      }
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [sound]);
 
   useEffect(() => {
     sound?.play();
@@ -78,20 +119,18 @@ const PlayerContent = ({
   };
 
   return (
+    
     <div className="grid grid-cols-2 md:grid-cols-3 h-full">
+
       <div
-        className="
-                flex
-                w-full
-                justify-start
-            "
-      >
-        <div className="flex items-center mr-4 max-w-[280px] overflow-hidden">
+        className="flex w-full justify-start pr-10">
+        <div className="flex flex-col items-center mr-4 max-w-[280px] overflow-hidden">
           <MediaItem data={episode} isPodcast={false} />
         </div>
         <LikeButton podcast_id={episode.podcast_id} />
       </div>
 
+      <div className="flex flex-col">
       <div
         className="
                 flex
@@ -123,7 +162,7 @@ const PlayerContent = ({
       <div
         className="
                 hidden
-                h-full
+                h-fit
                 md:flex
                 justify-center
                 items-center
@@ -149,6 +188,7 @@ const PlayerContent = ({
                         bg-amber-200
                         p-1
                         cursor-pointer
+
                     "
         >
           <Icon size={30} className="text-black" />
@@ -160,6 +200,22 @@ const PlayerContent = ({
         />
       </div>
 
+
+        <Slider
+            value={currSeconds}
+            onChange={(value) => {
+                setCurrSeconds(value);
+                setValue(value);
+            }}
+            defaultValue={[0]}
+            max={duration ? duration / 1000 : 0}
+            ariaLabel="Timeline Slider"
+            step={1}
+        />
+
+      </div>
+
+
       <div className="hidden md:flex w-full justify-end pr-2">
         <div className="flex items-center gap-x-2 w-[120px]">
           <VolumeIcon
@@ -167,7 +223,14 @@ const PlayerContent = ({
             className="cursor-pointer"
             size={24}
           />
-          <Slider value={volume} onChange={(value) => setVolume(value)} />
+          <Slider
+            value={volume}
+            onChange={(value) => setVolume(value)}
+            defaultValue={[1]}
+            max={1}
+            step={0.05}
+            ariaLabel="Volume Slider"
+          />
         </div>
       </div>
     </div>

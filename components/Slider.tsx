@@ -4,9 +4,17 @@ import * as RadixSlider from "@radix-ui/react-slider"
 
 const Slider = ({
     value=1,
+    defaultValue,
+    max,
+    step,
+    ariaLabel,
     onChange
 }: {
     value?: number;
+    defaultValue: number[];
+    max: number;
+    step: number;
+    ariaLabel: string;
     onChange?: (value:number) => void
 }) => {
     const handleChange = (newValue: number[]) => {
@@ -14,18 +22,18 @@ const Slider = ({
     }
     return ( 
         <RadixSlider.Root
-            className="relative flex items-center select-none touch-none w-full h-10"
-            defaultValue={[1]}
+            className="group relative flex items-center select-none touch-none w-full h-4 cursor-pointer py-4"
+            defaultValue={defaultValue}
             value={[value]}
             onValueChange={handleChange}
-            max={1}
-            step={0.05}
-            aria-label="Volume slider"
+            max={max}
+            step={step}
+            aria-label={ariaLabel}
         >
-            <RadixSlider.Track className="relative bg-white grow rounded-full h-[3px]">
+            <RadixSlider.Track className="relative bg-white grow rounded-full h-[4px]">
                 <RadixSlider.Range className="absolute bg-black rounded-full h-full" />
             </RadixSlider.Track>
-
+            <RadixSlider.Thumb className="invisible group-hover:visible block w-[10px] h-[10px] bg-amber-200 shadow-md rounded-2xl" aria-label="Volume" />
 
         </RadixSlider.Root>
      );

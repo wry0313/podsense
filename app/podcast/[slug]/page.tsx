@@ -33,7 +33,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
   }
 
   return (
-    <div className="px-6 bg-white rounded-lg  w-full overflow-hidden overflow-y-auto h-[calc(100%-96px)]">
+    <div className="px-6 bg-white rounded-lg  w-full overflow-hidden overflow-y-auto h-[calc(100%-96px-80px)]">
 
         <div className="flex flex-col">
           <div className="flex flex-col md:flex-row items-center gap-x-5">
