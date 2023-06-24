@@ -8,7 +8,6 @@ const Slider = ({
     max,
     step,
     ariaLabel,
-    sliderHeight=4,
     onChange
 }: {
     value?: number;
@@ -16,7 +15,6 @@ const Slider = ({
     max: number;
     step: number;
     ariaLabel: string;
-    sliderHeight?: number;
     onChange?: (value:number) => void
 }) => {
     const handleChange = (newValue: number[]) => {
@@ -32,7 +30,7 @@ const Slider = ({
             step={step}
             aria-label={ariaLabel}
         >
-            <RadixSlider.Track className={`relative bg-white grow rounded-full h-[${sliderHeight}px]`}>
+            <RadixSlider.Track className={`relative bg-white grow rounded-full h-[4px]`}>
                 <RadixSlider.Range className="absolute bg-black rounded-full h-full" />
             </RadixSlider.Track>
             <RadixSlider.Thumb className="invisible group-hover:visible block w-[10px] h-[10px] bg-amber-200 shadow-md rounded-2xl" aria-label="Volume" />
