@@ -46,6 +46,7 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
         `
         h-fit
         px-6
+        select-none
         `,
         className
       )}

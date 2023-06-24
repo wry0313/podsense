@@ -16,7 +16,6 @@ export const metadata = {
   description: "Listen to podcasts!",
 };
 
-export const revalidate = 0; // this means the page will be regenerated on every request & not be cached
 
 export default async function RootLayout({
   children,

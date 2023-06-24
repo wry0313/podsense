@@ -8,7 +8,8 @@ const Slider = ({
     max,
     step,
     ariaLabel,
-    onChange
+    onChange,
+    onCommit
 }: {
     value?: number;
     defaultValue: number[];
@@ -16,9 +17,13 @@ const Slider = ({
     step: number;
     ariaLabel: string;
     onChange?: (value:number) => void
+    onCommit?: (value:number) => void
 }) => {
     const handleChange = (newValue: number[]) => {
         onChange?.(newValue[0])
+    }
+    const handleCommit = (newValue: number[]) => {
+        onCommit?.(newValue[0])
     }
     return ( 
         <RadixSlider.Root
@@ -26,6 +31,7 @@ const Slider = ({
             defaultValue={defaultValue}
             value={[value]}
             onValueChange={handleChange}
+            onValueCommit={handleCommit}
             max={max}
             step={step}
             aria-label={ariaLabel}

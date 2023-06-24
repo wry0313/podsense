@@ -27,6 +27,7 @@ const Player = () => {
         py-2
         h-[90px]
         px-4
+        select-none
     ">
         <PlayerContent 
             episode={episode}

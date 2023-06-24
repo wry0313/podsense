@@ -5,7 +5,6 @@ import getLikedPodcasts from "@/actions/getLikdPodcasts";
 
 import LikedContent from "./components/LikedContent";
 
-export const revalidate = 0;
 
 const liked = async () => {
   const podcasts = await getLikedPodcasts();

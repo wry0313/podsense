@@ -8,10 +8,9 @@ import { AiFillStepBackward, AiFillStepForward } from "react-icons/ai";
 import { HiSpeakerWave, HiSpeakerXMark } from "react-icons/hi2";
 import Slider from "./Slider";
 import usePlayer from "@/hooks/usePlayer";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import useSound from "use-sound";
-import useDebounce from "@/hooks/useDebounce";
-import { set } from "react-hook-form";
+
 
 const PlayerContent = ({
   episode,
@@ -20,13 +19,10 @@ const PlayerContent = ({
   episode: Episode;
   episodeUrl: string;
 }) => {
-  const player = usePlayer();
+  // const player = usePlayer();
   const [volume, setVolume] = useState(1);
   const [isPlaying, setIsPlaying] = useState(false);
-
-  const [value, setValue] = useState(0);
-  const [barValue, setBarValue] = useState(0);
-  const debouncedValue = useDebounce(value, 300);
+  const [sliderValue, setSliderValue] = useState(0);
   const [currTime, setCurrTime] = useState(0);
   const [fullTime, setFullTime] = useState("");
 
@@ -42,11 +38,7 @@ const PlayerContent = ({
     loop: true
   });
 
-  useEffect(()=>{
 
-    sound?.seek(debouncedValue)
-    setValue(debouncedValue)
-}, [debouncedValue]);
 
 
 
@@ -61,16 +53,17 @@ const PlayerContent = ({
     return formattedHours + formattedMinutes + ':' + formattedSeconds;
   }
 
-  
 
   useEffect(() => {
 
     const interval = setInterval(() => {
-      
-      const curSec = (sound?.seek([]) || 0);
-      setBarValue(curSec);
-      if (typeof curSec === 'number') setCurrTime(curSec);
-    }, 1000);
+      if (sound) {
+        const currSec = (sound.seek());
+        setSliderValue(currSec);
+        setCurrTime(currSec);
+  
+      }
+  }, 1000);
     return () => clearInterval(interval);
   }, [sound]);
 
@@ -99,7 +92,9 @@ const PlayerContent = ({
     if (newTime > duration! / 1000) {
       newTime = (duration! /1000);
     }
-    setValue(newTime);
+    setCurrTime(newTime);
+    sound?.seek(newTime);
+
   };
 
   const onBackward = () => {
@@ -107,16 +102,16 @@ const PlayerContent = ({
     if (newTime < 0) {
       newTime = 0;
     }
-    setValue(newTime);
-
+    setCurrTime(newTime);
+    sound?.seek(newTime);
   };
 
   return (
     
-    <div className="grid grid-cols-2 md:grid-cols-3 h-full">
+    <div className="grid grid-cols-1 sm:grid-cols-3 h-full">
 
       <div
-        className="flex w-full justify-start pr-10">
+        className="hidden sm:flex w-full justify-cente pr-10">
         <div className="flex flex-col items-center mr-4 max-w-[280px] overflow-hidden">
           <MediaItem data={episode} isPodcast={false} />
         </div>
@@ -124,39 +119,12 @@ const PlayerContent = ({
       </div>
 
       <div className="flex flex-col">
-      <div
-        className="
-                flex
-                md:hidden
-                col-auto
-                w-full
-                justify-end
-                items-center
-            "
-      >
-        <div
-          onClick={handlePlay}
-          className="
-                h-10
-                w-10
-                flex
-                items-center
-                justify-center
-                rounded-full
-                bg-amber-200
-                p-1
-                cursor-pointer
-                "
-        >
-          <Icon size={30} className="text-black" />
-        </div>
-      </div>
+   
 
       <div
         className="
-                hidden
                 h-fit
-                md:flex
+                flex
                 justify-center
                 items-center
                 w-full
@@ -197,12 +165,16 @@ const PlayerContent = ({
         {convertSecondsToHMS(currTime)}
 
         <Slider
-            value={barValue}
+            value={sliderValue}
             onChange={(value) => {
-                setValue(value);
-                setBarValue(value)
-                setCurrTime(value)
+              setCurrTime(value)
+              setSliderValue(value)
             }}
+            onCommit={(value) => {
+              setCurrTime(value)
+              sound?.seek(value)
+            }
+            }
             defaultValue={[0]}
             max={duration ? duration / 1000 : 0}
             ariaLabel="Timeline Slider"
@@ -216,7 +188,7 @@ const PlayerContent = ({
       </div>
 
 
-      <div className="hidden md:flex w-full justify-end pr-2">
+      <div className="hidden sm:flex w-full justify-end pr-2">
         <div className="flex items-center gap-x-2 w-[120px]">
           <VolumeIcon
             onClick={toggleMute}
