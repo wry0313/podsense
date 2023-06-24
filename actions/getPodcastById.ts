@@ -2,6 +2,7 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 
 import { Podcast } from "@/types";
+import toast from "react-hot-toast";
 
 const getPodcastById = async (id: string): Promise<Podcast> => {
   const supabase = createServerComponentClient({
@@ -15,7 +16,7 @@ const getPodcastById = async (id: string): Promise<Podcast> => {
     .single();
 
   if (error) {
-    console.log(error.message);
+    toast.error("Something went wrong.");
   }
 
   return (data as any) || [];

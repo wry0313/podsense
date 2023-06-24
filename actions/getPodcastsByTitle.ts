@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 
 import { Podcast } from "@/types";
 import getPodcasts from "./getPodcasts";
+import { toast } from "react-hot-toast";
 
 
 const getPodcastsByTitle = async (title: string): Promise<Podcast[]> => {
@@ -22,7 +23,7 @@ const getPodcastsByTitle = async (title: string): Promise<Podcast[]> => {
         .order('created_at', { ascending: false });
         
         if (error) {
-            console.log(error);
+            toast.error("Something went wrong.");
         }
 
         return (data as Podcast[]) || [];

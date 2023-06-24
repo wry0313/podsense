@@ -16,6 +16,7 @@ const PageContent: React.FC<PageContentProps> = ({ episode }) => {
         onClick={() => onPlay(episode.id)}
         className="opacity-100 w-fit mb-10"
       />
+      
     </div>
   );
 };

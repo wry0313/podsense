@@ -25,7 +25,7 @@ function convertDuration(minutes: number) {
     }
   
     return result.trim();
-  }
+}
   
 
 const EpisodeItem = ({ episode }: EpisodeItemProps) => {

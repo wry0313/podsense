@@ -7,8 +7,9 @@ import PlayerContent from "./PlayerContent";
 const Player = () => {
     const player = usePlayer();
     const { episode } = useGetEpisodeById(player.activeId);
-
     const episodeUrl = episode?.audio_url;
+
+    // if we dont have an episode or we dont have an active id, we dont wanna render anything
 
     if (!episode || !player.activeId) {
         return null;
@@ -17,7 +18,8 @@ const Player = () => {
     // problem we have a client component and hook but all the ways we fetch song is with server components
     // great thing with supabase: we can avoid server client but we dont have to do that
 
-    return ( <div className="
+    return ( 
+    <div className="
         fixed
         bottom-0
         bg-neutral-100

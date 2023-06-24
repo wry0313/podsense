@@ -61,7 +61,7 @@ const UploadModal = () => {
         .eq("title", values.title)
         .single();
 
-      // console.log(podcast_data?.id);
+
       const podcast_id = podcast_data ? podcast_data.id : nanoid();
 
       // if podcast record doesn't exist

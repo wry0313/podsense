@@ -8,9 +8,10 @@ import { AiFillStepBackward, AiFillStepForward } from "react-icons/ai";
 import { HiSpeakerWave, HiSpeakerXMark } from "react-icons/hi2";
 import Slider from "./Slider";
 import usePlayer from "@/hooks/usePlayer";
-import { useEffect, useMemo, useState } from "react";
+import { use, useEffect, useState } from "react";
 import useSound from "use-sound";
 import useDebounce from "@/hooks/useDebounce";
+import { set } from "react-hook-form";
 
 const PlayerContent = ({
   episode,
@@ -25,30 +26,32 @@ const PlayerContent = ({
 
   const [value, setValue] = useState(0);
   const [barValue, setBarValue] = useState(0);
-  const debouncedValue = useDebounce(value, 10);
-  const [currTime, setCurrTime] = useState("00:00");
-
-  useEffect(()=>{
-    sound?.seek(debouncedValue);
-}, [debouncedValue]);
-
+  const debouncedValue = useDebounce(value, 300);
+  const [currTime, setCurrTime] = useState(0);
+  const [fullTime, setFullTime] = useState("");
 
   const [play, { pause, duration, sound }] = useSound(episodeUrl, {
     volume: volume,
     onplay: () => setIsPlaying(true),
     onend: () => {
       setIsPlaying(false);
-      onPlayNext();
     },
     onpause: () => setIsPlaying(false),
     format: ["mp3"],
+    html5: true, // Force HTML5 so that we can stream large files. NEEDED
+    loop: true
   });
 
-  const fullTime = useMemo(() => {
-    return convertSecondsToHMS(episode.duration);
-  },[episode.duration])
+  useEffect(()=>{
 
-  function convertSecondsToHMS(seconds : number) {
+    sound?.seek(debouncedValue)
+    setValue(debouncedValue)
+}, [debouncedValue]);
+
+
+
+  function convertSecondsToHMS(seconds : number | null) {
+    if (seconds === null) return '00:00';
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
     const remainingSeconds = Math.floor(seconds % 60);
@@ -58,63 +61,54 @@ const PlayerContent = ({
     return formattedHours + formattedMinutes + ':' + formattedSeconds;
   }
 
-  useEffect(() => {
-    setCurrTime(convertSecondsToHMS(value));
-  }, [value]);
+  
 
   useEffect(() => {
+
     const interval = setInterval(() => {
+      
       const curSec = (sound?.seek([]) || 0);
       setBarValue(curSec);
-      if (typeof curSec === 'number') setCurrTime(convertSecondsToHMS(curSec));
+      if (typeof curSec === 'number') setCurrTime(curSec);
     }, 1000);
     return () => clearInterval(interval);
   }, [sound]);
 
   useEffect(() => {
     sound?.play();
+    setFullTime(convertSecondsToHMS(duration!/1000));
     return () => {
       sound?.unload();
     };
   }, [sound]);
 
   const handlePlay = () => {
-    if (!isPlaying) {
-      play();
-    } else {
-      pause();
-    }
+    isPlaying ? pause() : play();
   };
 
   const toggleMute = () => {
-    if (volume === 0) {
-      setVolume(1);
-    } else {
-      setVolume(0);
-    }
+    volume ? setVolume(0) : setVolume(1)
   };
 
   const Icon = isPlaying ? BsPauseFill : BsPlayFill;
   const VolumeIcon = volume === 0 ? HiSpeakerXMark : HiSpeakerWave;
   
+  const onForward = () => {
+    let newTime = currTime + 15;
 
-  const onPlayNext = () => {
-    if (player.ids.length === 0) return;
-    const currentIndex = player.ids.findIndex((id) => id === player.activeId);
-    const nextEpisode = player.ids[currentIndex + 1];
-    if (!nextEpisode) {
-      return player.setId(player.ids[0]);
+    if (newTime > duration! / 1000) {
+      newTime = (duration! /1000);
     }
-    player.setId(nextEpisode);
+    setValue(newTime);
   };
-  const onPlayPrevious = () => {
-    if (player.ids.length === 0) return;
-    const currentIndex = player.ids.findIndex((id) => id === player.activeId);
-    const previousEpisode = player.ids[currentIndex - 1];
-    if (!previousEpisode) {
-      return player.setId(player.ids[player.ids.length - 1]);
+
+  const onBackward = () => {
+    let newTime = currTime - 15;
+    if (newTime < 0) {
+      newTime = 0;
     }
-    player.setId(previousEpisode);
+    setValue(newTime);
+
   };
 
   return (
@@ -171,7 +165,7 @@ const PlayerContent = ({
             "
       >
         <AiFillStepBackward
-          onClick={onPlayPrevious}
+          onClick={onBackward}
           size={30}
           className="text-black cursor-pointer hover:text-neutral-400 transition "
         />
@@ -192,7 +186,7 @@ const PlayerContent = ({
           <Icon size={30} className="text-black" />
         </div>
         <AiFillStepForward
-          onClick={onPlayNext}
+          onClick={onForward}
           size={30}
           className="text-black cursor-pointer hover:text-neutral-400 transition "
         />
@@ -200,13 +194,14 @@ const PlayerContent = ({
 
       <div className="flex flex-row gap-x-2 items-center text-sm text-neutral-600">
 
-        {currTime}
+        {convertSecondsToHMS(currTime)}
 
         <Slider
             value={barValue}
             onChange={(value) => {
                 setValue(value);
                 setBarValue(value)
+                setCurrTime(value)
             }}
             defaultValue={[0]}
             max={duration ? duration / 1000 : 0}
@@ -214,7 +209,7 @@ const PlayerContent = ({
             step={1}
         />
 
-        {fullTime }
+        {fullTime}
       </div>
         
 

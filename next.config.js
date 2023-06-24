@@ -5,6 +5,8 @@ const nextConfig = {
             'cnvniiywuoskmrtwfpum.supabase.co',
         ]
     }
+    
+
 }
 
 module.exports = nextConfig

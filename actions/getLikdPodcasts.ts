@@ -1,7 +1,7 @@
 import { Podcast } from "@/types";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
-import { HiEye } from "react-icons/hi";
+
 
 const getLikedPodcasts = async (): Promise<Podcast[]> => {
   const supabase = createServerComponentClient({

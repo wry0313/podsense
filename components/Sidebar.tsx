@@ -40,7 +40,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   );
 
   const player = usePlayer();
-  console.log(player)
+  // 90px is the player height
   const height = player?.activeId ? "h-[calc(100%-90px)]" : "h-full";
 
   return (

@@ -2,6 +2,7 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 
 import { Episode } from "@/types";
+import toast from "react-hot-toast";
 
 const getEpisodeByPodcastId = async (
   podcast_id: string
@@ -16,7 +17,7 @@ const getEpisodeByPodcastId = async (
     .eq("podcast_id", podcast_id);
 
   if (error) {
-    console.log(error);
+    toast.error("Something went wrong.");
   }
 
   return (data as Episode[]) || [];

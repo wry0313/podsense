@@ -14,8 +14,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
   const episodesData = getEpisodeByPodcastId(podcast_id);
 
   const [podcast, episodes] = await Promise.all([podcastData, episodesData]);
-  // console.log(episodes);
-  // console.log("podcast", podcast.id)
+
   if (!podcast || !podcast.id) {
     return (
       <div
