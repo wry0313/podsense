@@ -52,7 +52,7 @@ const UploadModal = () => {
         return;
       }
 
-      const cover_image_path = "cover_image_" + slugify(values.title);
+      const cover_image_path = "cover-image-" + slugify(values.title);
 
       // check if podcast exists
       const { data: podcast_data, error } = await supabaseClient

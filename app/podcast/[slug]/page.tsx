@@ -4,7 +4,6 @@ import getEpisodeByPodcastId from "@/actions/getEpisodesByPodcastId";
 import LikeButtonWithText from "@/components/LikeButtonWithText";
 import EpisodeItem from "@/components/EpisodeItem";
 
-
 // TODO: for generate static page: you can use suapabase admin: https://nesin.io/blog/check-if-file-exists-supabase-storage
 
 export default async function Page({ params }: { params: { slug: string } }) {
