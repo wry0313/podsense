@@ -23,9 +23,7 @@ const openAIConfig = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-export const config = {
-  runtime: "edge",
-};
+export const runtime = 'edge' // https://nextjs.org/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes
 
 const numTokens = (text: string) => {
   const enc = encoding_for_model(GPT_MODEL);
