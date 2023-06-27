@@ -1,8 +1,8 @@
-import ImageWrapper from "@/components/ImageWrapper";
 import getPodcastById from "@/actions/getPodcastById";
 import LikeButtonWithText from "@/components/LikeButtonWithText";
 import PageContent from "./component/PageContent";
 import getPodcastTagsByPodcastId from "@/actions/getPodcastTagsByPodcastId";
+import Image from "next/image";
 
 export const revalidate = 0;
 
@@ -27,11 +27,19 @@ export default async function Page({ params }: { params: { slug: string } }) {
   }
 
   return (
-    <div id="scroll-box" className="h-full px-6 bg-white rounded-lg w-full overflow-y-auto">
+    <div
+      id="scroll-box"
+      className="h-full px-6 bg-white rounded-lg w-full overflow-y-auto"
+    >
       <div className="flex flex-col">
         <div className="flex flex-col md:flex-row items-center gap-x-5">
           <div className="relative h-32 w-32 lg:h-56 lg:w-56 shadow-2xl flex-none">
-            <ImageWrapper data={podcast} />
+          <Image
+              src={podcast.image_url!}
+              alt="Liked"
+              className="object-cover rounded-md"
+              fill
+        />
           </div>
 
           <div className="flex flex-col gap-y-2 mt-4 md:mt-4">
@@ -64,9 +72,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
       </div>
 
       <PageContent podcast_id={podcast_id} />
-
     </div>
   );
 }
-
-

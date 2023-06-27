@@ -1,4 +1,4 @@
-import ImageWrapper from "@/components/ImageWrapper";
+import Image from "next/image";
 import getEpisodeByEpisodeId from "@/actions/getEpisodeByEpisodeId";
 import PlayButton from "@/components/PlayButton";
 import ChatWindow from "@/components/ChatWindow";
@@ -32,7 +32,12 @@ export default async function Page({ params }: { params: { slug: string } }) {
       <div className="flex flex-col">
         <div className="flex flex-col md:flex-row items-center gap-x-5">
           <div className="group relative h-32 w-32 lg:h-56 lg:w-56 shadow-2xl flex-none">
-            <ImageWrapper data={episode} />
+          <Image
+              src={episode.image_url}
+              alt="Liked"
+              className="object-cover rounded-md"
+              fill
+        />
             <PlayButton
               episode={episode}
               className="w-fit backdrop-blur-lg p-6 opacity-20 backdrop-brightness-200 bg-transparent translate-x-[120%] group-hover:translate-y-[4.5rem] translate-y-24"
