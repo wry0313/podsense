@@ -28,6 +28,7 @@ export interface Episode {
   podcast_title: string 
   released_date: string | null
   title: string 
+  transcript: string | null
 }
 
 export interface Product {

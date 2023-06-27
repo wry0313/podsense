@@ -48,7 +48,7 @@ export default function ChatWindow() {
   };
 
   return (
-    <div className="w-full max-w-xl">
+    <div className="w-full ">
       <textarea
         value={input}
         onChange={(e) => setInput(e.target.value)}

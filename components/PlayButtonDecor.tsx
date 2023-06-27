@@ -1,22 +1,17 @@
-"use client"
-
-import useOnPlay from "@/hooks/useOnPlay"
-import { Episode } from "@/types"
 import { FaPlay } from "react-icons/fa"
 import { twMerge } from "tailwind-merge"
 
 
-const PlayButton = ({
+const PlayButtonDecor = ({
     className,
-    episode
+    onClick
 } : {
     className?: string
-    episode: Episode
+    onClick?: () => void
 }) => {
-    const onPlay = useOnPlay();
     return (
         <button
-        onClick={() => onPlay(episode.id)}
+        onClick={onClick}
         className={twMerge(`
         transition
         opacity-0
@@ -38,4 +33,4 @@ const PlayButton = ({
     )
 }
 
-export default PlayButton;
+export default PlayButtonDecor;

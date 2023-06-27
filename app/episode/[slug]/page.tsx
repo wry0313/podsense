@@ -1,6 +1,8 @@
 import ImageWrapper from "@/components/ImageWrapper";
 import getEpisodeByEpisodeId from "@/actions/getEpisodeByEpisodeId";
-import PageContent from "./component/PageContent";
+import PlayButton from "@/components/PlayButton";
+import ChatWindow from "@/components/ChatWindow";
+import ExpandTextBlock from "@/components/ExpandTextBlock";
 
 // export const revalidate = 0;
 
@@ -24,13 +26,17 @@ export default async function Page({ params }: { params: { slug: string } }) {
       </div>
     );
   }
-  
+
   return (
     <div className="h-full px-6 bg-white rounded-lg  w-full overflow-hidden overflow-y-auto ">
-      <div className="flex flex-col border-b-2">
+      <div className="flex flex-col">
         <div className="flex flex-col md:flex-row items-center gap-x-5">
-          <div className="relative h-32 w-32 lg:h-56 lg:w-56 shadow-2xl flex-none">
+          <div className="group relative h-32 w-32 lg:h-56 lg:w-56 shadow-2xl flex-none">
             <ImageWrapper data={episode} />
+            <PlayButton
+              episode={episode}
+              className="w-fit backdrop-blur-lg p-6 opacity-20 backdrop-brightness-200 bg-transparent translate-x-[120%] group-hover:translate-y-[4.5rem] translate-y-24"
+            />
           </div>
 
           <div className="flex flex-col gap-y-2 mt-4 md:mt-4">
@@ -42,22 +48,18 @@ export default async function Page({ params }: { params: { slug: string } }) {
           </div>
         </div>
 
-        <div className="mt-8">
-        </div>
-
         <p className="font-semibold text-2xl mt-3">Episode Description</p>
-        <div
-          className="
-            mt-4
-            pb-4
-            max-w-[50%]
-          "
-        >
-          {episode.description}
+        <div className="my-4">
+          <ExpandTextBlock text={episode.description} />
         </div>
       </div>
 
-      <PageContent episode={episode} />
+      <div className="mb-6">
+        <ChatWindow />
+      </div>
+      <div className="mb-[10rem]">
+        {episode.transcript && <ExpandTextBlock text={episode.transcript} />}
+      </div>
     </div>
   );
 }

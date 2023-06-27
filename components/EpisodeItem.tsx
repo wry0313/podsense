@@ -1,11 +1,7 @@
-"use client";
-
 import Image from "next/image";
 import { Episode } from "@/types";
-import useLoadImage from "@/hooks/useLoadImage";
 import PlayButton from "./PlayButton";
 import Link from "next/link";
-import useOnPlay from "@/hooks/useOnPlay";
 
 interface EpisodeItemProps {
   episode: Episode;
@@ -29,8 +25,6 @@ function convertSecondsToTime(seconds:number) {
 }
 
 const EpisodeItem = ({ episode }: EpisodeItemProps) => {
-  const imagePath = useLoadImage(episode);
-  const onPlay = useOnPlay([episode]);
   return (
     <Link
       href={"/episode/" + episode.id}
@@ -47,12 +41,12 @@ const EpisodeItem = ({ episode }: EpisodeItemProps) => {
       >
         <Image
         className="object-cover"
-        src={imagePath}
+        src={episode.image_url}
         alt={episode.title}
         fill
       />
         <PlayButton
-          onClick={() => onPlay(episode.id)}
+        episode={episode}
           className="backdrop-blur-lg backdrop-brightness-200 bg-transparent translate-x-8 group-hover:translate-y-9 translate-y-12"
         />
       </div>

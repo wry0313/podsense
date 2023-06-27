@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Podcast } from "@/types"
 
 import useLoadImage from "@/hooks/useLoadImage";
-import PlayButton from "./PlayButton";
+import PlayButtonDecor from "./PlayButtonDecor";
 
 interface PodcastItemProps {
     podcast: Podcast;
@@ -61,7 +61,7 @@ const PodcastItem: React.FC<PodcastItemProps> = ({
                 </p>
            </div>
            <div className="absolute bottom-[4.7rem] right-5">
-                <PlayButton/>
+                <PlayButtonDecor/>
            </div>
         </Link>
      );
