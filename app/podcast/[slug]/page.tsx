@@ -1,10 +1,9 @@
 import ImageWrapper from "@/components/ImageWrapper";
 import getPodcastById from "@/actions/getPodcastById";
-import getEpisodeByPodcastId from "@/actions/getEpisodesByPodcastId";
 import LikeButtonWithText from "@/components/LikeButtonWithText";
 import PageContent from "./component/PageContent";
 
-// TODO: for generate static page: you can use suapabase admin: https://nesin.io/blog/check-if-file-exists-supabase-storage
+export const revalidate = 0;
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const podcast_id = params.slug;

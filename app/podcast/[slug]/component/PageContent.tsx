@@ -26,7 +26,7 @@ const PageContent = ({
   const [isLast, setIsLast] = useState(false);
 
   const [sortAscending, setSortAscending] = useState(false);
-  const [isButtom, setIsButtom] = useState(true) //hard code to true to trigger first time render
+  const [isBottom, setIsBottom] = useState(true) //hard code to true to trigger first time render
 
   useEffect(() => {
     const element = document.querySelector("div#scroll-box") as HTMLDivElement;
@@ -41,27 +41,29 @@ const PageContent = ({
       const container = containerRef.current as HTMLElement;
       const { bottom } = container.getBoundingClientRect();
       const { innerHeight } = window;
-      console.log(bottom, innerHeight)
-      console.log(bottom <= innerHeight)
-      setIsButtom(bottom <= innerHeight)
+      // console.log(bottom, innerHeight)
+      // console.log(bottom <= innerHeight)
+      setIsBottom(bottom <= innerHeight)
     }
   };
 
   useEffect(() => {
-    console.log("is buttom change deteced: " + isButtom)
-    if(isButtom && !isLoading) {
-      console.log("loading more")
+    // console.log("is Bottom change deteced: " + isBottom)
+    // console.log("what is isloading: " + isLoading)
+    if(isBottom && !isLoading) {
+      // console.log("loading more")
       loadMoreEpisodes(offset)
-      setIsButtom(false)
+      setIsBottom(false)
+
     }
-  }, [isButtom])
+  }, [isBottom])
 
   const handleDebouncedScroll = useCallback(debounce(() => handleScroll(), 200), [])
 
   useEffect(()=> {
     if (isLast) {
         const element = document.querySelector("div#scroll-box") as HTMLDivElement;
-        console.log("REMOVE SCROLL")
+        // console.log("REMOVE SCROLL")
         element!.removeEventListener("scroll", handleDebouncedScroll);
     }
   }, [isLast])
@@ -79,14 +81,15 @@ const PageContent = ({
     }
     // Merge new Episodes with all previously loaded
     setLoadedEpisodes((prevEpisodes) => [...prevEpisodes, ...newEpisodes]);
+    // console.log("set is loading false")
     setIsLoading(false);
   };
 
   const fetchEpisodes = async (offset: number) => {
-    console.log(offset)
+    // console.log(offset)
     const from = offset * PAGE_COUNT;
     let to = from + PAGE_COUNT - 1;
-    console.log(from, to)
+    // console.log(from, to)
     const { data, error } = await supabase!
       .from("episodes")
       .select("*")
@@ -98,13 +101,15 @@ const PageContent = ({
   };
 
   const toggleSort = () => {
-    // betng at the button will trigger one and setisbuttom will triger another time
+    // betng at the button will trigger one and setisBottom will triger another time
     // setInitialLoad(true)
-    setIsButtom(true) // hard code to trigger a load
+    // console.log('toggle')
+    setIsBottom(true) // hard code to trigger a load
     setOffset(0);
     setIsLast(false);
     setSortAscending(!sortAscending);
     setLoadedEpisodes([]);
+    setIsLoading(false)
 
   }
 
@@ -112,8 +117,9 @@ const PageContent = ({
     <div ref={containerRef} className="flex flex-col mt-5">
       <button
       onClick={toggleSort}
+      className="px-4 py-2 font-bold w-fit text-sm mb-4 text-black bg-neutral-100 hover:scale-105 transition rounded-lg"
       >
-        TOGGLE SORT
+        Toggle sort
       </button>
       {loadedEpisodes.map((episode, i) => {
 
