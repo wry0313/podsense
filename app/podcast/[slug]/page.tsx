@@ -10,7 +10,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
   const podcast_id = params.slug;
 
   const podcastData = getPodcastById(podcast_id);
-  const episodesPageCount = 10
+  const episodesPageCount = 50
   const episodesData = getEpisodeByPodcastId(podcast_id, episodesPageCount);
 
   const [podcast, episodes] = await Promise.all([podcastData, episodesData]);
@@ -19,7 +19,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
     return (
       <div
         className="
-    flex  
+      flex  
       font-bold
       text-5xl
       h-fit
@@ -32,7 +32,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
   }
 
   return (
-    <div id="scroll-box" className="h-full px-6 bg-white rounded-lg  w-full overflow-hidden overflow-y-auto">
+    <div id="scroll-box" className="h-full px-6 bg-white rounded-lg w-full overflow-y-auto">
       <div className="flex flex-col">
         <div className="flex flex-col md:flex-row items-center gap-x-5">
           <div className="relative h-32 w-32 lg:h-56 lg:w-56 shadow-2xl flex-none">

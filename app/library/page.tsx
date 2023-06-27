@@ -6,7 +6,7 @@ import getLikedPodcasts from "@/actions/getLikdPodcasts";
 import LikedContent from "./components/LikedContent";
 
 
-const liked = async () => {
+const Library = async () => {
   const podcasts = await getLikedPodcasts();
 
   return (
@@ -68,4 +68,4 @@ const liked = async () => {
   );
 };
 
-export default liked;
+export default Library;

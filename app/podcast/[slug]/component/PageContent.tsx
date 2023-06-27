@@ -103,9 +103,9 @@ const PageContent = ({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
-              duration: 0.5,
+              duration: 0.7,
               ease: [0.25, 0.25, 0, 1],
-              delay: (i%PAGE_COUNT)*0.04,
+              delay: (i%PAGE_COUNT)*0.1,
             }}
           >
             <EpisodeItem key={episode.id} episode={episode} />

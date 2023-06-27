@@ -4,7 +4,7 @@ import { TbPlaylist } from "react-icons/tb";
 
 import useAuthModal from "@/hooks/useAuthModal";
 import { useUser } from "@/hooks/useUser";
-import useUploadModal from "@/hooks/useUploadModal";
+// import useUploadModal from "@/hooks/useUploadModal";
 import { Podcast } from "@/types";
 
 import { usePathname } from "next/navigation";
@@ -23,12 +23,12 @@ const Library = ({ podcasts }: LibraryProps) => {
   const pathname = usePathname();
   console.log(pathname)
 
-  const onClick = () => {
-    if (!user) {
-      return authModal.onOpen();
-    }
+  // const onClick = () => {
+  //   if (!user) {
+  //     return authModal.onOpen();
+  //   }
     // return uploadModal.onOpen();
-  };
+  // };
   return (
     <div className="h-full flex flex-col">
     
