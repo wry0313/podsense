@@ -18,11 +18,12 @@ const Library = ({ pathname }: LibraryProps) => {
   const supabase = createClientComponentClient();
 
   const user = useUser();
+  const [fetched, setFetched] = useState(false);
 
 //https://devtrium.com/posts/async-functions-useeffect
   useEffect(() => {
-
-    const getData = async () => {
+    // console.log(user)
+    const fetchData = async () => {
       setIsLoading(true);
       const { data } = await supabase
         .from("liked_podcasts")
@@ -33,8 +34,13 @@ const Library = ({ pathname }: LibraryProps) => {
       setLikedPodcasts(podcastList || []);
       setIsLoading(false);
     };
-
-    getData();
+    if (fetched && !user.accessToken) {
+      setLikedPodcasts([]);
+      setFetched(false);
+    } else if (!fetched && user.accessToken) {
+      fetchData();
+      setFetched(true);
+    }
   }, [user]);
 
   useEffect(() => {

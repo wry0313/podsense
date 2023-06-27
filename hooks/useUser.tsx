@@ -7,7 +7,8 @@ type UserContextType = {
     accessToken: string | null;
     user: User | null;
     userDetails: UserDetails | null;
-    isLoading: boolean;
+    isLoadingUser: boolean;
+    isLoadingData: boolean;
 }
 
 export const UserContext = createContext<UserContextType | undefined>(
@@ -54,7 +55,8 @@ export const MyUserContextProvider = (props: Props) => {
         accessToken,
         user,
         userDetails,
-        isLoading: isLoadingUser || isLoadingData,
+        isLoadingUser: isLoadingUser,
+        isLoadingData: isLoadingData
     };
 
     return <UserContext.Provider value={value} {...props} />;
