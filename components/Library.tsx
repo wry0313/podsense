@@ -2,8 +2,8 @@
 import { TbPlaylist } from "react-icons/tb";
 // import { AiOutlinePlus } from "react-icons/ai";
 
-import useAuthModal from "@/hooks/useAuthModal";
-import { useUser } from "@/hooks/useUser";
+// import useAuthModal from "@/hooks/useAuthModal";
+// import { useUser } from "@/hooks/useUser";
 // import useUploadModal from "@/hooks/useUploadModal";
 import { Podcast } from "@/types";
 
@@ -15,10 +15,10 @@ interface LibraryProps {
   podcasts: Podcast[];
 }
 const Library = ({ podcasts }: LibraryProps) => {
-  const authModal = useAuthModal();
+  // const authModal = useAuthModal();
   // const uploadModal = useUploadModal();
 
-  const { user } = useUser();
+  // const { user } = useUser();
 
   const pathname = usePathname();
   console.log(pathname)

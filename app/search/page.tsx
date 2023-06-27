@@ -20,7 +20,7 @@ const Search = ({ searchParams }: SearchProps) => {
       className="
                 bg-white
                 rounded-lg
-                h-fit
+                h-full
                 w-full
                 overflow-hidden
                 overflow-y-auto

@@ -16,7 +16,6 @@ export const metadata = {
   description: "Listen to podcasts!",
 };
 
-
 export default async function RootLayout({
   children,
 }: {
@@ -25,20 +24,20 @@ export default async function RootLayout({
   const userPodcasts = await getLikdPodcasts();
   return (
     <html lang="en">
-      <body className={
-        // font.className
-        ""
-        }>
-        <ToasterProvider/>
+      <body
+        className={
+          // font.className
+          ""
+        }
+      >
+        <ToasterProvider />
         <SupabaseProvider>
           <UserProvider>
             <ModelProvider />
             <Sidebar podcasts={userPodcasts}>
-            <Header  >
-              {children}
+              <Header>
+                {children}
               </Header>
-
-            
             </Sidebar>
             <Player />
           </UserProvider>

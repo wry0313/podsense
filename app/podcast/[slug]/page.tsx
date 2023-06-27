@@ -8,12 +8,7 @@ import PageContent from "./component/PageContent";
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const podcast_id = params.slug;
-
-  const podcastData = getPodcastById(podcast_id);
-  const episodesPageCount = 50
-  const episodesData = getEpisodeByPodcastId(podcast_id, episodesPageCount);
-
-  const [podcast, episodes] = await Promise.all([podcastData, episodesData]);
+  const podcast = await getPodcastById(podcast_id);
 
   if (!podcast || !podcast.id) {
     return (
@@ -61,8 +56,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
         </div>
       </div>
 
-
-      <PageContent episodes={episodes} podcast_id={podcast_id} episodesPageCount={episodesPageCount} />
+      <PageContent podcast_id={podcast_id} />
 
     </div>
   );

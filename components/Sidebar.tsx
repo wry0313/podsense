@@ -84,7 +84,7 @@ const Sidebar: React.FC<SidebarProps> = ({
           <Library podcasts={podcasts}/>
         </div>
       </div>
-      <main className="h-full">{children}</main>
+      <main className="h-full w-full">{children}</main>
     </div>
   );
 };

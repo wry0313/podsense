@@ -49,7 +49,7 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
             justify-between
             h-[4rem]
             px-6
-        select-none
+            select-none
         "
       >
         <div

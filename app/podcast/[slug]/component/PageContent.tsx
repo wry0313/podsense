@@ -13,29 +13,23 @@ const supabase = createClient(
 );
 
 const PageContent = ({
-  episodes,
   podcast_id,
-  episodesPageCount
 }: {
-  episodes: Episode[];
   podcast_id: string;
-  episodesPageCount: number
 }) => {
-  const [loadedEpisodes, setLoadedEpisodes] = useState(episodes);
+  const PAGE_COUNT = 20
+  const [loadedEpisodes, setLoadedEpisodes] = useState([] as Episode[]);
   const containerRef = useRef<HTMLDivElement>(null);
-  const PAGE_COUNT = episodesPageCount;
   const [offset, setOffset] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-
   const [isLast, setIsLast] = useState(false);
+
 
   const handleScroll = () => {
     if (containerRef.current && typeof window !== "undefined") {
       const container = containerRef.current as HTMLElement;
       const { bottom } = container.getBoundingClientRect();
       const { innerHeight } = window;
-      // console.log("bottom", bottom)
-      // console.log("innerHeight", innerHeight)
       if (bottom <= innerHeight+100) {
         setOffset((prev) => prev + 1);
       }
@@ -44,12 +38,11 @@ const PageContent = ({
   const handleDebouncedScroll = useCallback(debounce(() => handleScroll(), 200), [])
 
   useEffect(() => {
-
       loadMoreEpisodes(offset);
-
   }, [offset]);
 
   useEffect(() => {
+    
     const element = document.querySelector("div#scroll-box") as HTMLDivElement;
     element!.addEventListener("scroll", handleDebouncedScroll);
     return () => {
@@ -80,16 +73,15 @@ const PageContent = ({
 
   const fetchEpisodes = async (offset: number) => {
     const from = offset * PAGE_COUNT;
-    const to = from + PAGE_COUNT - 1;
-    console.log ("from ", from, " to ", to)
+    let to = from + PAGE_COUNT - 1;
+   
     const { data, error } = await supabase!
       .from("episodes")
       .select("*")
       .eq("podcast_id", podcast_id)
       .order("released_date", { ascending: false })
       .range(from, to);
-    console.log(error)
-    console.log("returned " + data!.length + " episodes")
+
     return data as Episode[];
   };
 
@@ -105,7 +97,7 @@ const PageContent = ({
             transition={{
               duration: 0.7,
               ease: [0.25, 0.25, 0, 1],
-              delay: (i%PAGE_COUNT)*0.1,
+              delay: (i % PAGE_COUNT) * 0.1,
             }}
           >
             <EpisodeItem key={episode.id} episode={episode} />
