@@ -18,7 +18,7 @@ const PageContent = ({
 }: {
   podcast_id: string;
 }) => {
-  const PAGE_COUNT = 10
+  const PAGE_COUNT = 40
   const [loadedEpisodes, setLoadedEpisodes] = useState([] as Episode[]);
   const containerRef = useRef<HTMLDivElement>(null);
   const [offset, setOffset] = useState(0);
@@ -131,7 +131,7 @@ const PageContent = ({
             transition={{
               duration: 0.7,
               ease: [0.25, 0.25, 0, 1],
-              delay: (i % PAGE_COUNT) * 0.1,
+              delay: (i % PAGE_COUNT) * 0.07,
             }}
           >
             <EpisodeItem key={episode.id} episode={episode} />

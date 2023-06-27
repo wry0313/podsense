@@ -74,7 +74,7 @@ const LikeButtonWithText = ({ podcast_id }: LikeButtonWithTextProps) => {
       }
     }
 
-    router.refresh();
+
   };
 
   return (

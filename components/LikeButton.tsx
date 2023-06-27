@@ -80,7 +80,7 @@ const LikeButton = ({
             }
         }        
         
-        router.refresh();
+
     }
 
     return ( 

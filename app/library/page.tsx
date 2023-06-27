@@ -1,10 +1,6 @@
 import Image from "next/image";
-
 import getLikedPodcasts from "@/actions/getLikdPodcasts";
-
-
 import LikedContent from "./components/LikedContent";
-
 
 const Library = async () => {
   const podcasts = await getLikedPodcasts();

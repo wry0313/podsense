@@ -16,8 +16,6 @@ export const metadata = {
   description: "Listen to podcasts!",
 };
 
-// export const revalidate = 0
-
 export default function RootLayout({
   children,
 }: {
