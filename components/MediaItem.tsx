@@ -48,7 +48,7 @@ const MediaItem = ({
       >
         <Image
           fill
-          src={imageUrl || "/images/liked.png"}
+          src={imageUrl}
           alt="Cover Image"
           className="object-cover"
         />

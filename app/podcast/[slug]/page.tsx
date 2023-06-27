@@ -2,13 +2,14 @@ import ImageWrapper from "@/components/ImageWrapper";
 import getPodcastById from "@/actions/getPodcastById";
 import LikeButtonWithText from "@/components/LikeButtonWithText";
 import PageContent from "./component/PageContent";
+import getPodcastTagsByPodcastId from "@/actions/getPodcastTagsByPodcastId";
 
 export const revalidate = 0;
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const podcast_id = params.slug;
   const podcast = await getPodcastById(podcast_id);
-
+  const tags = await getPodcastTagsByPodcastId(podcast_id);
   if (!podcast || !podcast.id) {
     return (
       <div
@@ -45,10 +46,17 @@ export default async function Page({ params }: { params: { slug: string } }) {
         <div className="mt-8">
           <LikeButtonWithText podcast_id={podcast_id} />
         </div>
-        <p className="font-semibold text-2xl mt-3">About</p>
+        <p className="font-semibold text-2xl my-3">About</p>
+        <div className="flex flex-row gap-x-2 ">
+          {tags.map((tag) => (
+            <div className="bg-neutral-100 rounded-md p-1 w-fit cursor-pointer text-sm font-semibold">
+              {tag.tag}
+            </div>
+          ))}
+        </div>
         <div
           className="
-            mt-4
+            mt-2
           "
         >
           {podcast.description}
@@ -60,3 +68,5 @@ export default async function Page({ params }: { params: { slug: string } }) {
     </div>
   );
 }
+
+

@@ -9,6 +9,13 @@ export interface Podcast {
   title: string | null
 }
 
+export interface Tag {
+  created_at: string | null
+  id: number
+  podcast_id: string | null
+  tag: string | null
+}
+
 export interface Episode {
   audio_url: string 
   image_url: string 
