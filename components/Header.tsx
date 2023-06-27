@@ -26,7 +26,7 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
   const supabaseClient = useSupabaseClient();
   // IMPORTANT: we use useSupabaseClient when everything we read are public to read for everyone (unathenticated users)
   // however if something can only be read with authenticated user, we use useSessionContext instead
-  const { user, isLoading } = useUser();
+  const { user, isLoadingUser } = useUser();
 
   const handleLogout = async () => {
     const { error } = await supabaseClient.auth.signOut();
@@ -91,7 +91,7 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
         </div>
 
         <div className="flex justify-between items-center gap-x-4">
-          {!isLoading &&
+          {!isLoadingUser &&
             (user ? (
               <div className="flex gap-x-4 items-center">
                 <Button onClick={handleLogout} className="px-6 py-2">
