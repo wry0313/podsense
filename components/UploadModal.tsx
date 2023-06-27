@@ -52,7 +52,7 @@ const UploadModal = () => {
         return;
       }
 
-      const cover_image_path = "cover-image-" + slugify(values.title);
+      const cover_image_url = "cover-image-" + slugify(values.title);
 
       // check if podcast exists
       const { data: podcast_data, error } = await supabaseClient
@@ -60,7 +60,6 @@ const UploadModal = () => {
         .select("*")
         .eq("title", values.title)
         .single();
-
 
       const podcast_id = podcast_data ? podcast_data.id : nanoid();
 
@@ -70,7 +69,7 @@ const UploadModal = () => {
         const { data: imageData, error: imageError } =
           await supabaseClient.storage
             .from("images")
-            .upload(cover_image_path, imageFile, {
+            .upload(cover_image_url, imageFile, {
               cacheControl: "3600",
               upsert: false,
             });
@@ -101,7 +100,7 @@ const UploadModal = () => {
               id: podcast_id,
               title: values.title,
               host: values.host,
-              cover_image_path: cover_image_path,
+              image_url: cover_image_url,
               description: values.description,
             },
             {
@@ -126,9 +125,8 @@ const UploadModal = () => {
           host: values.host,
           podcast_id: podcast_id,
           audio_url: values.audio_url,
-          cover_image_path: cover_image_path,
+          image_url: cover_image_url,
           description: values.episode_description,
-          podcast_title: values.title,
         });
 
       if (songuploaderror) {

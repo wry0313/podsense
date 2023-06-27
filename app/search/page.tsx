@@ -11,6 +11,8 @@ interface SearchProps {
   };
 }
 
+export const revalidate = 0
+
 
 const Search = ({ searchParams }: SearchProps) => {
   return (
@@ -34,9 +36,9 @@ const Search = ({ searchParams }: SearchProps) => {
 
       <Suspense
         fallback={
-          <div className="h-fit flex items-center justify-center">
-            <BounceLoader color="gray" size={100} />
-          </div>
+          <div className="h-full flex items-center justify-center">
+      <BounceLoader speedMultiplier={1.5} color="gray" size={100} />
+    </div>
         }
       >
         <SearchContentWrapper title={searchParams.title} />

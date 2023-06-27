@@ -4,28 +4,38 @@ import useLoadImage from "@/hooks/useLoadImage";
 import { Episode, Podcast } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
+import { twMerge } from "tailwind-merge";
 
 interface MediaItemProps {
   data: Podcast | Episode;
   isPodcast?: boolean;
+  active?: boolean;
 }
 
-const MediaItem = ({ data, isPodcast = true }: MediaItemProps) => {
+const MediaItem = ({
+  data,
+  isPodcast = true,
+  active = false,
+}: MediaItemProps) => {
   const imageUrl = useLoadImage(data);
   const link = isPodcast ? `/podcast/${data.id}` : `/episode/${data.id}`;
+
   return (
     <Link
       href={link}
-      className="
-    flex
-    items-center
-    gap-x-3
-    cursor-pointer
-    hover:bg-neutral-400/10
-    w-full
-    p-2
-    rounded-md
-  "
+      className={twMerge(
+        `
+        flex
+        items-center
+        gap-x-3
+        cursor-pointer
+        hover:bg-neutral-400/10
+        w-full
+        p-2
+        rounded-md
+            `,
+        active && "bg-neutral-400/10"
+      )}
     >
       <div
         className="

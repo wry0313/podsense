@@ -2,6 +2,8 @@ import getPodcasts from "@/actions/getPodcasts";
 import ListItem from "@/components/ListItem";
 import PageContent from "./components/PageContent";
 
+export const revalidate = 0
+
 export default async function Home() {
   const podcasts = await getPodcasts();
   return (

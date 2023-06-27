@@ -4,6 +4,8 @@ import PageContent from "./component/PageContent";
 
 // TODO: for generate static page: you can use suapabase admin: https://nesin.io/blog/check-if-file-exists-supabase-storage
 
+export const revalidate = 0
+
 export default async function Page({ params }: { params: { slug: string } }) {
   const episode_id = params.slug;
 

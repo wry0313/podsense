@@ -2,7 +2,7 @@ import ImageWrapper from "@/components/ImageWrapper";
 import getPodcastById from "@/actions/getPodcastById";
 import getEpisodeByPodcastId from "@/actions/getEpisodesByPodcastId";
 import LikeButtonWithText from "@/components/LikeButtonWithText";
-import EpisodeItem from "@/components/EpisodeItem";
+import PageContent from "./component/PageContent";
 
 // TODO: for generate static page: you can use suapabase admin: https://nesin.io/blog/check-if-file-exists-supabase-storage
 
@@ -10,7 +10,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
   const podcast_id = params.slug;
 
   const podcastData = getPodcastById(podcast_id);
-  const episodesData = getEpisodeByPodcastId(podcast_id);
+  const episodesPageCount = 10
+  const episodesData = getEpisodeByPodcastId(podcast_id, episodesPageCount);
 
   const [podcast, episodes] = await Promise.all([podcastData, episodesData]);
 
@@ -30,9 +31,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
     );
   }
 
-  // CSS IMPORTANT: the 96 px refers to the height of the header
   return (
-    <div className="h-full px-6 bg-white rounded-lg  w-full overflow-hidden overflow-y-auto">
+    <div id="scroll-box" className="h-full px-6 bg-white rounded-lg  w-full overflow-hidden overflow-y-auto">
       <div className="flex flex-col">
         <div className="flex flex-col md:flex-row items-center gap-x-5">
           <div className="relative h-32 w-32 lg:h-56 lg:w-56 shadow-2xl flex-none">
@@ -61,12 +61,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
         </div>
       </div>
 
-      {/* using map to map out all the episodes */}
-      <div className="flex flex-col mt-5">
-        {episodes.map((episode) => (
-          <EpisodeItem key={episode.id} episode={episode} />
-        ))}
-      </div>
+
+      <PageContent episodes={episodes} podcast_id={podcast_id} episodesPageCount={episodesPageCount} />
+
     </div>
   );
 }

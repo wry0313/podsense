@@ -17,6 +17,7 @@
     "@supabase/auth-helpers-react": "^0.4.0",
     "@supabase/auth-ui-react": "^0.4.2",
     "@supabase/auth-ui-shared": "^0.1.6",
+    "@supabase/supabase-js": "^2.26.0",
     "@types/node": "20.3.1",
     "@types/react": "18.2.13",
     "@types/react-dom": "18.2.6",
@@ -25,7 +26,9 @@
     "eslint": "8.43.0",
     "eslint-config-next": "13.4.6",
     "eventsource-parser": "^1.0.0",
+    "framer-motion": "^10.12.17",
     "https-proxy-agent": "^7.0.0",
+    "lodash": "^4.17.21",
     "nanoid": "^4.0.2",
     "next": "^13.4.7",
     "openai": "^3.3.0",
@@ -47,6 +50,7 @@
     "zustand": "^4.3.8"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.195",
     "@types/uniqid": "^5.3.2",
     "@types/uuid": "^9.0.2",
     "supabase": "^1.68.6"

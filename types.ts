@@ -1,7 +1,7 @@
 import Stripe from "stripe";
 
 export interface Podcast {
-  cover_image_path: string;
+  image_url: string;
   created_at: string;
   description: string;
   host: string;
@@ -11,7 +11,7 @@ export interface Podcast {
 
 export interface Episode {
   audio_url: string 
-  cover_image_path: string 
+  image_url: string 
   created_at: string 
   description: string 
   duration: number 

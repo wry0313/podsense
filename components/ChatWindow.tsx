@@ -7,7 +7,6 @@ export default function ChatWindow() {
   const [input, setInput] = useState("");
   const [response, setResponse] = useState<String>("");
 
-
   const generateResponse = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setResponse("");

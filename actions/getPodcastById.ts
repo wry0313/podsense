@@ -1,13 +1,10 @@
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
-
 import { Podcast } from "@/types";
-import toast from "react-hot-toast";
+
+import { createClient } from '@supabase/supabase-js'
+const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!)
+
 
 const getPodcastById = async (id: string): Promise<Podcast> => {
-  const supabase = createServerComponentClient({
-    cookies: cookies
-  });
 
   const { data, error } = await supabase
     .from('podcasts')
@@ -15,11 +12,8 @@ const getPodcastById = async (id: string): Promise<Podcast> => {
     .eq('id', id)
     .single();
 
-  if (error) {
-    toast.error("Something went wrong.");
-  }
 
-  return (data as any) || [];
+  return (data as any) || null;
 };
 
 export default getPodcastById;

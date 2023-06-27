@@ -1,6 +1,6 @@
 "use client";
 import { TbPlaylist } from "react-icons/tb";
-import { AiOutlinePlus } from "react-icons/ai";
+// import { AiOutlinePlus } from "react-icons/ai";
 
 import useAuthModal from "@/hooks/useAuthModal";
 import { useUser } from "@/hooks/useUser";
@@ -16,29 +16,24 @@ interface LibraryProps {
 }
 const Library = ({ podcasts }: LibraryProps) => {
   const authModal = useAuthModal();
-  const uploadModal = useUploadModal();
+  // const uploadModal = useUploadModal();
 
   const { user } = useUser();
 
   const pathname = usePathname();
-
+  console.log(pathname)
 
   const onClick = () => {
     if (!user) {
       return authModal.onOpen();
     }
-    return uploadModal.onOpen();
+    // return uploadModal.onOpen();
   };
   return (
     <div className="h-full flex flex-col">
-      <div
-        className="
-             w-[300px]
-            "
-      >
-        <SidebarItem icon={AiOutlinePlus} label={"Upload"} onClick={onClick} href={pathname} />
+    
+        {/* <SidebarItem icon={AiOutlinePlus} label={"Upload"} onClick={onClick} href={pathname} /> */}
         <SidebarItem icon={TbPlaylist} label={"Library"} href={"/library"} active={pathname == '/library'}/>
-      </div> 
 
       <div
         className="
@@ -52,7 +47,7 @@ const Library = ({ podcasts }: LibraryProps) => {
             "
       >
         {podcasts.map((podcast) => (
-          <MediaItem data={podcast} key={podcast.id} />
+          <MediaItem data={podcast} key={podcast.id} active={pathname=='/podcast/'+podcast.id}/>
         ))}
       </div>
     </div>

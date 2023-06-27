@@ -1,17 +1,26 @@
 import { Podcast, Episode } from "@/types";
-import { useSupabaseClient } from "@supabase/auth-helpers-react"
+
+import { createClient } from "@supabase/supabase-js";
 
 const useLoadImage = (data: Podcast | Episode) => {
-    if (!data.cover_image_path) {
-        return "";
-    }
+  if (!data.image_url) {
+    return "";
+  }
 
-    const supabaseClient = useSupabaseClient();
+  if (data.image_url.startsWith("http")) {
+    return data.image_url;
+  } else {
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
 
-    const { data: imageData } = supabaseClient
-    .storage.from('images').getPublicUrl(data.cover_image_path);
+    const { data: imageData } = supabase.storage
+      .from("images")
+      .getPublicUrl(data.image_url);
 
     return imageData.publicUrl;
-}
+  }
+};
 
 export default useLoadImage;

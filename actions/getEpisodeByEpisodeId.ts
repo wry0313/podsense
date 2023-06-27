@@ -1,15 +1,13 @@
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
-
 import { Episode } from "@/types";
-import toast from "react-hot-toast";
+
+import { createClient } from '@supabase/supabase-js'
+
+const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!)
+
 
 const getEpisodeByEpisodeId = async (
   episode_id: string
 ): Promise<Episode> => {
-  const supabase = createServerComponentClient({
-    cookies: cookies,
-  });
 
   const { data , error } = await supabase
     .from("episodes")
@@ -18,7 +16,7 @@ const getEpisodeByEpisodeId = async (
     .single();
 
   if (error) {
-    toast.error("Something went wrong.");
+    
   }
 
   return (data as Episode);

@@ -16,14 +16,14 @@ const initPinecone = async () => {
     environment: process.env.PINECONE_ENVIRONMENT!,
     apiKey: process.env.PINECONE_API_KEY!,
   });
-  console.log("init pinecone");
+  // console.log("init pinecone");
 };
 
 const openAIConfig = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-export const runtime = 'edge' // https://nextjs.org/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes
+export const runtime = 'nodejs' // 'nodejs' (default) | 'edge'
 
 const numTokens = (text: string) => {
   const enc = encoding_for_model(GPT_MODEL);
@@ -66,7 +66,7 @@ export async function POST(req: Request): Promise<Response | undefined> {
     const queryResponse = await index.query({ queryRequest });
 
     const introduction =
-      "Use the below sentences in a podcast interview to answer the subsequent question. If the answer cannot be found in the quote, use the content to help answer the question. In the response also include the specific evidence. The format of the ansewr should be {answer} Evidence:{evidence}";
+      "use the below transcript from a podcast interview to answer the question. if the exact answer cannot be found, use the transcript to help you answer the question. incorporate the text as quotation into your answer.";
     const question = "\n\nQuestion: " + query;
     let message = introduction;
     if (queryResponse["matches"]) {

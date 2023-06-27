@@ -12,7 +12,7 @@ interface SidebarItemProps {
 const SidebarItem: React.FC<SidebarItemProps> = ({
     icon: Icon,
     label,
-    active,
+    active = false,
     href,
     onClick
 }) => {
@@ -25,7 +25,6 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
             flex-row
             h-auto
             items-center
-            w-full
             gap-x-4
             text-md
             font-medium
@@ -36,7 +35,8 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
             transition
             text-neutral-400
             py-1
-            pl-5    
+            px-2
+            mx-3    
             mt-4
             `,
             active && "text-black bg-neutral-400/5"
