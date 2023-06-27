@@ -57,7 +57,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
         <p className="font-semibold text-2xl my-3">About</p>
         <div className="flex flex-row gap-x-2 ">
           {tags.map((tag) => (
-            <div className="bg-neutral-100 rounded-md p-1 w-fit cursor-pointer text-sm font-semibold">
+            <div 
+            key={tag.tag}
+            className="bg-neutral-100 rounded-md p-1 w-fit cursor-pointer text-sm font-semibold">
               {tag.tag}
             </div>
           ))}
