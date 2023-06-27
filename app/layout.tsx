@@ -8,33 +8,33 @@ import getLikdPodcasts from "@/actions/getLikdPodcasts";
 import Header from "@/components/Header";
 import Player from "@/components/Player";
 
-// import { Inter } from "next/font/google";
-// const font = Inter({  subsets: ["latin"] });
+import { Inter } from "next/font/google";
+const font = Inter({  subsets: ["latin"] });
 
 export const metadata = {
   title: "Podsense.net",
   description: "Listen to podcasts!",
 };
 
+export const revalidte = 0
+
 export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const userPodcasts = await getLikdPodcasts();
   return (
     <html lang="en">
       <body
         className={
-          // font.className
-          ""
+          font.className
         }
       >
         <ToasterProvider />
         <SupabaseProvider>
           <UserProvider>
             <ModelProvider />
-            <Sidebar podcasts={userPodcasts}>
+            <Sidebar >
               <Header>
                 {children}
               </Header>

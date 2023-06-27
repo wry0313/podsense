@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import { TbPlaylist } from "react-icons/tb";
 // import { AiOutlinePlus } from "react-icons/ai";
 
@@ -6,22 +6,45 @@ import { TbPlaylist } from "react-icons/tb";
 // import { useUser } from "@/hooks/useUser";
 // import useUploadModal from "@/hooks/useUploadModal";
 import { Podcast } from "@/types";
+import getLikdPodcasts from "@/actions/getLikdPodcasts";
 
-import { usePathname } from "next/navigation";
 import SidebarItem from "./SidebarItem";
 import MediaItem from "./MediaItem";
+// import getLikdPodcasts from "@/actions/getLikdPodcasts";
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+
+import { useEffect, useState } from 'react'
+import { Database } from "@/types_db";
+
 
 interface LibraryProps {
-  podcasts: Podcast[];
+  pathname: string
 }
-const Library = ({ podcasts }: LibraryProps) => {
+const Library = async ({ pathname }: LibraryProps) => {
+  // const [likedPodcasts, setLikedPocasts] = useState<Podcast[]>([])
+  // const supabase = createClientComponentClient()
+
+  // useEffect(() => {
+  //   const getData = async () => {
+  //     const { data } = await supabase
+  //     .from('liked_podcasts')
+  //     .select('*, podcasts(*)')
+  //     .order('created_at', { ascending: false });
+    
+  //     const podcastList = data?.map((item) => item.podcasts)
+  //     console.log(podcastList)
+  //     setLikedPocasts(podcastList!)
+  //   }
+
+  //   getData()
+  // }, [])
+
   // const authModal = useAuthModal();
   // const uploadModal = useUploadModal();
 
   // const { user } = useUser();
-
-  const pathname = usePathname();
-  console.log(pathname)
+  // const userPodcasts = await getLikdPodcasts();
+  // console.log(userPodcasts)
 
   // const onClick = () => {
   //   if (!user) {
@@ -33,7 +56,6 @@ const Library = ({ podcasts }: LibraryProps) => {
     <div className="h-full flex flex-col">
     
         {/* <SidebarItem icon={AiOutlinePlus} label={"Upload"} onClick={onClick} href={pathname} /> */}
-        <SidebarItem icon={TbPlaylist} label={"Library"} href={"/library"} active={pathname == '/library'}/>
 
       <div
         className="
@@ -46,9 +68,10 @@ const Library = ({ podcasts }: LibraryProps) => {
             overflow-y-auto
             "
       >
-        {podcasts.map((podcast) => (
+        {/* {likedPodcasts.map((podcast) => (
           <MediaItem data={podcast} key={podcast.id} active={pathname=='/podcast/'+podcast.id}/>
-        ))}
+        ))} */}
+
       </div>
     </div>
   );

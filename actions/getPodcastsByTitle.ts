@@ -1,11 +1,7 @@
 import { Podcast } from "@/types";
 import getPodcasts from "./getPodcasts";
 
-import { createClient } from "@supabase/supabase-js";
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+import supabase from "./getSupabaseClient";
 
 const getPodcastsByTitle = async (title: string): Promise<Podcast[]> => {
   if (!title) {

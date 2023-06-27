@@ -33,41 +33,38 @@ export interface Database {
       }
       episodes: {
         Row: {
-          audio_path: string | null
-          cover_image_path: string | null
+          audio_url: string | null
           created_at: string | null
           description: string | null
           duration: number | null
           host: string | null
           id: string
+          image_url: string | null
           podcast_id: string | null
-          podcast_title: string | null
           released_date: string | null
           title: string | null
         }
         Insert: {
-          audio_path?: string | null
-          cover_image_path?: string | null
+          audio_url?: string | null
           created_at?: string | null
           description?: string | null
           duration?: number | null
           host?: string | null
           id: string
+          image_url?: string | null
           podcast_id?: string | null
-          podcast_title?: string | null
           released_date?: string | null
           title?: string | null
         }
         Update: {
-          audio_path?: string | null
-          cover_image_path?: string | null
+          audio_url?: string | null
           created_at?: string | null
           description?: string | null
           duration?: number | null
           host?: string | null
           id?: string
+          image_url?: string | null
           podcast_id?: string | null
-          podcast_title?: string | null
           released_date?: string | null
           title?: string | null
         }
@@ -77,12 +74,6 @@ export interface Database {
             columns: ["podcast_id"]
             referencedRelation: "podcasts"
             referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "episodes_podcast_title_fkey"
-            columns: ["podcast_title"]
-            referencedRelation: "podcasts"
-            referencedColumns: ["title"]
           }
         ]
       }
@@ -90,16 +81,26 @@ export interface Database {
         Row: {
           created_at: string | null
           name: string
+          podcast_id: string | null
         }
         Insert: {
           created_at?: string | null
           name: string
+          podcast_id?: string | null
         }
         Update: {
           created_at?: string | null
           name?: string
+          podcast_id?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "hosts_podcast_id_fkey"
+            columns: ["podcast_id"]
+            referencedRelation: "podcasts"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       liked_podcasts: {
         Row: {
@@ -132,29 +133,57 @@ export interface Database {
           }
         ]
       }
+      podcast_tags: {
+        Row: {
+          created_at: string | null
+          id: number
+          podcast_id: string | null
+          tag: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: number
+          podcast_id?: string | null
+          tag?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: number
+          podcast_id?: string | null
+          tag?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "podcast_tags_podcast_id_fkey"
+            columns: ["podcast_id"]
+            referencedRelation: "podcasts"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       podcasts: {
         Row: {
-          cover_image_path: string | null
           created_at: string | null
           description: string | null
           host: string | null
           id: string
+          image_url: string | null
           title: string | null
         }
         Insert: {
-          cover_image_path?: string | null
           created_at?: string | null
           description?: string | null
           host?: string | null
           id: string
+          image_url?: string | null
           title?: string | null
         }
         Update: {
-          cover_image_path?: string | null
           created_at?: string | null
           description?: string | null
           host?: string | null
           id?: string
+          image_url?: string | null
           title?: string | null
         }
         Relationships: []

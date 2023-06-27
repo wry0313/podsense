@@ -6,18 +6,19 @@ import { HiHome } from "react-icons/hi";
 import { BiSearch } from "react-icons/bi";
 import SidebarItem from "./SidebarItem";
 import Library from "./Library";
-import { Podcast } from "@/types";
+
 import Link from "next/link";
 import usePlayer from "@/hooks/usePlayer";
+import { TbPlaylist } from "react-icons/tb";
 
 
 interface SidebarProps {
   children: React.ReactNode;
-  podcasts: Podcast[];
+
 }
 const Sidebar: React.FC<SidebarProps> = ({ 
   children,
-  podcasts
+
  }) => {
   const pathname = usePathname();
 
@@ -35,9 +36,16 @@ const Sidebar: React.FC<SidebarProps> = ({
         active: pathname === "/search",
         href: "/search",
       },
+      {
+        icon: TbPlaylist,
+        label: "Library",
+        active: pathname === "/library",
+        href: "/library",
+      }
     ],
     [pathname]
   );
+
 
   const player = usePlayer();
   // 90px is the player height
@@ -51,7 +59,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         md:flex
         flex-col
         h-full
-        w-[300px]
+        w-[400px]
         p-2
         bg-neutral-50
         select-none
@@ -81,7 +89,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
 
         <div className="overflow-y-auto h-full">
-          <Library podcasts={podcasts}/>
+          <Library pathname={pathname}/>
         </div>
       </div>
       <main className="h-full w-full">{children}</main>

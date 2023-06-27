@@ -7,6 +7,7 @@ import { debounce } from "lodash";
 
 import { createClient } from "@supabase/supabase-js";
 import { motion } from "framer-motion";
+
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
@@ -17,32 +18,17 @@ const PageContent = ({
 }: {
   podcast_id: string;
 }) => {
-  const PAGE_COUNT = 20
+  const PAGE_COUNT = 10
   const [loadedEpisodes, setLoadedEpisodes] = useState([] as Episode[]);
   const containerRef = useRef<HTMLDivElement>(null);
   const [offset, setOffset] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [isLast, setIsLast] = useState(false);
 
-
-  const handleScroll = () => {
-    if (containerRef.current && typeof window !== "undefined") {
-      const container = containerRef.current as HTMLElement;
-      const { bottom } = container.getBoundingClientRect();
-      const { innerHeight } = window;
-      if (bottom <= innerHeight+100) {
-        setOffset((prev) => prev + 1);
-      }
-    }
-  };
-  const handleDebouncedScroll = useCallback(debounce(() => handleScroll(), 200), [])
+  const [sortAscending, setSortAscending] = useState(false);
+  const [isButtom, setIsButtom] = useState(true) //hard code to true to trigger first time render
 
   useEffect(() => {
-      loadMoreEpisodes(offset);
-  }, [offset]);
-
-  useEffect(() => {
-    
     const element = document.querySelector("div#scroll-box") as HTMLDivElement;
     element!.addEventListener("scroll", handleDebouncedScroll);
     return () => {
@@ -50,19 +36,44 @@ const PageContent = ({
     };
   }, []);
 
+  const handleScroll = () => {
+    if (containerRef.current && typeof window !== "undefined") {
+      const container = containerRef.current as HTMLElement;
+      const { bottom } = container.getBoundingClientRect();
+      const { innerHeight } = window;
+      console.log(bottom, innerHeight)
+      console.log(bottom <= innerHeight)
+      setIsButtom(bottom <= innerHeight)
+    }
+  };
+
+  useEffect(() => {
+    console.log("is buttom change deteced: " + isButtom)
+    if(isButtom && !isLoading) {
+      console.log("loading more")
+      loadMoreEpisodes(offset)
+      setIsButtom(false)
+    }
+  }, [isButtom])
+
+  const handleDebouncedScroll = useCallback(debounce(() => handleScroll(), 200), [])
+
   useEffect(()=> {
     if (isLast) {
         const element = document.querySelector("div#scroll-box") as HTMLDivElement;
+        console.log("REMOVE SCROLL")
         element!.removeEventListener("scroll", handleDebouncedScroll);
     }
   }, [isLast])
 
-  const loadMoreEpisodes = async (offset: number) => {
+  const loadMoreEpisodes = async (offset : number) => {
     setIsLoading(true);
     // Every time we fetch, we want to increase
     // the offset to load fresh Episodes
-    // setOffset((prev) => prev + 1);
     const newEpisodes = await fetchEpisodes(offset);
+
+    setOffset((prev) => prev + 1);
+
     if (newEpisodes.length === 0) {
         setIsLast(true);
     }
@@ -72,21 +83,38 @@ const PageContent = ({
   };
 
   const fetchEpisodes = async (offset: number) => {
+    console.log(offset)
     const from = offset * PAGE_COUNT;
     let to = from + PAGE_COUNT - 1;
-   
+    console.log(from, to)
     const { data, error } = await supabase!
       .from("episodes")
       .select("*")
       .eq("podcast_id", podcast_id)
-      .order("released_date", { ascending: false })
-      .range(from, to);
-
+      .range(from, to)
+      .order("released_date", { ascending: sortAscending })
+      
     return data as Episode[];
   };
 
+  const toggleSort = () => {
+    // betng at the button will trigger one and setisbuttom will triger another time
+    // setInitialLoad(true)
+    setIsButtom(true) // hard code to trigger a load
+    setOffset(0);
+    setIsLast(false);
+    setSortAscending(!sortAscending);
+    setLoadedEpisodes([]);
+
+  }
+
   return (
     <div ref={containerRef} className="flex flex-col mt-5">
+      <button
+      onClick={toggleSort}
+      >
+        TOGGLE SORT
+      </button>
       {loadedEpisodes.map((episode, i) => {
 
         return (

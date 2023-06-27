@@ -1,12 +1,12 @@
 import Stripe from "stripe";
 
 export interface Podcast {
-  image_url: string;
-  created_at: string;
-  description: string;
-  host: string;
-  id: string;
-  title: string;
+  created_at: string | null
+  description: string | null
+  host: string | null
+  id: string
+  image_url: string | null
+  title: string | null
 }
 
 export interface Episode {
