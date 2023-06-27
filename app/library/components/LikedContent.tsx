@@ -13,15 +13,15 @@ interface LikedContentProps {
 }
 const LikedContent = ({ podcasts }: LikedContentProps) => {
   const router = useRouter();
-  const { isLoading, user } = useUser();
+  const { isLoadingUser, user } = useUser();
   const authModal = useAuthModal();
 
   useEffect(() => {
-    if (!isLoading && !user) {
+    if (!isLoadingUser && !user) {
       authModal.onOpen();
       router.replace("/");
     }
-  }, [isLoading, user, router]);
+  }, [isLoadingUser, user, router]);
 
   if (podcasts.length === 0) {
     return (
