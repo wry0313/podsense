@@ -1,7 +1,6 @@
 "use client"
 
 import { useSessionContext } from "@supabase/auth-helpers-react";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import useAuthModal from "@/hooks/useAuthModal";
@@ -16,7 +15,7 @@ interface LikeButtonProps {
 const LikeButton = ({
     podcast_id
 }:LikeButtonProps) => {
-    const router = useRouter();
+
     const { supabaseClient} = useSessionContext();
 
     const authModal = useAuthModal();
@@ -25,7 +24,10 @@ const LikeButton = ({
     const [isLiked, setIsLiked] = useState(false);
 
     useEffect(() => {
-        if (!user?.id) return;
+        if (!user) {
+            setIsLiked(false);
+            return;
+        }
 
         const fetchData = async () => {
             const { data, error } = await supabaseClient
@@ -41,7 +43,7 @@ const LikeButton = ({
         }
 
         fetchData()
-    }, [podcast_id, supabaseClient, user?.id])
+    }, [podcast_id, supabaseClient, user])
 
     const Icon = isLiked ? AiFillHeart : AiOutlineHeart
 

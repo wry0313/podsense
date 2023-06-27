@@ -6,6 +6,7 @@ import MediaItem from "./MediaItem";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useEffect, useState } from "react";
 import getPodcastById from "@/actions/getPodcastById";
+import { useUser } from "@/hooks/useUser";
 
 interface LibraryProps {
   pathname: string;
@@ -15,23 +16,26 @@ const Library = ({ pathname }: LibraryProps) => {
   const [likedPodcasts, setLikedPodcasts] = useState<Podcast[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const supabase = createClientComponentClient();
+
+  const user = useUser();
+
 //https://devtrium.com/posts/async-functions-useeffect
   useEffect(() => {
+
     const getData = async () => {
       setIsLoading(true);
-      console.log("fethcing data");
       const { data } = await supabase
         .from("liked_podcasts")
         .select("*, podcasts(*)")
         .order("created_at", { ascending: false });
 
       const podcastList = data?.map((item) => item.podcasts);
-      setLikedPodcasts(podcastList!);
+      setLikedPodcasts(podcastList || []);
       setIsLoading(false);
     };
 
     getData();
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     const addPodcast = async (podcast_id: string) => {
@@ -45,10 +49,10 @@ const Library = ({ pathname }: LibraryProps) => {
         { event: "*", schema: "public", table: "liked_podcasts" },
         (payload) => {
           if (payload.eventType === "INSERT") {
-            console.log(payload.new);
+
             addPodcast(payload.new.podcast_id);
           } else if (payload.eventType === "DELETE") {
-            console.log(payload.old);
+
             setLikedPodcasts((prevPodcasts) =>
               prevPodcasts.filter((p) => p.id !== payload.old.podcast_id)
             );
