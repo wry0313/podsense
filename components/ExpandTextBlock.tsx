@@ -1,10 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 function ExpandTextBlock({ text }: { text: string }) {
   const [expanded, setExpanded] = useState(false);
-
+  // text replace all <br /> with \n and usememo
+  text = useMemo(() => {
+    return text.replace(/<br\s*\/?>/gm, "\n");
+  }, [text]);
   return (
     <div className="my-2">
       {expanded ? (

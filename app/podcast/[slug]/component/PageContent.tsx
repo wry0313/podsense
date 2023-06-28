@@ -86,6 +86,7 @@ const PageContent = ({
   };
 
   const fetchEpisodes = async (offset: number) => {
+
     // console.log(offset)
     const from = offset * PAGE_COUNT;
     let to = from + PAGE_COUNT - 1;
@@ -96,7 +97,7 @@ const PageContent = ({
       .eq("podcast_id", podcast_id)
       .range(from, to)
       .order("released_date", { ascending: sortAscending })
-      
+
     return data as Episode[];
   };
 

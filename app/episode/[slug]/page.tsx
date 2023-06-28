@@ -60,7 +60,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
       </div>
 
       <div className="mb-6">
-        <ChatWindow />
+        <ChatWindow episodeId={episode_id} />
       </div>
       <div className="mb-[10rem]">
         {episode.transcript && <ExpandTextBlock text={episode.transcript} />}

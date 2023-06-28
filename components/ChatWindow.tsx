@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-export default function ChatWindow() {
+export default function ChatWindow({episodeId} : {episodeId: string}) {
   const [loading, setLoading] = useState(false);
   const [input, setInput] = useState("");
   const [response, setResponse] = useState<String>("");
@@ -19,8 +19,8 @@ export default function ChatWindow() {
       },
       body: JSON.stringify({
         query: input,
-        tokenBudget: 2000,
-        namespace: "lex-fridman-1"
+        tokenBudget: 1000,
+        namespace: episodeId
       }),
     });
 
@@ -48,7 +48,7 @@ export default function ChatWindow() {
   };
 
   return (
-    <div className="w-full ">
+    <div className="w-full">
       <textarea
         value={input}
         onChange={(e) => setInput(e.target.value)}
@@ -56,7 +56,7 @@ export default function ChatWindow() {
         maxLength={200}
         className="focus:ring-neu w-full rounded-md border border-neutral-400
          p-4 text-neutral-900 shadow-sm placeholder:text-neutral-400 focus:border-neutral-900"
-        placeholder={"e.g. What is React?"}
+        placeholder={"e.g. What are Dr. Huberman's protocals to sleeping better?"}
       />
       {!loading ? (
         <button

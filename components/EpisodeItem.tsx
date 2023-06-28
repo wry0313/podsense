@@ -50,10 +50,11 @@ const EpisodeItem = ({ episode }: EpisodeItemProps) => {
           className="backdrop-blur-lg backdrop-brightness-200 bg-transparent translate-x-8 group-hover:translate-y-9 translate-y-12"
         />
       </div>
+
       <div className="flex-1">
         <h3 className="text-lg font-semibold">{episode.title}</h3>
         <p className="text-gray-500 overflow-y-hidden h-[50px]">
-          {episode.description}
+          {episode.description.replace(/<br\s*\/?>/gm, "\n")}
         </p>
         <div className="flex flex-row items-baseline gap-x-2">
           <p className="text-gray-500">{convertSecondsToTime(episode.duration)}</p>
