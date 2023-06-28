@@ -1,8 +1,9 @@
 import { OpenAIStream, OpenAIStreamPayload } from "@/utils/openAIStream";
 import { PineconeClient } from "@pinecone-database/pinecone";
 import { Configuration, OpenAIApi } from "openai";
-import { HttpsProxyAgent } from "https-proxy-agent";
-import { encoding_for_model } from "@dqbd/tiktoken";
+// import { HttpsProxyAgent } from "https-proxy-agent";
+
+// import { encode } from 'gpt-3-encoder'
 
 if (!process.env.OPENAI_API_KEY || !process.env.PINECONE_API_KEY) {
   console.error("Missing .env API key");
@@ -25,8 +26,7 @@ const openAIConfig = new Configuration({
 export const runtime = 'edge' // 'nodejs' (default) | 'edge'
 
 const numTokens = (text: string) => {
-  const enc = encoding_for_model(GPT_MODEL);
-  return enc.encode(text).length;
+  return 0;
 };
 
 export async function POST(req: Request): Promise<Response | undefined> {
@@ -48,7 +48,7 @@ export async function POST(req: Request): Promise<Response | undefined> {
         model: "text-embedding-ada-002",
         input: query,
       }
-      // {
+      // ,{
       //   proxy: false,
       //   httpAgent: new HttpsProxyAgent("http://127.0.0.1:1087"),
       //   httpsAgent: new HttpsProxyAgent("http://127.0.0.1:1087"),
@@ -99,11 +99,11 @@ export async function POST(req: Request): Promise<Response | undefined> {
     
     if (typeof e === "string") {
       return new Response(e, {
-        status: 500,
+        status: 400,
       });
     } else if (e instanceof Error) {
       return new Response((e as Error).message, {
-        status: 500,
+        status: 400,
       });
     }
   }
