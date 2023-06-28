@@ -1,5 +1,5 @@
 import getPodcasts from "@/actions/getPodcasts";
-import PageContent from "./components/PageContent";
+import PodcastItem from "@/components/PodcastItem";
 
 export default async function Home() {
   const podcasts = await getPodcasts();
@@ -18,7 +18,26 @@ export default async function Home() {
         <div className="flex justify-between items-center">
           <h1 className="text-black text-2xl font-semibold">Discover New Podcasts</h1>
         </div>
-        <PageContent podcasts={podcasts}/>
+        <div 
+      className="
+        grid 
+        grid-cols-2
+        sm:grid-cols-3
+        md:grid-cols-3
+        lg:grid-cols-4
+        xl:grid-cols-5
+        2xl:grid-cols-8
+        gap-4 
+        mt-4
+      "
+    >
+      {podcasts.map((podcast) => (
+        <PodcastItem
+          key={podcast.id} 
+          podcast={podcast}
+        />
+      ))}
+    </div>
       </div>
     </div>
   );

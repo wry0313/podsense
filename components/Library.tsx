@@ -74,12 +74,19 @@ const Library = ({ pathname }: LibraryProps) => {
   }, [supabase, setLikedPodcasts, likedPodcasts]);
 
   return (
-    <div className="flex flex-col gap-y-2 mt-4 px-3 h-full overflow-y-auto">
-      {isLoading ? (
+    <div className="flex flex-col gap-y-2 mt-4 px-3 h-fit overflow-y-auto">
+      {
+        !user.user ? (
+          <div className="flex justify-center items-center py-4 px-2 shadow-sm bg-neutral-200/20 rounded-md text-md font-semibold text-neutral-500">
+          <p>Sign in to access your library</p>
+        </div>
+        ):
+      
+      isLoading ? (
         <LoadingDots />
       ) : likedPodcasts.length === 0 ? (
         <div className="flex justify-center items-center py-4 px-2 shadow-sm bg-neutral-200/20 rounded-md text-md font-semibold text-neutral-500">
-          <p>Add some podcasts to your library!</p>
+          <p>Add some podcasts to your library</p>
         </div>
       ) : (
         likedPodcasts.map((podcast) => (

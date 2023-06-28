@@ -59,7 +59,8 @@ const Sidebar: React.FC<SidebarProps> = ({
         md:flex
         flex-col
         h-full
-        w-[400px]
+        w-[300px]
+        flex-none
         p-2
         bg-neutral-50
         select-none
@@ -78,7 +79,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         "
         href="/"
         >
-          Podsense🎙️.net
+          PODSENSE
         </Link>
         
 

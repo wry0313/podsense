@@ -103,8 +103,7 @@ const PageContent = ({ podcast_id }: { podcast_id: string }) => {
 
   const toggleSort = () => {
     // betng at the button will trigger one and setisBottom will triger another time
-    // setInitialLoad(true)
-    // console.log('toggle')
+
     setIsBottom(true); // hard code to trigger a load
     setOffset(0);
     setIsLast(false);
@@ -120,7 +119,7 @@ const PageContent = ({ podcast_id }: { podcast_id: string }) => {
         onClick={toggleSort}
         className="px-4 py-2 font-bold w-fit text-sm mb-4 text-black bg-neutral-100 hover:scale-105 transition rounded-lg"
       >
-        Toggle sort
+        {sortAscending ? "Earlist to lastest" : "Latest to earliest"}
       </button>
 
       {loadedEpisodes.map((episode, i) => {

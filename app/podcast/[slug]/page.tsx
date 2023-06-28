@@ -32,11 +32,11 @@ export default async function Page({ params }: { params: { slug: string } }) {
     >
       <div className="flex flex-col">
         <div className="flex flex-col md:flex-row items-center gap-x-5">
-          <div className="relative h-32 w-32 lg:h-56 lg:w-56 shadow-2xl flex-none">
+          <div className="relative h-32 w-32 lg:h-56 lg:w-56 shadow-lg flex-none">
           <Image
               src={podcast.image_url!}
               alt="Podcast cover image"
-              className="object-cover rounded-md"
+              className="object-cover rounded-lg"
               fill
         />
           </div>

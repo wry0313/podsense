@@ -40,7 +40,7 @@ const SearchContent = ({
         {episodes.map((episodes) => (
           <div key={episodes.id} className="flex items-center gap-x-4 w-full">
             <div className="flex-1">
-              <MediaItem data={episodes} isPodcast={false}/>
+              <MediaItem data={episodes} isPodcast={false} showProcess/>
             </div>
           </div>
         ))}

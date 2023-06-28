@@ -66,7 +66,7 @@ const EpisodeItem = ({ episode }: EpisodeItemProps) => {
           <p className="text-gray-500">{convertSecondsToTime(episode.duration)}</p>
           <p className="text-gray-500">{episode.released_date}</p>
           {episode.processed ? (
-            <p className="text-gray-500  bg-emerald-100 rounded-md shadow-sm p-1">✅ chatbot available</p>
+            <p className="bg-neutral-50 rounded-md shadow-sm text-sm w-fit p-1 text-green-600">✅ chatbot available</p>
           ) : (
             ""
           )}

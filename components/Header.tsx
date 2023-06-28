@@ -7,7 +7,6 @@ import { RxCaretLeft, RxCaretRight } from "react-icons/rx";
 import { HiHome } from "react-icons/hi";
 import { BiSearch } from "react-icons/bi";
 import { FaUserAlt } from "react-icons/fa";
-import { toast } from "react-hot-toast";
 
 import Button from "./Button";
 import useAuthModal from "@/hooks/useAuthModal";
@@ -28,17 +27,6 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
   // however if something can only be read with authenticated user, we use useSessionContext instead
   const { user, isLoadingUser } = useUser();
 
-  const handleLogout = async () => {
-    const { error } = await supabaseClient.auth.signOut();
-    // Reset any playing podcast in the future
-    router.refresh();
-
-    if (error) {
-      toast.error(error.message);
-    } else {
-      toast.success("Logged out successfully");
-    }
-  };
   return (
     <>
       <div
@@ -94,9 +82,6 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
           {!isLoadingUser &&
             (user ? (
               <div className="flex gap-x-4 items-center text-sm">
-                <Button onClick={handleLogout} className="px-4 py-1">
-                  Logout
-                </Button>
                 <Button onClick={() => router.push("/account")}>
                   <FaUserAlt size={20} />
                 </Button>

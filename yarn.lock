@@ -981,6 +981,11 @@ busboy@^1.6.0, busboy@1.6.0:
   dependencies:
     streamsearch "^1.1.0"
 
+cal-sans@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.npmjs.org/cal-sans/-/cal-sans-1.0.1.tgz"
+  integrity sha512-XwN3/7jez8WmFVcNnNqO2K9lh133KiIcURCyGFnSM+ZmNZ8zIcOTNfr3SpenLAkRceYsq+fQNX/PL4C1rIkEPQ==
+
 call-bind@^1.0.0, call-bind@^1.0.2:
   version "1.0.2"
   resolved "https://registry.npmjs.org/call-bind/-/call-bind-1.0.2.tgz"

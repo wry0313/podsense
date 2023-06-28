@@ -4,7 +4,7 @@ import PlayButton from "@/components/PlayButton";
 import ChatWindow from "@/components/ChatWindow";
 import ExpandTextBlock from "@/components/ExpandTextBlock";
 import ScrollTopButton from "@/components/ScrollTopButton";
-import ToastNotification from "@/components/ToastNotification";
+
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const episode_id = params.slug;
@@ -28,17 +28,19 @@ export default async function Page({ params }: { params: { slug: string } }) {
   }
 
   return (
-    <div id='scroll-box' className="h-full px-6 bg-white rounded-lg  w-full overflow-hidden overflow-y-auto ">
-      <ToastNotification text={"Hover over the cover to play the episode 👆"}/>
+    <div
+      id="scroll-box"
+      className="h-full px-6 bg-white rounded-lg  w-full overflow-hidden overflow-y-auto "
+    >
       <div className="flex flex-col">
-        <div className="flex flex-col md:flex-row items-center gap-x-5">
-          <div className="group relative h-32 w-32 lg:h-56 lg:w-56 shadow-2xl flex-none">
-          <Image
+        <div className="group flex flex-col md:flex-row items-center gap-x-5">
+          <div className="relative h-32 w-32 lg:h-56 lg:w-56 flex-none">
+            <Image
               src={episode.image_url}
               alt="Liked"
-              className="object-cover rounded-md"
+              className="object-cover rounded-lg shadow-md"
               fill
-        />
+            />
             <PlayButton
               episode={episode}
               className="
@@ -76,14 +78,19 @@ export default async function Page({ params }: { params: { slug: string } }) {
       </div>
 
       <div className="mb-6">
-        <ChatWindow episode={episode} />
+        {episode.processed &&  <ChatWindow episode={episode} />}
       </div>
+
       <div className="mb-[10rem]">
-        {episode.transcript && <ExpandTextBlock text={episode.transcript} />}
+        {episode.transcript && (
+          <>
+            <p className="font-semibold text-2xl mt-3">Episode Transcript</p>
+            <ExpandTextBlock text={episode.transcript} />
+          </>
+        )}
       </div>
 
-         <ScrollTopButton />
-
+      <ScrollTopButton />
     </div>
   );
 }
