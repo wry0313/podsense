@@ -23,7 +23,7 @@ const openAIConfig = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-export const runtime = 'edge' // 'nodejs' (default) | 'edge'
+export const runtime = 'nodejs' // 'nodejs' (default) | 'edge'
 
 const numTokens = (text: string) => {
   return 0;
