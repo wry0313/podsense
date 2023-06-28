@@ -38,7 +38,7 @@ const PageContent = ({ podcast_id }: { podcast_id: string }) => {
       const container = containerRef.current as HTMLElement;
       const { bottom } = container.getBoundingClientRect();
       const { innerHeight } = window;
-      console.log(bottom, innerHeight)
+      // console.log(bottom, innerHeight)
       console.log(bottom <= innerHeight + 100)
       setIsBottom(bottom <= innerHeight + 100);
     }
