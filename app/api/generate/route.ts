@@ -22,7 +22,7 @@ const openAIConfig = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-export const runtime = 'nodejs' // 'nodejs' (default) | 'edge'
+export const runtime = 'edge' // 'nodejs' (default) | 'edge'
 
 const numTokens = (text: string) => {
   const enc = encoding_for_model(GPT_MODEL);
@@ -47,7 +47,7 @@ export async function POST(req: Request): Promise<Response | undefined> {
       {
         model: "text-embedding-ada-002",
         input: query,
-      },
+      }
       // {
       //   proxy: false,
       //   httpAgent: new HttpsProxyAgent("http://127.0.0.1:1087"),
@@ -108,3 +108,6 @@ export async function POST(req: Request): Promise<Response | undefined> {
     }
   }
 }
+
+
+//https://levelup.gitconnected.com/how-to-stream-real-time-openai-api-responses-next-js-13-2-gpt-3-5-turbo-and-edge-functions-378fea4dadbd
