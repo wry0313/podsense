@@ -50,9 +50,9 @@ export default function ChatWindow({episode} : {episode: Episode}) {
 
   return (
     <div className="w-full">
-      <h1 className="text-2xl font-bold text-neutral-900 mb-2">
+      <p className="text-2xl font-bold text-neutral-900 mb-2">
         🤖 Hello! I am {episode.host} AI that can answer questions about this episode!
-      </h1>
+      </p>
       <textarea
         value={input}
         onChange={(e) => setInput(e.target.value)}

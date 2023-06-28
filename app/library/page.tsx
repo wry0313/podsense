@@ -1,10 +1,9 @@
 import Image from "next/image";
-import getLikedPodcasts from "@/actions/getLikdPodcasts";
-import LikedContent from "./components/LikedContent";
+
+import LibraryContent from "@/components/Library";
 
 
-const Library = async () => {
-  const podcasts = await getLikedPodcasts();
+const Library = () => {
 
   return (
     <div
@@ -58,7 +57,7 @@ const Library = async () => {
         </div>
       </div>
 
-      <LikedContent podcasts={podcasts} />
+      <LibraryContent showLiked={true} channelName="library page" />
     </div>
   );
 };

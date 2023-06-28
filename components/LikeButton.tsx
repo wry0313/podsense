@@ -7,14 +7,15 @@ import useAuthModal from "@/hooks/useAuthModal";
 import { useUser } from "@/hooks/useUser";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { toast } from "react-hot-toast";
-import { useRouter } from "next/navigation";
 
 interface LikeButtonProps {
     podcast_id: string;
+    defaultIsLiked?: boolean;
 }
 
 const LikeButton = ({
-    podcast_id
+    podcast_id,
+    defaultIsLiked = false,
 }:LikeButtonProps) => {
 
     const { supabaseClient} = useSessionContext();
@@ -22,9 +23,8 @@ const LikeButton = ({
     const authModal = useAuthModal();
     const { user } = useUser();
 
-    const [isLiked, setIsLiked] = useState(false);
+    const [isLiked, setIsLiked] = useState(defaultIsLiked);
 
-    const router = useRouter();
 
     useEffect(() => {
         if (!user) {
@@ -66,7 +66,6 @@ const LikeButton = ({
                 toast.error("Something went wrong.");
             } else {
                 setIsLiked(false);
-
             }
         } else {
             const { error } = await supabaseClient
@@ -84,8 +83,6 @@ const LikeButton = ({
 
             }
         }        
-        
-        router.refresh();
     }
 
     return ( 

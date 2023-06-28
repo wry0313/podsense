@@ -79,18 +79,18 @@ const LikeButtonWithText = ({ podcast_id }: LikeButtonWithTextProps) => {
       }
     }
 
-    router.refresh();
+
   };
 
   return (
     <button
       onClick={handleLike}
-      className="flex flex-row gap-x-2 bg-neutral-100 rounded-md p-1 w-fit cursor-pointer"
+      className="flex flex-row gap-x-2 bg-neutral-100 rounded-md p-1 px-2 w-fit cursor-pointer"
     >
       <div className="hover:opacity-75 transition">
         <Icon color={isLiked ? "#22c55e" : "gray"} size={25} />
       </div>
-      <p className="font-semibold"> {isLiked ? "Following" : "Follow"} </p>
+      <p className="font-semibold text-md"> {isLiked ? "Following" : "Follow"} </p>
     </button>
   );
 };

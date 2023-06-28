@@ -2,12 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+
 html,
 body,
 :root {
   height: 100%;
   background-color: white;
   color-scheme: light;
+}
+
+
+h1 {
+  font-family: "Cal Sans";
+}
+
+mark {
+  background-color: papayawhip;
 }
 
 body { min-height: 100vh; }

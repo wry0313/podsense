@@ -8,6 +8,8 @@ import ToasterProvider from "@/providers/ToasterProvider";
 import Header from "@/components/Header";
 import Player from "@/components/Player";
 
+import "cal-sans";
+
 // import { Inter } from "next/font/google";
 // const font = Inter({  subsets: ["latin"] });
 

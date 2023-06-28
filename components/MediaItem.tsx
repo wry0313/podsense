@@ -11,6 +11,7 @@ interface MediaItemProps {
   isPodcast: boolean;
   active?: boolean;
   showProcess?: boolean;
+  highlightPhrase?: string;
 }
 
 const MediaItem = ({
@@ -18,8 +19,8 @@ const MediaItem = ({
   isPodcast,
   active = false,
   showProcess = false,
+  highlightPhrase = "",
 }: MediaItemProps) => {
-  
   const imageUrl = data.image_url!;
   const link = isPodcast ? `/podcast/${data.id}` : `/episode/${data.id}`;
 
@@ -49,20 +50,22 @@ const MediaItem = ({
       overflow-hidden
       "
       >
-        <Image
-          fill
-          src={imageUrl}
-          alt="Cover Image"
-          className="object-cover"
-        />
+        <Image fill src={imageUrl} alt="Cover Image" className="object-cover" />
       </div>
       <div className="flex flex-col w-full">
-        <p className="font-semibold truncate w-full">{data.title}</p>
+        {highlightPhrase ? (
+          getHighlightedText(data.title!, highlightPhrase)
+        ) : (
+          <p className="font-medium truncate w-full">{data.title}</p>
+        )}
+
         <p className="text-neutral-400 text-sm w-full truncate">
           By {data.host}
         </p>
-        {showProcess && !isPodcast  && (data as Episode).processed && (
-           <p className="bg-neutral-50 rounded-md shadow-sm text-sm w-fit p-1 text-green-600">✅ chatbot available</p>
+        {showProcess && !isPodcast && (data as Episode).processed && (
+          <p className="bg-neutral-50 rounded-md shadow-sm text-sm w-fit p-1 text-green-600">
+            ✅ chatbot available
+          </p>
         )}
       </div>
     </Link>
@@ -70,3 +73,17 @@ const MediaItem = ({
 };
 
 export default MediaItem;
+
+const getHighlightedText = (text: string, highlight: string) => {
+  // Split on highlight term and include term into parts, ignore case
+  const parts = text.split(new RegExp(`(${highlight})`, "gi"));
+  return (
+    <p className="font-medium truncate w-full">
+      {" "}
+      {parts.map((part, i) =>
+        part.toLowerCase() === highlight.toLowerCase() ? <mark key={i} className="selection:bg-purple-100">{part}</mark> : part
+      )}
+    </p>
+  );
+
+};

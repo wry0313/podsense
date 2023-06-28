@@ -54,9 +54,9 @@ const PodcastItem: React.FC<PodcastItemProps> = ({
             />
            </div>
            <div className=" flex flex-col items-start w-full pt-2 gap-y-1">
-                <p className="font-semibold truncate w-full">
+                <h1 className="font-semibold truncate w-full">
                     {podcast.title}
-                </p>
+                </h1>
                 <p className="text-neutral-400 text-sm  w-full truncate">
                     By {podcast.host}
                 </p>

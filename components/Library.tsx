@@ -8,14 +8,17 @@ import { useEffect, useState } from "react";
 import getPodcastById from "@/actions/getPodcastById";
 import { useUser } from "@/hooks/useUser";
 import LoadingDots from "./LoadingDots";
+import LikeButton from "./LikeButton";
 
 interface LibraryProps {
-  pathname: string;
+  pathname?: string;
+  showLiked?: boolean;
+  channelName?: string;
 }
 //https://github.com/supabase/supabase/blob/master/examples/auth/nextjs/app/realtime-posts.tsx
-const Library = ({ pathname }: LibraryProps) => {
+const Library = ({ pathname, showLiked = false, channelName='*' }: LibraryProps) => {
   const [likedPodcasts, setLikedPodcasts] = useState<Podcast[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const supabase = createClientComponentClient();
 
   const user = useUser();
@@ -50,7 +53,7 @@ const Library = ({ pathname }: LibraryProps) => {
       setLikedPodcasts((likedPodcasts) => [...likedPodcasts, newLikedPodcast]);
     };
     const channel = supabase
-      .channel("*")
+      .channel(channelName)
       .on(
         "postgres_changes",
         { event: "*", schema: "public", table: "liked_podcasts" },
@@ -76,11 +79,11 @@ const Library = ({ pathname }: LibraryProps) => {
   return (
     <div className="flex flex-col gap-y-2 mt-4 px-3 h-fit overflow-y-auto">
       {
-        !user.user ? (
+        (!user.user && !user.isLoadingUser) ? (
           <div className="flex justify-center items-center py-4 px-2 shadow-sm bg-neutral-200/20 rounded-md text-md font-semibold text-neutral-500">
           <p>Sign in to access your library</p>
         </div>
-        ):
+        ) :
       
       isLoading ? (
         <LoadingDots />
@@ -88,7 +91,7 @@ const Library = ({ pathname }: LibraryProps) => {
         <div className="flex justify-center items-center py-4 px-2 shadow-sm bg-neutral-200/20 rounded-md text-md font-semibold text-neutral-500">
           <p>Add some podcasts to your library</p>
         </div>
-      ) : (
+      ) : !showLiked ? (
         likedPodcasts.map((podcast) => (
           <MediaItem
             data={podcast}
@@ -96,6 +99,25 @@ const Library = ({ pathname }: LibraryProps) => {
             isPodcast={true}
             active={pathname === "/podcast/" + podcast.id}
           />
+          
+        ))
+      ) : (
+        likedPodcasts.map((podcast) => (
+          <div key={podcast.id}
+              className="flex items-center gap-x-4 w-full"
+          >
+              <div className="flex-1">
+                  <MediaItem 
+                      data={podcast}
+                      isPodcast={true}
+                  />
+              </div>
+              <LikeButton 
+                  podcast_id={podcast.id}
+                  defaultIsLiked={true}
+                  />
+  
+          </div>
         ))
       )}
     </div>

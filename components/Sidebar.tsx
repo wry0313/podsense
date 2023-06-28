@@ -5,7 +5,7 @@ import { useMemo } from "react";
 import { HiHome } from "react-icons/hi";
 import { BiSearch } from "react-icons/bi";
 import SidebarItem from "./SidebarItem";
-import Library from "./Library";
+import SidebarLibrary from "./Library";
 
 import Link from "next/link";
 import usePlayer from "@/hooks/usePlayer";
@@ -79,7 +79,9 @@ const Sidebar: React.FC<SidebarProps> = ({
         "
         href="/"
         >
+          <h1>
           PODSENSE
+          </h1>
         </Link>
         
 
@@ -91,7 +93,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
 
         <div className="overflow-y-auto h-full">
-          <Library pathname={pathname}/>
+          <SidebarLibrary pathname={pathname} channelName="sidebar library"/>
         </div>
       </div>
       <main className="h-full w-full">{children}</main>

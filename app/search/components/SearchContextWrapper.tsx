@@ -15,13 +15,12 @@ const SearchContentWrapper = async ({
 }:{
     title: string
 }) => {
-    const podcastsData = await fetchPodcasts(title)
-    const episodeData = await fetchEpisodes(title)
+    const podcastsData = fetchPodcasts(title)
+    const episodeData = fetchEpisodes(title)
 
     const [podcasts, episodes] = await Promise.all([podcastsData, episodeData])
-    // console.log("EOFIIJFIEFIWIJWEIFJOWIFJOIWEJFOIWEFJWOEIJF", episodes)
     return ( 
-        <SearchContent podcasts={podcasts} episodes={episodes} />
+        <SearchContent podcasts={podcasts} episodes={episodes} query={title} />
      );
 }
  
