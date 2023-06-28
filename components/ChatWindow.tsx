@@ -51,7 +51,7 @@ export default function ChatWindow({episode} : {episode: Episode}) {
   return (
     <div className="w-full">
       <p className="text-2xl font-bold text-neutral-900 mb-2">
-        🤖 Hello! I am {episode.host} AI that can answer questions about this episode!
+        🤖 Hello! I am {episode.host} AI that can answer your questions about this episode!
       </p>
       <textarea
         value={input}

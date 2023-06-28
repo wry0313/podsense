@@ -4,7 +4,7 @@ import {
   ReconnectInterval,
 } from "eventsource-parser";
 
-import { ProxyAgent, setGlobalDispatcher } from "undici";
+// import { ProxyAgent, setGlobalDispatcher } from "undici";
 
 export type ChatGPTAgent = "user" | "system";
 
@@ -31,7 +31,7 @@ export async function OpenAIStream(payload: OpenAIStreamPayload) {
 
   let counter = 0;
 
-  setGlobalDispatcher(new ProxyAgent("http://127.0.0.1:1087"))
+  // setGlobalDispatcher(new ProxyAgent("http://127.0.0.1:1087"))
 
   const res = await fetch("https://api.openai.com/v1/chat/completions", {
     headers: {

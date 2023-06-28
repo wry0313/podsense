@@ -58,12 +58,11 @@ const MediaItem = ({
         ) : (
           <p className="font-medium truncate w-full">{data.title}</p>
         )}
-
         <p className="text-neutral-400 text-sm w-full truncate">
           By {data.host}
         </p>
         {showProcess && !isPodcast && (data as Episode).processed && (
-          <p className="bg-neutral-50 rounded-md shadow-sm text-sm w-fit p-1 text-green-600">
+          <p className="bg-neutral-50 px-1 rounded-md shadow-sm text-sm w-fit  text-green-600">
             ✅ chatbot available
           </p>
         )}

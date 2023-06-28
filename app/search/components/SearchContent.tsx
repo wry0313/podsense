@@ -30,7 +30,10 @@ const SearchContent = ({
         </div>
       )}
       {episodes.length > 0 && (
-        <div className="mt-10 text-xl font-bold">Episodes</div>
+        <div className="flex flex-row gap-x-2 text-sm mt-10 items-center">
+          <div className="text-xl font-bold">Episodes</div>
+          {episodes.length} episodes found
+        </div>
       )}
       <div className="flex flex-col gap-y-2 w-full h-fit">
         {episodes.map((episodes) => (

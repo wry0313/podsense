@@ -9,6 +9,8 @@ import getPodcastById from "@/actions/getPodcastById";
 import { useUser } from "@/hooks/useUser";
 import LoadingDots from "./LoadingDots";
 import LikeButton from "./LikeButton";
+import useAuthModal from "@/hooks/useAuthModal";
+import Router, { useRouter } from "next/navigation";
 
 interface LibraryProps {
   pathname?: string;
@@ -22,7 +24,16 @@ const Library = ({ pathname, showLiked = false, channelName='*' }: LibraryProps)
   const supabase = createClientComponentClient();
 
   const user = useUser();
+  const auth = useAuthModal();
   const [fetched, setFetched] = useState(false);
+  const router = useRouter()
+
+  useEffect(() => {
+    if (!user.isLoadingUser && !user.user) {
+      auth.onOpen();
+      router.replace("/");
+    }
+  }, [user, user, router]);
 
 //https://devtrium.com/posts/async-functions-useeffect
   useEffect(() => {

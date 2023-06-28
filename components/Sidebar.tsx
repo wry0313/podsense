@@ -80,7 +80,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         href="/"
         >
           <h1>
-          PODSENSE
+          podsense
           </h1>
         </Link>
         
