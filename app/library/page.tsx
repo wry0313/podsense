@@ -57,7 +57,7 @@ const Library = () => {
         </div>
       </div>
 
-      <LibraryContent showLiked={true} channelName="library page" />
+      <LibraryContent showLiked={true} channelName="library page" isPage={true} />
     </div>
   );
 };

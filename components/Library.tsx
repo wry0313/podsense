@@ -10,15 +10,16 @@ import { useUser } from "@/hooks/useUser";
 import LoadingDots from "./LoadingDots";
 import LikeButton from "./LikeButton";
 import useAuthModal from "@/hooks/useAuthModal";
-import Router, { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 interface LibraryProps {
   pathname?: string;
   showLiked?: boolean;
   channelName?: string;
+  isPage?: boolean
 }
 //https://github.com/supabase/supabase/blob/master/examples/auth/nextjs/app/realtime-posts.tsx
-const Library = ({ pathname, showLiked = false, channelName='*' }: LibraryProps) => {
+const Library = ({ pathname, showLiked = false, channelName='*', isPage=false}: LibraryProps) => {
   const [likedPodcasts, setLikedPodcasts] = useState<Podcast[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const supabase = createClientComponentClient();
@@ -29,10 +30,11 @@ const Library = ({ pathname, showLiked = false, channelName='*' }: LibraryProps)
   const router = useRouter()
 
   useEffect(() => {
-    if (!user.isLoadingUser && !user.user) {
-      auth.onOpen();
-      router.replace("/");
-    }
+
+      if (isPage && !user.isLoadingUser && !user.user) {
+        auth.onOpen();
+        router.replace("/");
+      }
   }, [user, user, router]);
 
 //https://devtrium.com/posts/async-functions-useeffect
