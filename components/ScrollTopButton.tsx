@@ -1,5 +1,7 @@
 "use client";
 
+import usePlayer from "@/hooks/usePlayer";
+
 const ScrollTopButton = () => {
   const handleScrollTop = () => {
     const scrollBox = document.getElementById("scroll-box");
@@ -7,9 +9,11 @@ const ScrollTopButton = () => {
       scrollBox.scroll({ top: 0, behavior: "smooth" });
     }
   };
+  const player = usePlayer();
+  const bottomOffset = player?.activeId ? "bottom-[7rem]" : "bottom-[2rem]";
 
   return (
-    <div className="fixed right-[2rem] bottom-[7rem] z-10 invisible md:visible">
+    <div className={"fixed right-[2rem] z-10 invisible md:visible " + bottomOffset}>
       <button
         aria-label="Scroll To Top"
         type="button"

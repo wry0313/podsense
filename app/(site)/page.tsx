@@ -1,8 +1,5 @@
 import getPodcasts from "@/actions/getPodcasts";
-import ListItem from "@/components/ListItem";
 import PageContent from "./components/PageContent";
-
-export const revalidate = 0
 
 export default async function Home() {
   const podcasts = await getPodcasts();
@@ -17,7 +14,7 @@ export default async function Home() {
     bg-white
     "
     >
-      <div className="mt-2 mb-7 px-6">
+      <div className="mt-2 px-6">
         <div className="flex justify-between items-center">
           <h1 className="text-black text-2xl font-semibold">Discover New Podcasts</h1>
         </div>

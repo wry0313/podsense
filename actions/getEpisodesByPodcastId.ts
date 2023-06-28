@@ -16,7 +16,7 @@ const getEpisodeByPodcastId = async (
     .limit(limitCount)
 
     if (error) {
-      throw new Error(error.message)
+      console.error(error.message)
     }
 
   return (data as Episode[]) || [];

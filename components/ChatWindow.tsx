@@ -1,8 +1,9 @@
 "use client";
 
+import { Episode } from "@/types";
 import { useState } from "react";
 
-export default function ChatWindow({episodeId} : {episodeId: string}) {
+export default function ChatWindow({episode} : {episode: Episode}) {
   const [loading, setLoading] = useState(false);
   const [input, setInput] = useState("");
   const [response, setResponse] = useState<String>("");
@@ -20,12 +21,12 @@ export default function ChatWindow({episodeId} : {episodeId: string}) {
       body: JSON.stringify({
         query: input,
         tokenBudget: 1000,
-        namespace: episodeId
+        namespace: episode.id
       }),
     });
 
     if (!response.ok) {
-      throw new Error(response.statusText);
+      console.error(response.statusText);
     }
 
     // This data is a ReadableStream
@@ -49,6 +50,9 @@ export default function ChatWindow({episodeId} : {episodeId: string}) {
 
   return (
     <div className="w-full">
+      <h1 className="text-2xl font-bold text-neutral-900">
+        🤖 Hello I am a chatbot that can answer questions about this episode!
+      </h1>
       <textarea
         value={input}
         onChange={(e) => setInput(e.target.value)}

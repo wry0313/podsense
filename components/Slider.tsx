@@ -9,7 +9,8 @@ const Slider = ({
     step,
     ariaLabel,
     onChange,
-    onCommit
+    onCommit,
+    isLoading=false
 }: {
     value?: number;
     defaultValue: number[];
@@ -18,6 +19,7 @@ const Slider = ({
     ariaLabel: string;
     onChange?: (value:number) => void
     onCommit?: (value:number) => void
+    isLoading?: boolean
 }) => {
     const handleChange = (newValue: number[]) => {
         onChange?.(newValue[0])
@@ -25,6 +27,7 @@ const Slider = ({
     const handleCommit = (newValue: number[]) => {
         onCommit?.(newValue[0])
     }
+    const barColor = isLoading ? 'bg-neutral-50 animate-pulse' : 'bg-white'
     return ( 
         <RadixSlider.Root
             className="group relative flex items-center select-none touch-none w-full h-4 cursor-pointer"
@@ -36,7 +39,7 @@ const Slider = ({
             step={step}
             aria-label={ariaLabel}
         >
-            <RadixSlider.Track className={`relative bg-white grow rounded-full h-[4px]`}>
+            <RadixSlider.Track className={`relative grow rounded-full h-[4px] ` + barColor}>
                 <RadixSlider.Range className="absolute bg-black rounded-full h-full" />
             </RadixSlider.Track>
             <RadixSlider.Thumb className="invisible group-hover:visible block w-[10px] h-[10px] bg-amber-200 shadow-md rounded-2xl" aria-label="Volume" />

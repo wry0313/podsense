@@ -13,7 +13,7 @@ function ExpandTextBlock({ text }: { text: string }) {
       {expanded ? (
         <div>{text}</div>
       ) : (
-        <div className="line-clamp-4">{text}</div>
+        <div className="line-clamp-3">{text}</div>
       )}
         <button
           className="mt-3 text-blue-500"

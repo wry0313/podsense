@@ -61,13 +61,13 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
             "
         >
           <button
-            className="rounded-full bg-neutral-100 flex items-center justify-center hover:opacity-75 transition"
+            className="rounded-xl bg-neutral-100 flex items-center justify-center hover:opacity-75 transition"
             onClick={() => router.back()}
           >
             <RxCaretLeft size={35} />
           </button>
           <button
-            className="rounded-full bg-neutral-100 flex items-center justify-center hover:opacity-75 transition"
+            className="rounded-xl bg-neutral-100 flex items-center justify-center hover:opacity-75 transition"
             onClick={() => router.forward()}
           >
             <RxCaretRight size={35} />
@@ -93,8 +93,8 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
         <div className="flex justify-between items-center gap-x-4">
           {!isLoadingUser &&
             (user ? (
-              <div className="flex gap-x-4 items-center">
-                <Button onClick={handleLogout} className="px-6 py-2">
+              <div className="flex gap-x-4 items-center text-sm">
+                <Button onClick={handleLogout} className="px-4 py-1">
                   Logout
                 </Button>
                 <Button onClick={() => router.push("/account")}>

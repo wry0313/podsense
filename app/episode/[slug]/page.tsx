@@ -4,8 +4,7 @@ import PlayButton from "@/components/PlayButton";
 import ChatWindow from "@/components/ChatWindow";
 import ExpandTextBlock from "@/components/ExpandTextBlock";
 import ScrollTopButton from "@/components/ScrollTopButton";
-
-// export const revalidate = 0;
+import ToastNotification from "@/components/ToastNotification";
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const episode_id = params.slug;
@@ -30,6 +29,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   return (
     <div id='scroll-box' className="h-full px-6 bg-white rounded-lg  w-full overflow-hidden overflow-y-auto ">
+      <ToastNotification text={"Hover over the cover to play the episode 👆"}/>
       <div className="flex flex-col">
         <div className="flex flex-col md:flex-row items-center gap-x-5">
           <div className="group relative h-32 w-32 lg:h-56 lg:w-56 shadow-2xl flex-none">
@@ -43,23 +43,25 @@ export default async function Page({ params }: { params: { slug: string } }) {
               episode={episode}
               className="
               w-fit 
-              backdrop-blur-lg 
               p-6 
-              opacity-20 
-              backdrop-brightness-200 
-              bg-transparent 
-              lg:translate-x-[120%] 
+              bg-amber-100
+              lg:translate-x-[110%] 
               lg:group-hover:translate-y-[4.5rem] 
+              group-hover:translate-y-[2rem] 
               lg:translate-y-24
               translate-x-[50%] 
-              group-hover:translate-y-[2rem] 
-              translate-y-12  
+              translate-y-12
+              scale-100
+              lg:scale-150
+              hover:scale-110
+              lg:hover:scale-[1.65]
               "
+              size={20}
             />
           </div>
 
           <div className="flex flex-col gap-y-2 mt-4 md:mt-4">
-            <p className="hidden md:block font-semibold text-sm">episode</p>
+            <p className="hidden md:block font-semibold">episode</p>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold">
               {episode.title}
             </h1>
@@ -74,7 +76,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
       </div>
 
       <div className="mb-6">
-        <ChatWindow episodeId={episode_id} />
+        <ChatWindow episode={episode} />
       </div>
       <div className="mb-[10rem]">
         {episode.transcript && <ExpandTextBlock text={episode.transcript} />}

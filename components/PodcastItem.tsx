@@ -33,6 +33,7 @@ const PodcastItem: React.FC<PodcastItemProps> = ({
                 cursor-pointer
                 transition
                 p-3
+                shadow-md
             "
         >
            <div 

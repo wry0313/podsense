@@ -2,15 +2,14 @@ import Image from "next/image";
 import getLikedPodcasts from "@/actions/getLikdPodcasts";
 import LikedContent from "./components/LikedContent";
 
+
 const Library = async () => {
   const podcasts = await getLikedPodcasts();
 
   return (
     <div
       className="
-        bg-white
-        rounded-lg
-        h-fit
+        h-full
         w-full
         overflow-hidden
         overflow-y-auto
@@ -39,7 +38,7 @@ const Library = async () => {
               fill
               src="/images/podcast.png"
               alt="Podcast library icon"
-              className="object-cover shadow-2xl"
+              className="object-cover shadow-md rounded-full"
             />
           </div>
           <div

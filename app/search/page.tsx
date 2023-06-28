@@ -11,9 +11,6 @@ interface SearchProps {
   };
 }
 
-export const revalidate = 0
-
-
 const Search = ({ searchParams }: SearchProps) => {
   return (
     <div

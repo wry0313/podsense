@@ -3,9 +3,7 @@ import LikeButtonWithText from "@/components/LikeButtonWithText";
 import PageContent from "./component/PageContent";
 import getPodcastTagsByPodcastId from "@/actions/getPodcastTagsByPodcastId";
 import Image from "next/image";
-
-
-export const revalidate = 0;
+import ExpandTextBlock from "@/components/ExpandTextBlock";
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const podcast_id = params.slug;
@@ -37,14 +35,13 @@ export default async function Page({ params }: { params: { slug: string } }) {
           <div className="relative h-32 w-32 lg:h-56 lg:w-56 shadow-2xl flex-none">
           <Image
               src={podcast.image_url!}
-              alt="Liked"
+              alt="Podcast cover image"
               className="object-cover rounded-md"
               fill
         />
           </div>
-
           <div className="flex flex-col gap-y-2 mt-4 md:mt-4">
-            <p className="hidden md:block font-semibold text-sm">Podcast</p>
+            <p className="hidden md:block font-semibold text-xl">podcast</p>
             <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold">
               {podcast.title}
             </h1>
@@ -70,7 +67,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
             mt-2
           "
         >
-          {podcast.description}
+          <ExpandTextBlock text={podcast.description!} />
         </div>
       </div>
 

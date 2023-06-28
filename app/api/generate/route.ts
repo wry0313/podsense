@@ -5,7 +5,7 @@ import { HttpsProxyAgent } from "https-proxy-agent";
 import { encoding_for_model } from "@dqbd/tiktoken";
 
 if (!process.env.OPENAI_API_KEY || !process.env.PINECONE_API_KEY) {
-  throw new Error("Missing .env API key");
+  console.error("Missing .env API key");
 }
 
 const GPT_MODEL = "gpt-3.5-turbo";
@@ -16,7 +16,6 @@ const initPinecone = async () => {
     environment: process.env.PINECONE_ENVIRONMENT!,
     apiKey: process.env.PINECONE_API_KEY!,
   });
-  // console.log("init pinecone");
 };
 
 const openAIConfig = new Configuration({
@@ -49,11 +48,11 @@ export async function POST(req: Request): Promise<Response | undefined> {
         model: "text-embedding-ada-002",
         input: query,
       },
-      // {
-      //   proxy: false,
-      //   httpAgent: new HttpsProxyAgent("http://127.0.0.1:1087"),
-      //   httpsAgent: new HttpsProxyAgent("http://127.0.0.1:1087"),
-      // }
+      {
+        proxy: false,
+        httpAgent: new HttpsProxyAgent("http://127.0.0.1:1087"),
+        httpsAgent: new HttpsProxyAgent("http://127.0.0.1:1087"),
+      }
     );
     const query_embedding = response.data["data"][0].embedding;
 
