@@ -1,6 +1,6 @@
 "use client";
 
-import useLoadImage from "@/hooks/useLoadImage";
+// import useLoadImage from "@/hooks/useLoadImage";
 import { Episode, Podcast } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,16 +8,19 @@ import { twMerge } from "tailwind-merge";
 
 interface MediaItemProps {
   data: Podcast | Episode;
-  isPodcast?: boolean;
+  isPodcast: boolean;
   active?: boolean;
+  showProcess?: boolean;
 }
 
 const MediaItem = ({
   data,
-  isPodcast = true,
+  isPodcast,
   active = false,
+  showProcess = false,
 }: MediaItemProps) => {
-  const imageUrl = useLoadImage(data);
+  
+  const imageUrl = data.image_url!;
   const link = isPodcast ? `/podcast/${data.id}` : `/episode/${data.id}`;
 
   return (
@@ -58,6 +61,9 @@ const MediaItem = ({
         <p className="text-neutral-400 text-sm w-full truncate">
           By {data.host}
         </p>
+        {showProcess && !isPodcast  && (data as Episode).processed && (
+           <p className="text-gray-500  bg-emerald-100 rounded-md shadow-sm p-1">✅ chatbot available</p>
+        )}
       </div>
     </Link>
   );

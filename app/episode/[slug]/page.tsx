@@ -3,6 +3,7 @@ import getEpisodeByEpisodeId from "@/actions/getEpisodeByEpisodeId";
 import PlayButton from "@/components/PlayButton";
 import ChatWindow from "@/components/ChatWindow";
 import ExpandTextBlock from "@/components/ExpandTextBlock";
+import ScrollTopButton from "@/components/ScrollTopButton";
 
 // export const revalidate = 0;
 
@@ -28,7 +29,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
   }
 
   return (
-    <div className="h-full px-6 bg-white rounded-lg  w-full overflow-hidden overflow-y-auto ">
+    <div id='scroll-box' className="h-full px-6 bg-white rounded-lg  w-full overflow-hidden overflow-y-auto ">
       <div className="flex flex-col">
         <div className="flex flex-col md:flex-row items-center gap-x-5">
           <div className="group relative h-32 w-32 lg:h-56 lg:w-56 shadow-2xl flex-none">
@@ -40,7 +41,20 @@ export default async function Page({ params }: { params: { slug: string } }) {
         />
             <PlayButton
               episode={episode}
-              className="w-fit backdrop-blur-lg p-6 opacity-20 backdrop-brightness-200 bg-transparent translate-x-[120%] group-hover:translate-y-[4.5rem] translate-y-24"
+              className="
+              w-fit 
+              backdrop-blur-lg 
+              p-6 
+              opacity-20 
+              backdrop-brightness-200 
+              bg-transparent 
+              lg:translate-x-[120%] 
+              lg:group-hover:translate-y-[4.5rem] 
+              lg:translate-y-24
+              translate-x-[50%] 
+              group-hover:translate-y-[2rem] 
+              translate-y-12  
+              "
             />
           </div>
 
@@ -65,6 +79,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
       <div className="mb-[10rem]">
         {episode.transcript && <ExpandTextBlock text={episode.transcript} />}
       </div>
+
+         <ScrollTopButton />
+
     </div>
   );
 }

@@ -1,12 +1,11 @@
 "use client";
 
-import { BounceLoader } from "react-spinners";
+import LoadingDots from "@/components/LoadingDots";
+
 
 const Loading = () => {
   return ( 
-    <div className="h-full flex items-center justify-center">
-      <BounceLoader speedMultiplier={1.5} color="gray" size={100} />
-    </div>
+    <LoadingDots className="h-full"/>
   );
 }
  

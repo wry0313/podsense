@@ -4,16 +4,13 @@ import supabase from "./getSupabaseClient";
 
 const getPodcasts = async (): Promise<Podcast[]> => {
 
-    const { data, error } = await supabase
+    const { data } = await supabase
         .from('podcasts')
         .select('*')
         .order('created_at', { ascending: true });
-        
-        if (error) {
-           
-        }
 
-        return (data as Podcast[]) || [];
+
+    return (data as Podcast[]) || [];
 }
 
 export default getPodcasts;

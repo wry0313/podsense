@@ -2,8 +2,8 @@
 import SearchInput from "@/components/SearchInput";
 
 import { Suspense } from "react";
-import { BounceLoader } from "react-spinners";
 import SearchContentWrapper from "./components/SearchContextWrapper";
+import LoadingDots from "@/components/LoadingDots";
 
 interface SearchProps {
   searchParams: {
@@ -36,9 +36,7 @@ const Search = ({ searchParams }: SearchProps) => {
 
       <Suspense
         fallback={
-          <div className="h-full flex items-center justify-center">
-      <BounceLoader speedMultiplier={1.5} color="gray" size={100} />
-    </div>
+          <LoadingDots className="h-full"/>
         }
       >
         <SearchContentWrapper title={searchParams.title} />

@@ -29,6 +29,7 @@ export interface Episode {
   released_date: string | null
   title: string 
   transcript: string | null
+  processed: boolean | null
 }
 
 export interface Product {

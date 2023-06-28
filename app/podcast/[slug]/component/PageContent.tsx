@@ -7,18 +7,15 @@ import { debounce } from "lodash";
 
 import { createClient } from "@supabase/supabase-js";
 import { motion } from "framer-motion";
+import ScrollTopButton from "@/components/ScrollTopButton";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
-const PageContent = ({
-  podcast_id,
-}: {
-  podcast_id: string;
-}) => {
-  const PAGE_COUNT = 40
+const PageContent = ({ podcast_id }: { podcast_id: string }) => {
+  const PAGE_COUNT = 40;
   const [loadedEpisodes, setLoadedEpisodes] = useState([] as Episode[]);
   const containerRef = useRef<HTMLDivElement>(null);
   const [offset, setOffset] = useState(0);
@@ -26,7 +23,7 @@ const PageContent = ({
   const [isLast, setIsLast] = useState(false);
 
   const [sortAscending, setSortAscending] = useState(false);
-  const [isBottom, setIsBottom] = useState(true) //hard code to true to trigger first time render
+  const [isBottom, setIsBottom] = useState(true); //hard code to true to trigger first time render
 
   useEffect(() => {
     const element = document.querySelector("div#scroll-box") as HTMLDivElement;
@@ -41,34 +38,38 @@ const PageContent = ({
       const container = containerRef.current as HTMLElement;
       const { bottom } = container.getBoundingClientRect();
       const { innerHeight } = window;
-      // console.log(bottom, innerHeight)
-      // console.log(bottom <= innerHeight)
-      setIsBottom(bottom <= innerHeight)
+      console.log(bottom, innerHeight)
+      console.log(bottom <= innerHeight + 100)
+      setIsBottom(bottom <= innerHeight + 100);
     }
   };
 
   useEffect(() => {
     // console.log("is Bottom change deteced: " + isBottom)
     // console.log("what is isloading: " + isLoading)
-    if(isBottom && !isLoading) {
+    if (isBottom && !isLoading) {
       // console.log("loading more")
-      loadMoreEpisodes(offset)
-      setIsBottom(false)
-
+      loadMoreEpisodes(offset);
+      setIsBottom(false);
     }
-  }, [isBottom])
+  }, [isBottom]);
 
-  const handleDebouncedScroll = useCallback(debounce(() => handleScroll(), 200), [])
+  const handleDebouncedScroll = useCallback(
+    debounce(() => handleScroll(), 200),
+    []
+  );
 
-  useEffect(()=> {
+  useEffect(() => {
     if (isLast) {
-        const element = document.querySelector("div#scroll-box") as HTMLDivElement;
-        // console.log("REMOVE SCROLL")
-        element!.removeEventListener("scroll", handleDebouncedScroll);
+      const element = document.querySelector(
+        "div#scroll-box"
+      ) as HTMLDivElement;
+      // console.log("REMOVE SCROLL")
+      element!.removeEventListener("scroll", handleDebouncedScroll);
     }
-  }, [isLast])
+  }, [isLast]);
 
-  const loadMoreEpisodes = async (offset : number) => {
+  const loadMoreEpisodes = async (offset: number) => {
     setIsLoading(true);
     // Every time we fetch, we want to increase
     // the offset to load fresh Episodes
@@ -77,7 +78,7 @@ const PageContent = ({
     setOffset((prev) => prev + 1);
 
     if (newEpisodes.length === 0) {
-        setIsLast(true);
+      setIsLast(true);
     }
     // Merge new Episodes with all previously loaded
     setLoadedEpisodes((prevEpisodes) => [...prevEpisodes, ...newEpisodes]);
@@ -86,7 +87,6 @@ const PageContent = ({
   };
 
   const fetchEpisodes = async (offset: number) => {
-
     // console.log(offset)
     const from = offset * PAGE_COUNT;
     let to = from + PAGE_COUNT - 1;
@@ -96,7 +96,7 @@ const PageContent = ({
       .select("*")
       .eq("podcast_id", podcast_id)
       .range(from, to)
-      .order("released_date", { ascending: sortAscending })
+      .order("released_date", { ascending: sortAscending });
 
     return data as Episode[];
   };
@@ -105,25 +105,27 @@ const PageContent = ({
     // betng at the button will trigger one and setisBottom will triger another time
     // setInitialLoad(true)
     // console.log('toggle')
-    setIsBottom(true) // hard code to trigger a load
+    setIsBottom(true); // hard code to trigger a load
     setOffset(0);
     setIsLast(false);
     setSortAscending(!sortAscending);
     setLoadedEpisodes([]);
-    setIsLoading(false)
-
-  }
+    setIsLoading(false);
+  };
 
   return (
     <div ref={containerRef} className="flex flex-col mt-5">
+      <ScrollTopButton />
+
       <button
-      onClick={toggleSort}
-      className="px-4 py-2 font-bold w-fit text-sm mb-4 text-black bg-neutral-100 hover:scale-105 transition rounded-lg"
+        onClick={toggleSort}
+        className="px-4 py-2 font-bold w-fit text-sm mb-4 text-black bg-neutral-100 hover:scale-105 transition rounded-lg"
       >
         Toggle sort
       </button>
-      {loadedEpisodes.map((episode, i) => {
 
+      
+      {loadedEpisodes.map((episode, i) => {
         return (
           <motion.div
             key={episode.id}
@@ -140,13 +142,15 @@ const PageContent = ({
         );
       })}
 
-       <div className="flex flex-row items-start justify-center h-[4rem] text-sm text-neutral-600">
-       {isLoading ? (<div className="animate-pulse font-bold text-xl">
-        ...
-        </div>) :
-       isLast ? 'You have reached the end' : ''}
-        </div>
-        
+      <div className="flex flex-row items-start justify-center h-[4rem] text-sm text-neutral-600">
+        {isLoading ? (
+          <div className="animate-pulse font-bold text-xl">...</div>
+        ) : isLast ? (
+          "You have reached the end"
+        ) : (
+          ""
+        )}
+      </div>
     </div>
   );
 };

@@ -4,6 +4,7 @@ import PageContent from "./component/PageContent";
 import getPodcastTagsByPodcastId from "@/actions/getPodcastTagsByPodcastId";
 import Image from "next/image";
 
+
 export const revalidate = 0;
 
 export default async function Page({ params }: { params: { slug: string } }) {
@@ -74,6 +75,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
       </div>
 
       <PageContent podcast_id={podcast_id} />
+      
     </div>
   );
 }

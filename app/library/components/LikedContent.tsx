@@ -48,7 +48,7 @@ const LikedContent = ({ podcasts }: LikedContentProps) => {
             <div className="flex-1">
                 <MediaItem 
                     data={podcast}
-
+                    isPodcast={true}
                 />
             </div>
             <LikeButton 

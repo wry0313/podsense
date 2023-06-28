@@ -7,6 +7,7 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useEffect, useState } from "react";
 import getPodcastById from "@/actions/getPodcastById";
 import { useUser } from "@/hooks/useUser";
+import LoadingDots from "./LoadingDots";
 
 interface LibraryProps {
   pathname: string;
@@ -75,11 +76,7 @@ const Library = ({ pathname }: LibraryProps) => {
   return (
     <div className="flex flex-col gap-y-2 mt-4 px-3 h-full overflow-y-auto">
       {isLoading ? (
-        <div className="flex justify-center items-center h-16">
-          <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse mx-1"></div>
-          <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse mx-1"></div>
-          <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse mx-1"></div>
-        </div>
+        <LoadingDots />
       ) : likedPodcasts.length === 0 ? (
         <div className="flex justify-center items-center py-4 px-2 shadow-sm bg-neutral-200/20 rounded-md text-md font-semibold text-neutral-500">
           <p>Add some podcasts to your library!</p>
@@ -89,6 +86,7 @@ const Library = ({ pathname }: LibraryProps) => {
           <MediaItem
             data={podcast}
             key={podcast.id}
+            isPodcast={true}
             active={pathname === "/podcast/" + podcast.id}
           />
         ))

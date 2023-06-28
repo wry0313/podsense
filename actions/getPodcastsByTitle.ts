@@ -16,10 +16,10 @@ const getPodcastsByTitle = async (title: string): Promise<Podcast[]> => {
     .order("created_at", { ascending: false });
 
   if (error) {
-    throw new Error(error.message);
+    return []
   }
 
-  return (data as Podcast[]) || [];
+  return (data as Podcast[]);
 };
 
 export default getPodcastsByTitle;

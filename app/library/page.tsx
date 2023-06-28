@@ -37,8 +37,8 @@ const Library = async () => {
           >
             <Image
               fill
-              src="/images/liked.png"
-              alt="Liked"
+              src="/images/podcast.png"
+              alt="Podcast library icon"
               className="object-cover shadow-2xl"
             />
           </div>
