@@ -2,7 +2,7 @@ import Sidebar from "@/components/Sidebar";
 import "./globals.css";
 import SupabaseProvider from "@/providers/SupabaseProvider";
 import UserProvider from "@/providers/UserProvider";
-import ModelProvider from "@/providers/ModalProvider";
+
 import ToasterProvider from "@/providers/ToasterProvider";
 import Header from "@/components/Header";
 import Player from "@/components/Player";
@@ -32,7 +32,6 @@ export default function RootLayout({
         <ToasterProvider />
         <SupabaseProvider>
           <UserProvider>
-            <ModelProvider />
             <Sidebar >
               <Header>
                 {children}

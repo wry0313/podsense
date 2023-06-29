@@ -4,7 +4,6 @@ import supabase from "./getSupabaseClient";
 // import { cache } from "react";
 
 const getPodcasts = (async (): Promise<Podcast[]> => {
-
     const { data } = await supabase
         .from('podcasts')
         .select('*')

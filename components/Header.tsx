@@ -1,17 +1,18 @@
 "use client";
 
-import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 import { RxCaretLeft, RxCaretRight } from "react-icons/rx";
 import { HiHome } from "react-icons/hi";
 import { BiSearch } from "react-icons/bi";
 import { FaUserAlt } from "react-icons/fa";
 
-import Button from "./Button";
-import useAuthModal from "@/hooks/useAuthModal";
 import { useUser } from "@/hooks/useUser";
-import Link from "next/link";
+import useAuthModal from "@/hooks/useAuthModal";
+
+import Button from "./Button";
+import dynamic from "next/dynamic";
 
 interface HeaderProps {
   children?: React.ReactNode;
@@ -19,6 +20,7 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ children }) => {
+  
   const authModal = useAuthModal();
   const router = useRouter();
 
@@ -26,8 +28,13 @@ const Header: React.FC<HeaderProps> = ({ children }) => {
   // however if something can only be read with authenticated user, we use useSessionContext instead
   const { user, isLoadingUser } = useUser();
 
+  const AuthModalComponent = dynamic(() => import("@/components/AuthModal"), {
+    ssr: false,
+  });
+
   return (
     <>
+      {authModal.isOpen && <AuthModalComponent />}
       <div
         className="
             w-full
@@ -48,14 +55,14 @@ const Header: React.FC<HeaderProps> = ({ children }) => {
             "
         >
           <button
-          aria-label='back'
+            aria-label="back"
             className="rounded-xl bg-neutral-100 flex items-center justify-center hover:opacity-75 transition"
             onClick={() => router.back()}
           >
             <RxCaretLeft size={35} />
           </button>
           <button
-          aria-label='forward'
+            aria-label="forward"
             className="rounded-xl bg-neutral-100 flex items-center justify-center hover:opacity-75 transition"
             onClick={() => router.forward()}
           >

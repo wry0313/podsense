@@ -30,7 +30,6 @@ const Library = ({ pathname, showLiked = false, channelName='*', isPage=false}: 
   const router = useRouter()
 
   useEffect(() => {
-
       if (isPage && !user.isLoadingUser && !user.user) {
         auth.onOpen();
         router.replace("/");
