@@ -50,7 +50,15 @@ const PodcastItem: React.FC<PodcastItemProps> = ({
                 className="object-cover"
                 src={imagePath}
                 fill 
-                alt="Image"
+                alt="Image cover image"
+                sizes="
+                (min-width: 1536px) 12vw,
+                (min-width: 1280px) 20vw,
+                (min-width: 1024px) 25vw,
+                (min-width: 640px) 33vw,
+                (min-width: 768px) 33vw
+                (min-width: 640px) 50vw, 
+                50vw"
             />
            </div>
            <div className=" flex flex-col items-start w-full pt-2 gap-y-1">

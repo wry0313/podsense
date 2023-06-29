@@ -51,6 +51,7 @@ const ListItem = ({image, name, href}:{
                     fill
                     src={image}
                     alt="Image"
+                    sizes="1vw"
                 />
             </div>
             <p className="font-medium truncate py-5">

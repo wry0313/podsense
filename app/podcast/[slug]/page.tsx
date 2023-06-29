@@ -37,8 +37,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
             <Image
               src={podcast.image_url!}
               alt="Podcast cover image"
-              className="object-cover rounded-lg"
+              className="object-cover rounded-md"
               fill
+              sizes="(min-width: 1024px) 224px, 128px"
             />
           </div>
           <div className="flex flex-col gap-y-3 md:mt-0">

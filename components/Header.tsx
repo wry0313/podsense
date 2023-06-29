@@ -18,12 +18,11 @@ interface HeaderProps {
   className?: string;
 }
 
-const Header: React.FC<HeaderProps> = ({ children, className }) => {
+const Header: React.FC<HeaderProps> = ({ children }) => {
   const authModal = useAuthModal();
   const router = useRouter();
 
-  const supabaseClient = useSupabaseClient();
-  // IMPORTANT: we use useSupabaseClient when everything we read are public to read for everyone (unathenticated users)
+  // IMPORTANT: we use useSupabaseClient when everything the reads are public to read for everyone (unathenticated users)
   // however if something can only be read with authenticated user, we use useSessionContext instead
   const { user, isLoadingUser } = useUser();
 

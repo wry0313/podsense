@@ -21,7 +21,7 @@ const MediaItem = ({
   showProcess = false,
   highlightPhrase = "",
 }: MediaItemProps) => {
-  const imageUrl = data.image_url!;
+
   const link = isPodcast ? `/podcast/${data.id}` : `/episode/${data.id}`;
 
   return (
@@ -50,7 +50,14 @@ const MediaItem = ({
       overflow-hidden
       "
       >
-        <Image fill src={imageUrl} alt="Cover Image" className="object-cover" />
+        <Image 
+        fill 
+        src={data.image_url!} 
+        alt="Cover Image" 
+        className="object-cover" 
+        sizes="48px"
+        loading="lazy"
+        />
       </div>
       <div className="flex flex-col w-full">
         {highlightPhrase ? (

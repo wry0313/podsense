@@ -37,7 +37,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
           <div className="relative h-32 w-32 lg:h-56 lg:w-56 flex-none">
             <Image
               src={episode.image_url}
-              alt="Liked"
+              alt="Episode cover image"
+              sizes="(min-width: 1024px) 224px, 128px"
+              quality={100}
               className="object-cover rounded-lg shadow-md"
               fill
             />

@@ -35,6 +35,7 @@ const Library = () => {
           >
             <Image
               fill
+              sizes="(min-width: 1024px) 176px, 128px"
               src="/images/podcast.png"
               alt="Podcast library icon"
               className="object-cover shadow-md rounded-full"
