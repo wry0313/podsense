@@ -11,6 +11,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   const episode = await getEpisodeByEpisodeId(episode_id);
 
+  console.log(episode.processed);
   if (!episode || !episode.id) {
     return (
       <div
