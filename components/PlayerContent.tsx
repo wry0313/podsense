@@ -7,7 +7,7 @@ import { BsPauseFill, BsPlayFill } from "react-icons/bs";
 import { AiFillStepBackward, AiFillStepForward } from "react-icons/ai";
 import { HiSpeakerWave, HiSpeakerXMark } from "react-icons/hi2";
 import Slider from "./Slider";
-// import usePlayer from "@/hooks/usePlayer";
+
 import { useEffect, useState } from "react";
 import useSound from "use-sound";
 
@@ -28,7 +28,7 @@ const PlayerContent = ({
   const [fullTime, setFullTime] = useState("");
 
   const [isSliding, setIsSliding] = useState(false);
-  const [lastChangedValue, setLastChangedValue] = useState(0);
+
 
   const [isLoading, setIsLoading] = useState(false);
 

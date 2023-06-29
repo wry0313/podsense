@@ -64,6 +64,7 @@ export default function ChatWindow({episode} : {episode: Episode}) {
       />
       {!loading ? (
         <button
+        aria-label='generate response'
           className="w-full rounded-xl bg-neutral-900 px-4 py-2 font-medium text-white hover:bg-black/80"
           onClick={(e) => generateResponse(e)}
         >
@@ -72,6 +73,7 @@ export default function ChatWindow({episode} : {episode: Episode}) {
       ) : (
         <button
           disabled
+          aria-label='loading'
           className="w-full rounded-xl bg-neutral-900 px-4 py-2 font-medium text-white"
         >
           <div className="animate-pulse font-bold tracking-widest">...</div>

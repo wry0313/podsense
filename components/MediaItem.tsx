@@ -1,6 +1,5 @@
 "use client";
 
-// import useLoadImage from "@/hooks/useLoadImage";
 import { Episode, Podcast } from "@/types";
 import Image from "next/image";
 import Link from "next/link";

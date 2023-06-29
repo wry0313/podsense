@@ -42,8 +42,8 @@ const EpisodeItem = ({ episode }: EpisodeItemProps) => {
         <Image
         src={episode.image_url}
         alt={episode.title}
-        fill
-        sizes="112px"
+        width={112}
+        height={112}
       />
         <PlayButton
         episode={episode}

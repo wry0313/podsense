@@ -15,7 +15,7 @@ const ScrollTopButton = () => {
   return (
     <div className={"fixed right-[2rem] z-10 invisible md:visible " + bottomOffset}>
       <button
-        aria-label="Scroll To Top"
+        aria-label="Scroll to top"
         type="button"
         onClick={handleScrollTop}
         className="hover:scale-105 duration-300 rounded-2xl bg-gray-200 p-2 text-gray-500 transition-all hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-600"

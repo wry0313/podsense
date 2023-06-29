@@ -39,7 +39,7 @@ export default function Account() {
           Manage your account settings.
         </h1>
       </div>
-      <Button onClick={handleLogout} className="px-4 py-1 w-fit mt-4">
+      <Button aria-label='log out' onClick={handleLogout} className="px-4 py-1 w-fit mt-4">
         Logout
       </Button>
     </div>

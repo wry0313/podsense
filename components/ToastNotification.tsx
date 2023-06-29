@@ -20,6 +20,7 @@ const ToastNotification = ({text} : {text:string}) => {
           </div>
           <div className="flex border-l border-gray-200">
             <button
+              aria-label='dismiss'
               onClick={() => toast.dismiss()}
               className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-amber-400 hover:text-amber-300 focus:outline-none"
             >

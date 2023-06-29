@@ -18,6 +18,7 @@ const PlayButton = ({
     const onPlay = useOnPlay();
     return (
         <button
+        aria-label='play'
         onClick={() => onPlay(episode.id)}
         className={twMerge(`
         transition

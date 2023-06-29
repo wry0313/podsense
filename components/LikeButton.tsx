@@ -87,6 +87,7 @@ const LikeButton = ({
 
     return ( 
         <button
+        aria-label='like button'
         onClick={handleLike}
         className="hover:opacity-75 transition"
         >

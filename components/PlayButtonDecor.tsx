@@ -11,6 +11,7 @@ const PlayButtonDecor = ({
 }) => {
     return (
         <button
+        aria-label='play'
         onClick={onClick}
         className={twMerge(`
         transition

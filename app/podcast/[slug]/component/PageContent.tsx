@@ -115,6 +115,7 @@ const PageContent = ({ podcast_id }: { podcast_id: string }) => {
     <div ref={containerRef} className="flex flex-col mt-5">
       <ScrollTopButton />
       <button
+        aria-label='sort by time'
         onClick={toggleSort}
         className="px-4 py-2 font-bold w-fit text-sm mb-4 text-black bg-neutral-100 hover:scale-105 transition rounded-lg"
       >

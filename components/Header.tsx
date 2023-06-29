@@ -48,12 +48,14 @@ const Header: React.FC<HeaderProps> = ({ children }) => {
             "
         >
           <button
+          aria-label='back'
             className="rounded-xl bg-neutral-100 flex items-center justify-center hover:opacity-75 transition"
             onClick={() => router.back()}
           >
             <RxCaretLeft size={35} />
           </button>
           <button
+          aria-label='forward'
             className="rounded-xl bg-neutral-100 flex items-center justify-center hover:opacity-75 transition"
             onClick={() => router.forward()}
           >

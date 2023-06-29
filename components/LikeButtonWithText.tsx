@@ -84,6 +84,7 @@ const LikeButtonWithText = ({ podcast_id }: LikeButtonWithTextProps) => {
 
   return (
     <button
+    aria-label='like button'
       onClick={handleLike}
       className="flex flex-row gap-x-2 bg-neutral-100 rounded-md p-1 px-2 w-fit cursor-pointer"
     >

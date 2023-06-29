@@ -2,10 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-
 import { Podcast } from "@/types"
-
-import useLoadImage from "@/hooks/useLoadImage";
 import PlayButtonDecor from "./PlayButtonDecor";
 
 interface PodcastItemProps {
@@ -14,7 +11,6 @@ interface PodcastItemProps {
 const PodcastItem: React.FC<PodcastItemProps> = ({
     podcast,
 }) => {
-    const imagePath = useLoadImage(podcast);
     return ( 
         <Link
             href={`/podcast/${podcast.id}`}
@@ -47,18 +43,13 @@ const PodcastItem: React.FC<PodcastItemProps> = ({
             "
            >
             <Image
-                className="object-cover"
-                src={imagePath}
+                src={podcast.image_url!}
                 fill 
-                alt="Image cover image"
+                alt="wef"
                 sizes="
-                (min-width: 1536px) 12vw,
-                (min-width: 1280px) 20vw,
-                (min-width: 1024px) 25vw,
-                (min-width: 640px) 33vw,
-                (min-width: 768px) 33vw
-                (min-width: 640px) 50vw, 
-                50vw"
+                (max-width: 1536px) 10vw,
+                20vw"
+                priority={true}
             />
            </div>
            <div className=" flex flex-col items-start w-full pt-2 gap-y-1">

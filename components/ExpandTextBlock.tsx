@@ -35,6 +35,7 @@ const TextBlock = ({ text }: { text: string }) => {
       )}
       {isClamped && (
         <button
+        aria-label="expand or collapse text"
           className="w-full flex flex-row justify-center items-center mt-2"
           onClick={toggleExpanded}
         >
