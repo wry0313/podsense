@@ -5,6 +5,7 @@ import ChatWindow from "@/components/ChatWindow";
 import ExpandTextBlock from "@/components/ExpandTextBlock";
 import ScrollTopButton from "@/components/ScrollTopButton";
 
+export const revalidate = 0;
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const episode_id = params.slug;
@@ -12,6 +13,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
   const episode = await getEpisodeByEpisodeId(episode_id);
 
   console.log(episode.processed);
+
   if (!episode || !episode.id) {
     return (
       <div
