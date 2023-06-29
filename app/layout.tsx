@@ -4,7 +4,6 @@ import SupabaseProvider from "@/providers/SupabaseProvider";
 import UserProvider from "@/providers/UserProvider";
 import ModelProvider from "@/providers/ModalProvider";
 import ToasterProvider from "@/providers/ToasterProvider";
-// import getLikdPodcasts from "@/actions/getLikdPodcasts";
 import Header from "@/components/Header";
 import Player from "@/components/Player";
 
@@ -26,10 +25,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={
-          ""
-          // font.className
-        }
+        // className={
+        //   font.className
+        // }
       >
         <ToasterProvider />
         <SupabaseProvider>

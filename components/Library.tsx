@@ -35,20 +35,22 @@ const Library = ({ pathname, showLiked = false, channelName='*', isPage=false}: 
         auth.onOpen();
         router.replace("/");
       }
-  }, [user, user, router]);
+  }, [user, router]);
 
 //https://devtrium.com/posts/async-functions-useeffect
   useEffect(() => {
     // console.log(user)
     const fetchData = async () => {
       setIsLoading(true);
-      const { data } = await supabase
+      if(user.user) {
+        const { data } = await supabase
         .from("liked_podcasts")
         .select("*, podcasts(*)")
         .order("created_at", { ascending: false });
 
       const podcastList = data?.map((item) => item.podcasts);
       setLikedPodcasts(podcastList || []);
+      }
       setIsLoading(false);
     };
     if (fetched && !user.accessToken) {
