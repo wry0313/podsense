@@ -33,7 +33,7 @@ const PageContent = ({ podcast_id }: { podcast_id: string }) => {
   }, []);
 
   const handleScroll = () => {
-    console.log("scroll")
+    // console.log("scroll")
     if (containerRef.current && typeof window !== "undefined") {
       const container = containerRef.current as HTMLElement;
       const { bottom } = container.getBoundingClientRect();
@@ -124,10 +124,7 @@ const PageContent = ({ podcast_id }: { podcast_id: string }) => {
 
       {loadedEpisodes.map((episode, i) => {
         return (
-
-
-            <EpisodeItem  episode={episode} />
-
+            <EpisodeItem  episode={episode} key={i}/>
         );
       })}
 

@@ -106,11 +106,13 @@ const Library = ({ pathname, showLiked = false, channelName='*', isPage=false}: 
           <p>Add some podcasts to your library</p>
         </div>
       ) : !showLiked ? (
-        likedPodcasts.map((podcast, i) => (
-         <div className="overflow-hidden">
+        likedPodcasts.map((podcast) => (
+         <div 
+         key={podcast.id}
+         className="overflow-hidden">
            <MediaItem
             data={podcast}
-            key={i}
+            
             isPodcast={true}
             active={pathname === "/podcast/" + podcast.id}
           />
@@ -118,20 +120,18 @@ const Library = ({ pathname, showLiked = false, channelName='*', isPage=false}: 
           
         ))
       ) : (
-        likedPodcasts.map((podcast, i) => (
+        likedPodcasts.map((podcast) => (
           <div 
-          key={i}
+          key={podcast.id}
               className="flex items-center gap-x-4 w-full"
           >
               <div className="flex-1">
                   <MediaItem 
-                  key={i}
                       data={podcast}
                       isPodcast={true}
                   />
               </div>
               <LikeButton 
-              key={i}
                   podcast_id={podcast.id}
                   defaultIsLiked={true}
                   />
