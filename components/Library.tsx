@@ -44,7 +44,7 @@ const Library = ({ pathname, showLiked = false, channelName='*', isPage=false}: 
       if(user.user) {
         const { data } = await supabase
         .from("liked_podcasts")
-        .select("*, podcasts(*)")
+        .select("*, podcasts(id, title, host, image_url)")
         .order("created_at", { ascending: false });
 
       const podcastList = data?.map((item) => item.podcasts);
@@ -106,18 +106,21 @@ const Library = ({ pathname, showLiked = false, channelName='*', isPage=false}: 
           <p>Add some podcasts to your library</p>
         </div>
       ) : !showLiked ? (
-        likedPodcasts.map((podcast) => (
-          <MediaItem
+        likedPodcasts.map((podcast, i) => (
+         <div className="overflow-hidden">
+           <MediaItem
             data={podcast}
-            key={podcast.id}
+            key={i}
             isPodcast={true}
             active={pathname === "/podcast/" + podcast.id}
           />
+         </div>
           
         ))
       ) : (
-        likedPodcasts.map((podcast) => (
-          <div key={podcast.id}
+        likedPodcasts.map((podcast, i) => (
+          <div 
+          key={i}
               className="flex items-center gap-x-4 w-full"
           >
               <div className="flex-1">

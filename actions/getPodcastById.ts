@@ -5,7 +5,7 @@ import supabase from "./getSupabaseClient";
 
 const getPodcastById = async (id: string): Promise<Podcast> => {
 
-  const { data, error } = await supabase
+  const { data } = await supabase
     .from('podcasts')
     .select('*')
     .eq('id', id)

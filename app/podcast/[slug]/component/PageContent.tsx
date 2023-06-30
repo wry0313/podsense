@@ -15,7 +15,7 @@ const supabase = createClient(
 );
 
 const PageContent = ({ podcast_id }: { podcast_id: string }) => {
-  const PAGE_COUNT = 40;
+  const PAGE_COUNT = 50;
   const [loadedEpisodes, setLoadedEpisodes] = useState([] as Episode[]);
   const containerRef = useRef<HTMLDivElement>(null);
   const [offset, setOffset] = useState(0);
@@ -76,7 +76,7 @@ const PageContent = ({ podcast_id }: { podcast_id: string }) => {
 
     setOffset((prev) => prev + 1);
 
-    if (newEpisodes.length === 0) {
+    if (newEpisodes && newEpisodes.length === 0) {
       setIsLast(true);
     }
     // Merge new Episodes with all previously loaded
@@ -90,9 +90,9 @@ const PageContent = ({ podcast_id }: { podcast_id: string }) => {
     const from = offset * PAGE_COUNT;
     let to = from + PAGE_COUNT - 1;
     // console.log(from, to)
-    const { data, error } = await supabase!
+    const { data } = await supabase!
       .from("episodes")
-      .select("*")
+      .select("id, title, released_date, description, duration, audio_url, image_url, processed")
       .eq("podcast_id", podcast_id)
       .range(from, to)
       .order("released_date", { ascending: sortAscending });
@@ -129,12 +129,12 @@ const PageContent = ({ podcast_id }: { podcast_id: string }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
-              duration: 0.7,
+              duration: 1,
               ease: [0.25, 0.25, 0, 1],
-              delay: (i % PAGE_COUNT) * 0.07,
+              delay: (i % PAGE_COUNT) * 0.03,
             }}
           >
-            <EpisodeItem key={episode.id} episode={episode} />
+            <EpisodeItem  episode={episode} />
           </motion.div>
         );
       })}

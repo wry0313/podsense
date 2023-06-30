@@ -2,7 +2,6 @@ import Image from "next/image";
 
 import LibraryContent from "@/components/Library";
 
-
 const Library = () => {
 
   return (
@@ -58,7 +57,9 @@ const Library = () => {
         </div>
       </div>
 
+      <div className="max-w-[800px]">
       <LibraryContent showLiked={true} channelName="library page" isPage={true} />
+      </div>
     </div>
   );
 };

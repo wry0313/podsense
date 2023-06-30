@@ -29,8 +29,6 @@ const PlayButton = ({
         bg-white
         p-4
         drop-shadow-md
-        translate
-        translate-y-1/4
         group-hover:opacity-100
         group-hover:translate-y-0
         `, className)}

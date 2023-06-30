@@ -7,7 +7,7 @@ interface EpisodeItemProps {
   episode: Episode;
 }
 
-function convertSecondsToTime(seconds:number) {
+function convertSecondsToTime(seconds: number) {
   const hours = Math.floor(seconds / 3600);
   const minutes = Math.floor((seconds % 3600) / 60);
   const remainingSeconds = seconds % 60;
@@ -21,7 +21,7 @@ function convertSecondsToTime(seconds:number) {
   if (hours === 0 && minutes === 0) {
     result += remainingSeconds + " sec";
   }
-  return result.trim(); 
+  return result.trim();
 }
 
 const EpisodeItem = ({ episode }: EpisodeItemProps) => {
@@ -30,52 +30,49 @@ const EpisodeItem = ({ episode }: EpisodeItemProps) => {
       href={"/episode/" + episode.id}
       className="flex items-start gap-x-4 border-t-2 pt-3 pb-6 group hover:bg-neutral-100 cursor-pointer max-w-[1200px]"
     >
-     <div className="relative w-0 h-0 z-10">
-      <PlayButton
-        episode={episode}
-          className="
-          aboslute
-          backdrop-blur-lg 
-          backdrop-brightness-200 
-          bg-transparent 
-          translate-x-12
-          group-hover:translate-y-8 
-          translate-y-12
-          "
-        />
-      </div>
-     
+
+       
+
       <div
         className="
                 relative
                 aspect-square
                 min-w-[112px]
+                ml-4
             "
       >
-        <Image
-        className="rounded-md"
-        src={episode.image_url}
-        alt={episode.title}
-        width={112}
-        height={112}
-      />
-      </div>
+        <PlayButton 
+        className="
+        mt-[-52px]
+        translate-x-8
+        translate-y-24
+        group-hover:translate-y-20
+        "
+        episode={episode}/>
 
-      
-      
+        <Image
+          className="rounded-md"
+          src={episode.image_url}
+          alt={episode.title}
+          width={112}
+          height={112}
+        />
+      </div>
 
       <div className="flex-1">
         <h3 className="text-lg font-semibold">{episode.title}</h3>
         <p className="text-gray-500 overflow-hidden h-[50px]">
-          {episode.description.replace(/<[^>]+>/g, '').replace(/&[^;]+;/g, '')}
+          {episode.description.replace(/<[^>]+>/g, "").replace(/&[^;]+;/g, "")}
         </p>
         <div className="flex flex-row items-baseline gap-x-2 text-sm mt-1">
-          <p className="text-gray-500">{convertSecondsToTime(episode.duration)}</p>
+          <p className="text-gray-500">
+            {convertSecondsToTime(episode.duration)}
+          </p>
           <p className="text-gray-500">{episode.released_date}</p>
-          {episode.processed ? (
-            <p className="bg-neutral-50 rounded-md shadow-sm text-sm w-fit p-1 text-green-600">✅ chatbot available</p>
-          ) : (
-            ""
+          {episode.processed && (
+            <p className="bg-neutral-50 rounded-md shadow-sm text-sm w-fit p-1 text-green-600">
+              ✅ chatbot available
+            </p>
           )}
         </div>
       </div>

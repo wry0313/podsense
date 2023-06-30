@@ -5,12 +5,10 @@ import ChatWindow from "@/components/ChatWindow";
 import ExpandTextBlock from "@/components/ExpandTextBlock";
 import ScrollTopButton from "@/components/ScrollTopButton";
 
-
 export default async function Page({ params }: { params: { slug: string } }) {
   const episode_id = params.slug;
 
   const episode = await getEpisodeByEpisodeId(episode_id);
-  
 
   if (!episode || !episode.id) {
     return (
@@ -81,15 +79,15 @@ export default async function Page({ params }: { params: { slug: string } }) {
       </div>
 
       <div className="mb-6">
-        {episode.processed &&  <ChatWindow episode={episode} />}
+        {episode.transcript && <ChatWindow episode={episode} />}
       </div>
 
       <div className="mb-[10rem]">
-        {episode.transcript && (
-          <>
-            <p className="font-semibold text-2xl mt-3">Episode Transcript</p>
-            <ExpandTextBlock htmlText={episode.transcript} />
-          </>
+        <p className="font-semibold text-2xl mt-3">Episode Transcript</p>
+        {episode.transcript ? (
+          <ExpandTextBlock htmlText={episode.transcript} />
+        ) : (
+          <p className="text-md mt-3 text-neutral-500">No transcript available yet.</p>
         )}
       </div>
 

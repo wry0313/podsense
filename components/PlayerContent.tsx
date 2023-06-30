@@ -114,7 +114,7 @@ const PlayerContent = ({
     <div className="grid grid-cols-1 sm:grid-cols-3 h-full">
       {episode ? (
         <div className="hidden sm:flex w-full justify-cente pr-10">
-          <div className="flex flex-col items-center mr-4 max-w-[280px] overflow-hidden">
+          <div className="flex flex-col items-center mr-4 max-w-[300px] overflow-hidden">
             <MediaItem data={episode} isPodcast={false} />
           </div>
           <LikeButton podcast_id={episode.podcast_id} />
