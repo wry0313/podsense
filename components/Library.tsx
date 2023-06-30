@@ -5,7 +5,7 @@ import MediaItem from "./MediaItem";
 
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useEffect, useState } from "react";
-import getPodcastById from "@/actions/getPodcastById";
+
 import { useUser } from "@/hooks/useUser";
 import LoadingDots from "./LoadingDots";
 import LikeButton from "./LikeButton";
@@ -18,6 +18,8 @@ interface LibraryProps {
   channelName?: string;
   isPage?: boolean
 }
+
+
 //https://github.com/supabase/supabase/blob/master/examples/auth/nextjs/app/realtime-posts.tsx
 const Library = ({ pathname, showLiked = false, channelName='*', isPage=false}: LibraryProps) => {
   const [likedPodcasts, setLikedPodcasts] = useState<Podcast[]>([]);
@@ -63,8 +65,8 @@ const Library = ({ pathname, showLiked = false, channelName='*', isPage=false}: 
 
   useEffect(() => {
     const addPodcast = async (podcast_id: string) => {
-      const newLikedPodcast = await getPodcastById(podcast_id);
-      setLikedPodcasts((likedPodcasts) => [...likedPodcasts, newLikedPodcast]);
+
+      setLikedPodcasts((likedPodcasts) => [...likedPodcasts]);
     };
     const channel = supabase
       .channel(channelName)

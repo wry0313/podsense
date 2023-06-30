@@ -5,6 +5,9 @@ import getPodcastTagsByPodcastId from "@/actions/getPodcastTagsByPodcastId";
 import Image from "next/image";
 import ExpandTextBlock from "@/components/ExpandTextBlock";
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export default async function Page({ params }: { params: { slug: string } }) {
   const podcast_id = params.slug;
   const podcastData = getPodcastById(podcast_id);

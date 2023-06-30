@@ -3,17 +3,13 @@
 import EpisodeItem from "@/components/EpisodeItem";
 import { Episode } from "@/types";
 import { useRef, useState, useEffect, useCallback } from "react";
-import { createClient } from "@supabase/supabase-js";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+
 import ScrollTopButton from "@/components/ScrollTopButton";
 import { useDebounce } from "@/hooks/useDebounce";
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
-
-
 const PageContent = ({ podcast_id }: { podcast_id: string }) => {
+  const supabase = createClientComponentClient();
   const PAGE_COUNT = 50;
   const [loadedEpisodes, setLoadedEpisodes] = useState([] as Episode[]);
   const containerRef = useRef<HTMLDivElement>(null);
