@@ -45,7 +45,7 @@ const PodcastItem: React.FC<PodcastItemProps> = ({
             <Image
                 src={podcast.image_url!}
                 fill 
-                alt="wef"
+                alt={podcast.title!}
                 sizes="
                 (max-width: 1536px) 50vw,
                 40vw"

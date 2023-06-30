@@ -4,6 +4,7 @@ import { Podcast } from "@/types";
 import MediaItem from "./MediaItem";
 
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+
 import { useEffect, useState } from "react";
 
 import { useUser } from "@/hooks/useUser";
@@ -15,13 +16,13 @@ import { useRouter } from "next/navigation";
 interface LibraryProps {
   pathname?: string;
   showLiked?: boolean;
-  channelName?: string;
+  channelName: string;
   isPage?: boolean
 }
 
 
 //https://github.com/supabase/supabase/blob/master/examples/auth/nextjs/app/realtime-posts.tsx
-const Library = ({ pathname, showLiked = false, channelName='*', isPage=false}: LibraryProps) => {
+const Library = ({ pathname, showLiked = false, channelName, isPage=false}: LibraryProps) => {
   const [likedPodcasts, setLikedPodcasts] = useState<Podcast[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const supabase = createClientComponentClient();
@@ -64,9 +65,14 @@ const Library = ({ pathname, showLiked = false, channelName='*', isPage=false}: 
   }, [user]);
 
   useEffect(() => {
-    const addPodcast = async (podcast_id: string) => {
+    const addPodcast = async (newPodcastId : string) => {
+      const {data} = await supabase
+      .from('podcasts')
+      .select('*')
+      .eq('id', newPodcastId)
+      .single();
 
-      setLikedPodcasts((likedPodcasts) => [...likedPodcasts]);
+      setLikedPodcasts((likedPodcasts) => [...likedPodcasts, data]);
     };
     const channel = supabase
       .channel(channelName)
@@ -75,7 +81,6 @@ const Library = ({ pathname, showLiked = false, channelName='*', isPage=false}: 
         { event: "*", schema: "public", table: "liked_podcasts" },
         (payload) => {
           if (payload.eventType === "INSERT") {
-
             addPodcast(payload.new.podcast_id);
           } else if (payload.eventType === "DELETE") {
 

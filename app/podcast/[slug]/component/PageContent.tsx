@@ -2,11 +2,13 @@
 
 import EpisodeItem from "@/components/EpisodeItem";
 import { Episode } from "@/types";
-import { useRef, useState, useEffect, useCallback } from "react";
+import { useRef, useState, useEffect, useCallback, memo } from "react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 import ScrollTopButton from "@/components/ScrollTopButton";
 import { useDebounce } from "@/hooks/useDebounce";
+
+const MemoEpisodeItem = memo(EpisodeItem);
 
 const PageContent = ({ podcast_id }: { podcast_id: string }) => {
   const supabase = createClientComponentClient();
@@ -120,7 +122,7 @@ const PageContent = ({ podcast_id }: { podcast_id: string }) => {
 
       {loadedEpisodes.map((episode, i) => {
         return (
-            <EpisodeItem  episode={episode} key={i}/>
+            <MemoEpisodeItem  episode={episode} key={i}/>
         );
       })}
 
