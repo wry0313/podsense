@@ -4,13 +4,13 @@ import qs from "query-string"
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
-import useDebounce from "@/hooks/useDebounce";
+import useDebounceValue from "@/hooks/useDebounceValue";
 import Input from "./Input";
 
 const SearchInput = () => {
     const router = useRouter();
     const [value, setValue] = useState("");
-    const debouncedValue = useDebounce(value, 500);
+    const debouncedValue = useDebounceValue(value, 500);
 
     useEffect(()=>{
         const query = {

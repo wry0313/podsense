@@ -50,12 +50,11 @@ const MediaItem = ({
       "
       >
         <Image 
-        fill 
         src={data.image_url!} 
         alt="Cover Image" 
         className="object-cover" 
-        sizes="48px"
-        loading="lazy"
+        width={48}
+        height={48}
         />
       </div>
       <div className="flex flex-col w-full">

@@ -3,16 +3,15 @@
 import EpisodeItem from "@/components/EpisodeItem";
 import { Episode } from "@/types";
 import { useRef, useState, useEffect, useCallback } from "react";
-import { debounce } from "lodash";
-
 import { createClient } from "@supabase/supabase-js";
-import { motion } from "framer-motion";
 import ScrollTopButton from "@/components/ScrollTopButton";
+import { useDebounce } from "@/hooks/useDebounce";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
+
 
 const PageContent = ({ podcast_id }: { podcast_id: string }) => {
   const PAGE_COUNT = 50;
@@ -34,6 +33,7 @@ const PageContent = ({ podcast_id }: { podcast_id: string }) => {
   }, []);
 
   const handleScroll = () => {
+    console.log("scroll")
     if (containerRef.current && typeof window !== "undefined") {
       const container = containerRef.current as HTMLElement;
       const { bottom } = container.getBoundingClientRect();
@@ -54,7 +54,7 @@ const PageContent = ({ podcast_id }: { podcast_id: string }) => {
   }, [isBottom]);
 
   const handleDebouncedScroll = useCallback(
-    debounce(() => handleScroll(), 200),
+    useDebounce(() => handleScroll(), 200),
     []
   );
 
@@ -124,18 +124,10 @@ const PageContent = ({ podcast_id }: { podcast_id: string }) => {
 
       {loadedEpisodes.map((episode, i) => {
         return (
-          <motion.div
-            key={episode.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 1,
-              ease: [0.25, 0.25, 0, 1],
-              delay: (i % PAGE_COUNT) * 0.03,
-            }}
-          >
+
+
             <EpisodeItem  episode={episode} />
-          </motion.div>
+
         );
       })}
 

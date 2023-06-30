@@ -125,11 +125,13 @@ const Library = ({ pathname, showLiked = false, channelName='*', isPage=false}: 
           >
               <div className="flex-1">
                   <MediaItem 
+                  key={i}
                       data={podcast}
                       isPodcast={true}
                   />
               </div>
               <LikeButton 
+              key={i}
                   podcast_id={podcast.id}
                   defaultIsLiked={true}
                   />
