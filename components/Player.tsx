@@ -30,7 +30,7 @@ const Player = () => {
         select-none
     ">
         <PlayerContent 
-            episode={episode}
+            episode={episode!}
             episodeUrl={episodeUrl!}
             key={episodeUrl} // key attribute, whenever it changes it will completely destroy the element and re-render a new one
             // we need key because we want to have a playlist and we want to allow the user to step the song

@@ -62,9 +62,9 @@ const MediaItem = ({
         {highlightPhrase ? (
           getHighlightedText(data.title!, highlightPhrase)
         ) : (
-          <p className="font-medium truncate w-full">{data.title}</p>
+          <p className="font-medium w-full">{data.title}</p>
         )}
-        <p className="text-neutral-400 text-sm w-full truncate">
+        <p className="text-neutral-400 text-sm w-full ">
           By {data.host}
         </p>
         {showProcess && !isPodcast && (data as Episode).processed && (

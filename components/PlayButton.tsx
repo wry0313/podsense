@@ -26,7 +26,7 @@ const PlayButton = ({
         rounded-full
         flex
         items-center
-        bg-amber-100
+        bg-white
         p-4
         drop-shadow-md
         translate

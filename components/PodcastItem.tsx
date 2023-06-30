@@ -47,8 +47,8 @@ const PodcastItem: React.FC<PodcastItemProps> = ({
                 fill 
                 alt="wef"
                 sizes="
-                (max-width: 1536px) 10vw,
-                20vw"
+                (max-width: 1536px) 50vw,
+                40vw"
                 priority={true}
             />
            </div>

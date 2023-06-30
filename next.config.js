@@ -4,7 +4,9 @@ const nextConfig = {
         domains: [
             'cnvniiywuoskmrtwfpum.supabase.co',
             'megaphone.imgix.net',
-            'lexfridman.com'
+            'lexfridman.com',
+            'ssl-static.libsyn.com',
+            'bookworm.fm'
         ]
     }
     

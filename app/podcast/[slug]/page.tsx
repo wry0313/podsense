@@ -43,17 +43,15 @@ export default async function Page({ params }: { params: { slug: string } }) {
             />
           </div>
           <div className="flex flex-col gap-y-3 md:mt-0">
-            {/* <p className="hidden md:block font-semibold text-xl">podcast</p> */}
-            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold">
+            <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold">
               {podcast.title}
             </h1>
             <p className="text-xl font-semibold">{podcast.host}</p>
-            {/* <p className="font-semibold text-xl">Tags</p> */}
             <div className="flex flex-row gap-x-2">
               {tags.map((tag) => (
                 <div
                   key={tag.tag}
-                  className="bg-neutral-100 rounded-md p-1 w-fit cursor-pointer text-sm font-semibold"
+                  className="bg-neutral-100 rounded-md p-1 w-fit cursor-pointer text-sm font-semibold h-fit"
                 >
                   {tag.tag}
                 </div>
@@ -69,7 +67,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
           "
         >
           <p className="font-semibold text-2xl">About</p>
-          <ExpandTextBlock text={podcast.description!} />
+          <ExpandTextBlock htmlText={podcast.description!} />
         </div>
       </div>
 

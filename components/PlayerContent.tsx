@@ -29,7 +29,6 @@ const PlayerContent = ({
 
   const [isSliding, setIsSliding] = useState(false);
 
-
   const [isLoading, setIsLoading] = useState(false);
 
   const [play, { pause, duration, sound }] = useSound(episodeUrl, {
@@ -67,13 +66,11 @@ const PlayerContent = ({
     return () => clearInterval(interval);
   }, [sound, isSliding]);
 
-
   const handleSeek = debounce(2000, (value) => {
     sound.seek(value);
-    setIsSliding(false)
-    setIsLoading(false)
+    setIsSliding(false);
+    setIsLoading(false);
   });
-
 
   useEffect(() => {
     sound?.play();
@@ -115,12 +112,17 @@ const PlayerContent = ({
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-3 h-full">
-      <div className="hidden sm:flex w-full justify-cente pr-10">
-        <div className="flex flex-col items-center mr-4 max-w-[280px] overflow-hidden">
-          <MediaItem data={episode} isPodcast={false} />
+      {episode ? (
+        <div className="hidden sm:flex w-full justify-cente pr-10">
+          <div className="flex flex-col items-center mr-4 max-w-[280px] overflow-hidden">
+            <MediaItem data={episode} isPodcast={false} />
+          </div>
+          <LikeButton podcast_id={episode.podcast_id} />
         </div>
-        <LikeButton podcast_id={episode.podcast_id} />
-      </div>
+      ) : (
+        <div className="mr-4 max-w-[280px]">
+          </div>
+      )}
 
       <div className="flex flex-col">
         <div
@@ -176,7 +178,7 @@ const PlayerContent = ({
             onCommit={(value) => {
               setCurrTime(value);
               handleSeek(value);
-              setIsLoading(true)
+              setIsLoading(true);
             }}
             defaultValue={[0]}
             max={duration ? duration / 1000 : 0}

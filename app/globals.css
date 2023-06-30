@@ -21,3 +21,8 @@ mark {
 }
 
 body { min-height: 100vh; }
+
+#text-div a {
+  color: firebrick;
+  text-decoration: underline;
+}

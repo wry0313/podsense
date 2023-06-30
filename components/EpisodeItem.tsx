@@ -21,46 +21,53 @@ function convertSecondsToTime(seconds:number) {
   if (hours === 0 && minutes === 0) {
     result += remainingSeconds + " sec";
   }
-  return result.trim();
+  return result.trim(); 
 }
 
 const EpisodeItem = ({ episode }: EpisodeItemProps) => {
   return (
     <Link
       href={"/episode/" + episode.id}
-      className="flex items-start gap-x-4 border-t-2 pt-3 pb-6 group hover:bg-neutral-100 cursor-pointer"
+      className="flex items-start gap-x-4 border-t-2 pt-3 pb-6 group hover:bg-neutral-100 cursor-pointer max-w-[1200px]"
     >
+     <div className="relative w-0 h-0 z-10">
+      <PlayButton
+        episode={episode}
+          className="
+          aboslute
+          backdrop-blur-lg 
+          backdrop-brightness-200 
+          bg-transparent 
+          translate-x-12
+          group-hover:translate-y-8 
+          translate-y-12
+          "
+        />
+      </div>
+     
       <div
         className="
                 relative
                 aspect-square
-                w-28
-                h-28
-                overflow-hidden
+                min-w-[112px]
             "
       >
         <Image
+        className="rounded-md"
         src={episode.image_url}
         alt={episode.title}
         width={112}
         height={112}
       />
-        <PlayButton
-        episode={episode}
-          className="
-          backdrop-blur-lg 
-          backdrop-brightness-200 
-          bg-transparent 
-          translate-x-8 
-          group-hover:translate-y-9 
-          translate-y-12"
-        />
       </div>
+
+      
+      
 
       <div className="flex-1">
         <h3 className="text-lg font-semibold">{episode.title}</h3>
-        <p className="text-gray-500 overflow-y-hidden h-[50px]">
-          {episode.description.replace(/<br\s*\/?>/gm, "\n")}
+        <p className="text-gray-500 overflow-hidden h-[50px]">
+          {episode.description.replace(/<[^>]+>/g, '').replace(/&[^;]+;/g, '')}
         </p>
         <div className="flex flex-row items-baseline gap-x-2 text-sm mt-1">
           <p className="text-gray-500">{convertSecondsToTime(episode.duration)}</p>
