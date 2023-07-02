@@ -5,7 +5,6 @@ import ChatWindow from "@/components/ChatWindow";
 import ExpandTextBlock from "@/components/ExpandTextBlock";
 import ScrollTopButton from "@/components/ScrollTopButton";
 
-export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
 

@@ -21,6 +21,7 @@
     "@types/react-dom": "18.2.6",
     "autoprefixer": "10.4.14",
     "cal-sans": "^1.0.1",
+    "encoding": "^0.1.13",
     "eslint": "8.43.0",
     "eslint-config-next": "13.4.6",
     "eventsource-parser": "^1.0.0",
