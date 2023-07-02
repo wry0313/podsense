@@ -78,7 +78,7 @@ const PlayerContent = ({
     return () => {
       sound?.unload();
     };
-  }, [sound]);
+  }, [sound, duration]);
 
   const handlePlay = () => {
     isPlaying ? pause() : play();

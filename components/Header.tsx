@@ -12,7 +12,8 @@ import { useUser } from "@/hooks/useUser";
 import useAuthModal from "@/hooks/useAuthModal";
 
 import Button from "./Button";
-import dynamic from "next/dynamic";
+import AuthModal from "@/components/AuthModal";
+
 import useDebounceValue from "@/hooks/useDebounceValue";
 import { useEffect, useState } from "react";
 
@@ -41,13 +42,11 @@ const Header: React.FC<HeaderProps> = ({ children }) => {
     }
   }, [debouncedValue, router]);
 
-  const AuthModalComponent = dynamic(() => import("@/components/AuthModal"), {
-    ssr: false,
-  });
+ 
 
   return (
     <>
-      {authModal.isOpen && <AuthModalComponent />}
+      <AuthModal />
       <div
         className="
             w-full

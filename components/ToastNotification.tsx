@@ -30,7 +30,7 @@ const ToastNotification = ({text} : {text:string}) => {
         </div>
       ));
     }
-  }, []);
+  }, [shown, text]);
   return <></>;
 };
 

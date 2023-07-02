@@ -1,10 +1,29 @@
+"use client"
 import Image from "next/image";
 
 import LibraryContent from "@/components/Library";
 
+import useAuthModal from "@/hooks/useAuthModal";
+import { useUser } from "@/hooks/useUser";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+
 const Library = () => {
 
+  const {user, isLoadingUser} = useUser();
+  const auth = useAuthModal();
+  const router = useRouter();
+  useEffect(() => {
+    
+    if (!isLoadingUser && !user) {
+      auth.onOpen();
+      router.replace("/");
+    }
+}, [user, isLoadingUser, router]);
+
+  if (user) {
   return (
+    
     <div className="h-full w-full overflow-hidden overflow-y-auto">
       <div className="px-10 mb-5">
         <div className="flex flex-col md:flex-row items-center gap-x-5" >
@@ -27,10 +46,11 @@ const Library = () => {
       </div>
 
       <div className="max-w-[800px] pl-10">
-      <LibraryContent showLiked={true} channelName="library page" isPage={true} />
+      <LibraryContent showLiked={true} channelName="library page" />
       </div>
     </div>
   );
+  }
 };
 
 export default Library;
