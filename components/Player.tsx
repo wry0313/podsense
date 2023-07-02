@@ -23,7 +23,7 @@ const Player = () => {
     const fetchEpisode = async () => {
       const { data, error } = await supabase
         .from("episodes")
-        .select("title, host, audio_url, id, image_url")
+        .select("title, host, audio_url, id, image_url, podcast_id")
         .eq("id", player.activeId)
         .single();    
 

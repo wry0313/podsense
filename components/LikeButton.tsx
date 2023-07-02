@@ -27,6 +27,7 @@ const LikeButton = ({
 
     useEffect(() => {
         if (!user) {
+            
             setIsLiked(false);
             return;
         }
