@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 
 import { RxCaretLeft, RxCaretRight } from "react-icons/rx";
@@ -13,6 +13,9 @@ import useAuthModal from "@/hooks/useAuthModal";
 
 import Button from "./Button";
 import dynamic from "next/dynamic";
+import useDebounceValue from "@/hooks/useDebounceValue";
+import { useEffect, useState } from "react";
+
 
 interface HeaderProps {
   children?: React.ReactNode;
@@ -20,13 +23,23 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ children }) => {
-  
   const authModal = useAuthModal();
   const router = useRouter();
-
+  const pathname = usePathname();
   // IMPORTANT: we use useSupabaseClient when everything the reads are public to read for everyone (unathenticated users)
   // however if something can only be read with authenticated user, we use useSessionContext instead
   const { user, isLoadingUser } = useUser();
+
+  const [value, setValue] = useState("");
+  const debouncedValue = useDebounceValue(value, 300);
+
+  useEffect(() => {
+    if (debouncedValue === "") {
+      router.push("/")
+    } else {
+      router.push("/search/" + debouncedValue);
+    }
+  }, [debouncedValue, router]);
 
   const AuthModalComponent = dynamic(() => import("@/components/AuthModal"), {
     ssr: false,
@@ -40,18 +53,34 @@ const Header: React.FC<HeaderProps> = ({ children }) => {
             w-full
             flex
             items-center
-            justify-between
             h-[4rem]
+            justify-between
             px-6
             select-none
         "
       >
+        {/* mobile view */}
+        <div className="flex md:hidden gap-x-2 items-center">
+          <Link
+            href="/"
+            className="rounded-full p-2 bg-neutral-100 flex items-center justify-center hover:opacity-75 transition"
+          >
+            <HiHome className="text-black" size={20} aria-label="home" />
+          </Link>
+          <Link
+            href="/search"
+            className="rounded-full p-2 bg-neutral-100 flex items-center justify-center hover:opacity-75 transition"
+          >
+            <BiSearch className="text-black" size={20} aria-label="search" />
+          </Link>
+        </div>
         <div
           className="
                 hidden
                 md:flex
                 gap-x-2
                 items-center
+                grow
             "
         >
           <button
@@ -68,25 +97,23 @@ const Header: React.FC<HeaderProps> = ({ children }) => {
           >
             <RxCaretRight size={35} />
           </button>
+
         </div>
 
-        {/* mobile view */}
-        <div className="flex md:hidden gap-x-2 items-center">
-          <Link
-            href="/"
-            className="rounded-full p-2 bg-neutral-100 flex items-center justify-center hover:opacity-75 transition"
-          >
-            <HiHome className="text-black" size={20} aria-label="home"/>
-          </Link>
-          <Link
-            href="/search"
-            className="rounded-full p-2 bg-neutral-100 flex items-center justify-center hover:opacity-75 transition"
-          >
-            <BiSearch className="text-black" size={20} aria-label="search"/>
-          </Link>
-        </div>
+        {(pathname === "/" || pathname.slice(0, 8) === "/search/" || pathname.slice(0, 9) === "/podcast/" || pathname.slice(0, 9) === "/episode/") && (
+            <div className="grow hidden lg:flex">
+              
+              <input
+              type="search"
+              placeholder="Search podcasts or episodes"
+              className=" w-[30rem] rounded-md bg-neutral-100 px-2 py-1 focus:border-neutral-300 border-2 border-transparent outline-none placeholder:text-neutral-500 text-md"
+              onChange={(e) => setValue(e.target.value)}
+              > 
+              </input>
+            </div>
+          )}
 
-        <div className="flex justify-between items-center gap-x-4">
+        <div className="w-[200px] flex justify-end items-center gap-x-4">
           {!isLoadingUser &&
             (user ? (
               <div className="flex gap-x-4 items-center text-sm">

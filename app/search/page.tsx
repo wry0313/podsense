@@ -2,7 +2,7 @@
 import SearchInput from "@/components/SearchInput";
 
 import { Suspense } from "react";
-import SearchContentWrapper from "./components/SearchContext";
+import SearchContent from "./components/SearchContext";
 import LoadingDots from "@/components/LoadingDots";
 
 interface SearchProps {
@@ -15,8 +15,6 @@ const Search = ({ searchParams }: SearchProps) => {
   return (
     <div
       className="
-                bg-white
-                rounded-lg
                 h-full
                 w-full
                 overflow-hidden
@@ -27,7 +25,7 @@ const Search = ({ searchParams }: SearchProps) => {
     >
 
       <div className="px-6 mb-2 flex flex-col gap-y-6">
-        <h1 className="text-black text-3xl font-semibold">Search</h1>
+        <h1 className="text-3xl font-semibold">Search</h1>
         <SearchInput />
       </div>
 
@@ -36,7 +34,7 @@ const Search = ({ searchParams }: SearchProps) => {
           <LoadingDots className="h-full"/>
         }
       >
-        <SearchContentWrapper title={searchParams.title} />
+        <SearchContent title={searchParams.title} />
       </Suspense>
     </div>
   );

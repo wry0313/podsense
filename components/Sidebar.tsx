@@ -96,7 +96,9 @@ const Sidebar: React.FC<SidebarProps> = ({
           <SidebarLibrary pathname={pathname} channelName="sidebar library"/>
         </div>
       </div>
-      <main className="h-full w-full md:w-[calc(100%-300px)] flex-initial">{children}</main>
+      <main className="h-full w-full md:w-[calc(100%-300px)]">
+        {children}
+      </main>
     </div>
   );
 };

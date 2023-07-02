@@ -3,7 +3,6 @@ import PodcastItem from "@/components/PodcastItem";
 
 export default async function Home() {
   const podcasts = await getPodcasts();
-  console.log("render")
   return (
     <div
       className="
