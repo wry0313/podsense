@@ -15,7 +15,7 @@ const Modal: React.FC<ModelProps> = ({
     description,
     children
 }) => {
-    return ( 
+    return (
         <Dialog.Root
             open={isOpen}
             defaultOpen={isOpen}

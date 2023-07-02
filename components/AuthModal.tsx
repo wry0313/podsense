@@ -2,21 +2,17 @@
 
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
-
 import { useEffect } from "react";
 import { toast } from "react-hot-toast";
-
 import useAuthModal from "@/hooks/useAuthModal";
 import { useUser } from "@/hooks/useUser";
-
 import Modal from "./Modal";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-
 
 const AuthModal = () => {
   const supabaseClient = createClientComponentClient();
   const { onClose, isOpen } = useAuthModal();
-  const {user} = useUser();
+  const {user} = useUser()
 
   useEffect(() => {
     if (user && isOpen) {

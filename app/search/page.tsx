@@ -2,7 +2,7 @@
 import SearchInput from "@/components/SearchInput";
 
 import { Suspense } from "react";
-import SearchContentWrapper from "./components/SearchContextWrapper";
+import SearchContentWrapper from "./components/SearchContext";
 import LoadingDots from "@/components/LoadingDots";
 
 interface SearchProps {
