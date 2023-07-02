@@ -1,6 +1,5 @@
 import { Podcast } from "@/types";
 import getPodcasts from "./getPodcasts";
-
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 

@@ -4,6 +4,7 @@ import PageContent from "./component/PageContent";
 import getPodcastTagsByPodcastId from "@/actions/getPodcastTagsByPodcastId";
 import Image from "next/image";
 import ExpandTextBlock from "@/components/ExpandTextBlock";
+import getEpisodesByRange from "@/actions/getEpisodesByRange";
 
 export const revalidate = 0
 
@@ -11,7 +12,12 @@ export default async function Page({ params }: { params: { slug: string } }) {
   const podcast_id = params.slug;
   const podcastData = getPodcastById(podcast_id);
   const tagsData = getPodcastTagsByPodcastId(podcast_id);
-  const [podcast, tags] = await Promise.all([podcastData, tagsData]);
+  const PAGE_COUNT = 50;
+  const episodesDescData = getEpisodesByRange(podcast_id, PAGE_COUNT, false)
+  const episodeAscData = getEpisodesByRange(podcast_id, PAGE_COUNT, true)
+  const [podcast, tags, episodesDesc, episodesAsc] = await Promise.all([podcastData, tagsData, episodesDescData, episodeAscData]);
+
+
   if (!podcast || !podcast.id) {
     return (
       <div
@@ -73,7 +79,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
         </div>
       </div>
 
-      <PageContent podcast_id={podcast_id} />
+      <PageContent podcast_id={podcast_id} episodesDesc={episodesDesc} episodesAsc={episodesAsc} pageCount={PAGE_COUNT}/>
     </div>
   );
 }

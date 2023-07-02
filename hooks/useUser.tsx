@@ -23,7 +23,6 @@ export const MyUserContextProvider = (props: Props) => {
 
     useEffect(() => {
       async function getActiveSession() {
-        console.log(user)
         const {
           data: { session },
         } = await supabase.auth.getSession();

@@ -1,7 +1,5 @@
 import { Episode } from "@/types";
-
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-
 import { cookies } from "next/headers";
 
 const getEpisodesByTitle = async (title: string): Promise<Episode[]> => {
@@ -19,7 +17,6 @@ const getEpisodesByTitle = async (title: string): Promise<Episode[]> => {
     .order("created_at", { ascending: false });
 
   if (error) {
-    console.log(error);
     return [];
   }
 

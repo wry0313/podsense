@@ -10,17 +10,26 @@ import { useDebounce } from "@/hooks/useDebounce";
 
 const MemoEpisodeItem = memo(EpisodeItem);
 
-const PageContent = ({ podcast_id }: { podcast_id: string }) => {
+const PageContent = ({
+  podcast_id,
+  episodesDesc,
+  episodesAsc,
+  pageCount
+}: {
+  podcast_id: string;
+  episodesDesc: Episode[];
+  episodesAsc: Episode[];
+  pageCount: number
+}) => {
+
   const supabase = createClientComponentClient();
-  const PAGE_COUNT = 50;
-  const [loadedEpisodes, setLoadedEpisodes] = useState([] as Episode[]);
   const containerRef = useRef<HTMLDivElement>(null);
-  const [offset, setOffset] = useState(0);
+  const [offset, setOffset] = useState(1);
+  const [loadedEpisodes, setLoadedEpisodes] = useState(episodesDesc);
   const [isLoading, setIsLoading] = useState(false);
   const [isLast, setIsLast] = useState(false);
-
   const [sortAscending, setSortAscending] = useState(false);
-  const [isBottom, setIsBottom] = useState(true); //hard code to true to trigger first time render
+  const [isBottom, setIsBottom] = useState(false); //hard code to true to trigger first time render
 
   useEffect(() => {
     const element = document.querySelector("div#scroll-box") as HTMLDivElement;
@@ -31,21 +40,16 @@ const PageContent = ({ podcast_id }: { podcast_id: string }) => {
   }, []);
 
   const handleScroll = () => {
-    // console.log("scroll")
     if (containerRef.current && typeof window !== "undefined") {
       const container = containerRef.current as HTMLElement;
       const { bottom } = container.getBoundingClientRect();
       const { innerHeight } = window;
-      // console.log(bottom, innerHeight)
       setIsBottom(bottom <= innerHeight + 100);
     }
   };
 
   useEffect(() => {
-    // console.log("is Bottom change deteced: " + isBottom)
-    // console.log("what is isloading: " + isLoading)
     if (isBottom && !isLoading) {
-      // console.log("loading more")
       loadMoreEpisodes(offset);
       setIsBottom(false);
     }
@@ -61,7 +65,6 @@ const PageContent = ({ podcast_id }: { podcast_id: string }) => {
       const element = document.querySelector(
         "div#scroll-box"
       ) as HTMLDivElement;
-      // console.log("REMOVE SCROLL")
       element!.removeEventListener("scroll", handleDebouncedScroll);
     }
   }, [isLast]);
@@ -79,18 +82,18 @@ const PageContent = ({ podcast_id }: { podcast_id: string }) => {
     }
     // Merge new Episodes with all previously loaded
     setLoadedEpisodes((prevEpisodes) => [...prevEpisodes, ...newEpisodes]);
-    // console.log("set is loading false")
     setIsLoading(false);
   };
 
   const fetchEpisodes = async (offset: number) => {
-    // console.log(offset)
-    const from = offset * PAGE_COUNT;
-    let to = from + PAGE_COUNT - 1;
-    // console.log(from, to)
-    const { data } = await supabase!
+    const from = offset * pageCount;
+    const to = from + pageCount - 1;
+    
+    const { data } = await supabase
       .from("episodes")
-      .select("id, title, released_date, description, duration, audio_url, image_url, processed")
+      .select(
+        "id, title, released_date, description, duration, audio_url, image_url, processed"
+      )
       .eq("podcast_id", podcast_id)
       .range(from, to)
       .order("released_date", { ascending: sortAscending });
@@ -100,12 +103,15 @@ const PageContent = ({ podcast_id }: { podcast_id: string }) => {
 
   const toggleSort = () => {
     // betng at the button will trigger one and setisBottom will triger another time
-
-    setIsBottom(true); // hard code to trigger a load
-    setOffset(0);
+    if (sortAscending) {
+      setLoadedEpisodes(episodesDesc);
+    } else {
+      setLoadedEpisodes(episodesAsc);
+    }
+    setIsBottom(false); // hard code to trigger a load
+    setOffset(1);
     setIsLast(false);
     setSortAscending(!sortAscending);
-    setLoadedEpisodes([]);
     setIsLoading(false);
   };
 
@@ -113,7 +119,7 @@ const PageContent = ({ podcast_id }: { podcast_id: string }) => {
     <div ref={containerRef} className="flex flex-col mt-5">
       <ScrollTopButton />
       <button
-        aria-label='sort by time'
+        aria-label="sort by time"
         onClick={toggleSort}
         className="px-4 py-2 font-bold w-fit text-sm mb-4 text-black bg-neutral-100 hover:scale-105 transition rounded-lg"
       >
@@ -121,9 +127,7 @@ const PageContent = ({ podcast_id }: { podcast_id: string }) => {
       </button>
 
       {loadedEpisodes.map((episode, i) => {
-        return (
-            <MemoEpisodeItem  episode={episode} key={i}/>
-        );
+        return <MemoEpisodeItem episode={episode} key={i} />;
       })}
 
       <div className="flex flex-row items-start justify-center h-[4rem] text-sm text-neutral-600">
