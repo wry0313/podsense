@@ -22,7 +22,6 @@ const MediaItem = ({
 }: MediaItemProps) => {
 
   const link = isPodcast ? `/podcast/${data.id}` : `/episode/${data.id}`;
-
   return (
     <Link
       href={link}

@@ -1,10 +1,16 @@
 import { Episode } from "@/types";
-import supabase from "./getSupabaseClient";
+
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+
+import { cookies } from "next/headers";
 
 const getEpisodesByTitle = async (title: string): Promise<Episode[]> => {
   if (!title) {
-    return []
+    return [];
   }
+  const supabase = createServerComponentClient({
+    cookies,
+  });
 
   const { data, error } = await supabase
     .from("episodes")
@@ -13,11 +19,11 @@ const getEpisodesByTitle = async (title: string): Promise<Episode[]> => {
     .order("created_at", { ascending: false });
 
   if (error) {
-    console.log(error)
-    return []
+    console.log(error);
+    return [];
   }
 
-  return (data as Episode[]);
+  return data as Episode[];
 };
 
 export default getEpisodesByTitle;

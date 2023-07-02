@@ -1,8 +1,7 @@
 "use client"
 
-import { useSessionContext } from "@supabase/auth-helpers-react";
 import { useEffect, useState } from "react";
-
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import useAuthModal from "@/hooks/useAuthModal";
 import { useUser } from "@/hooks/useUser";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
@@ -18,7 +17,7 @@ const LikeButton = ({
     defaultIsLiked = false,
 }:LikeButtonProps) => {
 
-    const { supabaseClient} = useSessionContext();
+    const supabase = createClientComponentClient();
 
     const authModal = useAuthModal();
     const { user } = useUser();
@@ -33,7 +32,7 @@ const LikeButton = ({
         }
 
         const fetchData = async () => {
-            const { data, error } = await supabaseClient
+            const { data, error } = await supabase
                 .from('liked_podcasts')
                 .select('*')
                 .eq('user_id', user.id)
@@ -46,7 +45,7 @@ const LikeButton = ({
         }
 
         fetchData()
-    }, [podcast_id, supabaseClient, user])
+    }, [podcast_id, supabase, user])
 
     const Icon = isLiked ? AiFillHeart : AiOutlineHeart
 
@@ -56,7 +55,7 @@ const LikeButton = ({
         }
 
         if (isLiked) {
-            const { error } = await supabaseClient
+            const { error } = await supabase
             .from('liked_podcasts')
             .delete()
             .eq('user_id', user.id)
@@ -68,7 +67,7 @@ const LikeButton = ({
                 setIsLiked(false);
             }
         } else {
-            const { error } = await supabaseClient
+            const { error } = await supabase
             .from('liked_podcasts')
             .insert({
                 podcast_id: podcast_id,

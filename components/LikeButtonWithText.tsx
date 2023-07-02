@@ -1,6 +1,6 @@
 "use client";
 
-import { useSessionContext } from "@supabase/auth-helpers-react";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useEffect, useState } from "react";
 
 import useAuthModal from "@/hooks/useAuthModal";
@@ -15,7 +15,7 @@ interface LikeButtonWithTextProps {
 
 const LikeButtonWithText = ({ podcast_id }: LikeButtonWithTextProps) => {
 
-  const { supabaseClient } = useSessionContext();
+  const supabase = createClientComponentClient();
 
   const authModal = useAuthModal();
   const { user } = useUser();
@@ -31,7 +31,7 @@ const LikeButtonWithText = ({ podcast_id }: LikeButtonWithTextProps) => {
   }
 
     const fetchData = async () => {
-      const { data, error } = await supabaseClient
+      const { data, error } = await supabase
         .from("liked_podcasts")
         .select("*")
         .eq("user_id", user.id)
@@ -44,7 +44,7 @@ const LikeButtonWithText = ({ podcast_id }: LikeButtonWithTextProps) => {
     };
 
     fetchData();
-  }, [podcast_id, supabaseClient, user]);
+  }, [podcast_id, supabase, user]);
 
   const Icon = isLiked ? AiFillHeart : AiOutlineHeart;
 
@@ -54,7 +54,7 @@ const LikeButtonWithText = ({ podcast_id }: LikeButtonWithTextProps) => {
     }
 
     if (isLiked) {
-      const { error } = await supabaseClient
+      const { error } = await supabase
         .from("liked_podcasts")
         .delete()
         .eq("user_id", user.id)
@@ -66,7 +66,7 @@ const LikeButtonWithText = ({ podcast_id }: LikeButtonWithTextProps) => {
         setIsLiked(false);
       }
     } else {
-      const { error } = await supabaseClient.from("liked_podcasts").insert({
+      const { error } = await supabase.from("liked_podcasts").insert({
         podcast_id: podcast_id,
         user_id: user.id,
       });

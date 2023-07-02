@@ -1,47 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
+"use client"
 
-import { Episode } from "@/types";
-import { useSessionContext } from "@supabase/auth-helpers-react";
-import toast from "react-hot-toast";
-
-const useGetEpisodeById = (id?: string) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [episode, setEpisode] = useState<Episode | undefined>(undefined);
-  const { supabaseClient } = useSessionContext();
-
-  useEffect(() => {
-    if (!id) return;
-
-    setIsLoading(true);
-
-    const fetchEpisode = async () => {
-      const { data, error } = await supabaseClient
-        .from("episodes")
-        .select("*")
-        .eq("id", id)
-        .single();
-
-      if (error) {
-        return toast.error(error.message);
-      }
-
-      setEpisode(data as Episode);
-      setIsLoading(false);
-    };
-
-    fetchEpisode();
-  }, [id, supabaseClient]);
-
-  return useMemo(
-    () => ({
-      isLoading,
-      episode,
-    }),
-    [isLoading, episode]
-  );
-};
-
-export default useGetEpisodeById;
 
 
 /**

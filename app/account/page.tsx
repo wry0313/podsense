@@ -1,7 +1,7 @@
 "use client";
 import Button from "@/components/Button";
 import { useUser } from "@/hooks/useUser";
-import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
@@ -10,14 +10,13 @@ export default function Account() {
   const router = useRouter();
   const { isLoadingUser, user } = useUser();
 
-
   useEffect(() => {
     if (!isLoadingUser && !user) {
       router.replace("/");
     }
   }, [isLoadingUser, user, router]);
 
-  const supabaseClient = useSupabaseClient();
+  const supabaseClient = createClientComponentClient();
   // IMPORTANT: we use useSupabaseClient when everything we read are public to read for everyone (unathenticated users)
   // however if something can only be read with authenticated user, we use useSessionContext instead
 

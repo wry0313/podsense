@@ -2,6 +2,9 @@
 import LikeButton from "@/components/LikeButton";
 import MediaItem from "@/components/MediaItem";
 import { Episode, Podcast } from "@/types";
+import { memo } from "react";
+
+const MemoMeidaItem = memo(MediaItem);
 
 const SearchContent = ({
   podcasts,
@@ -36,11 +39,10 @@ const SearchContent = ({
         </div>
       )}
       <div className="flex flex-col gap-y-2 w-full h-fit">
-        {episodes.map((episodes) => (
-          <div key={episodes.id} className="flex items-center gap-x-4 w-full">
+        {episodes.map((episode, i) => (
+          <div key={i} className="flex items-center gap-x-4 w-full">
             <div className="flex-1">
-              
-              <MediaItem data={episodes} isPodcast={false} showProcess={true} highlightPhrase={query} />
+              <MemoMeidaItem data={episode} isPodcast={false} showProcess={true} highlightPhrase={query} />
             </div>
           </div>
         ))}

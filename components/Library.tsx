@@ -27,13 +27,13 @@ const Library = ({ pathname, showLiked = false, channelName, isPage=false}: Libr
   const [isLoading, setIsLoading] = useState(true);
   const supabase = createClientComponentClient();
 
-  const user = useUser();
+  const {user, isLoadingUser} = useUser();
   const auth = useAuthModal();
   const [fetched, setFetched] = useState(false);
   const router = useRouter()
 
   useEffect(() => {
-      if (isPage && !user.isLoadingUser && !user.user) {
+      if (isPage && !isLoadingUser && !user) {
         auth.onOpen();
         router.replace("/");
       }
@@ -44,7 +44,7 @@ const Library = ({ pathname, showLiked = false, channelName, isPage=false}: Libr
     // console.log(user)
     const fetchData = async () => {
       setIsLoading(true);
-      if(user.user) {
+      if(user) {
         const { data } = await supabase
         .from("liked_podcasts")
         .select("*, podcasts(id, title, host, image_url)")
@@ -55,10 +55,10 @@ const Library = ({ pathname, showLiked = false, channelName, isPage=false}: Libr
       }
       setIsLoading(false);
     };
-    if (fetched && !user.accessToken) {
+    if (fetched && !user) {
       setLikedPodcasts([]);
       setFetched(false);
-    } else if (!fetched && user.accessToken) {
+    } else if (!fetched && user) {
       fetchData();
       setFetched(true);
     }
@@ -100,7 +100,7 @@ const Library = ({ pathname, showLiked = false, channelName, isPage=false}: Libr
   return (
     <div className="flex flex-col gap-y-2 mt-4 px-3 h-fit overflow-y-auto">
       {
-        (!user.user && !user.isLoadingUser) ? (
+        (!user && !isLoadingUser) ? (
           <div className="flex justify-center items-center py-4 px-2 shadow-sm bg-neutral-200/20 rounded-md text-md font-semibold text-neutral-500">
           <p>Sign in to access your library</p>
         </div>
