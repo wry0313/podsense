@@ -9,7 +9,6 @@ const MemoMeidaItem = memo(MediaItem);
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const title = decodeURIComponent(params.slug);
-  console.log(title)
   const podcastsData = getPodcastsByTitle(title);
   const episodeData = getEpisodesByTitle(title);
 

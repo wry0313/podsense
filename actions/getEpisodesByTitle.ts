@@ -11,7 +11,10 @@ const getEpisodesByTitle = async (title: string): Promise<Episode[]> => {
   const { data, error } = await supabase
     .from("episodes")
     .select("id, title, image_url, host, processed")
-    .ilike("title", `%${title}%`)
+    .textSearch("title", title, {
+      type: "websearch",
+      config: "english",
+    })
     .order("created_at", { ascending: false });
 
   if (error) {
