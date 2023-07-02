@@ -1,11 +1,8 @@
 import { Podcast } from "@/types";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
+
+import supabase from "./getSupabaseClient";
 
 const getPodcastById = async (id: string): Promise<Podcast> => {
-  const supabase = createServerComponentClient({
-    cookies,
-  });
 
   const { data } = await supabase
     .from("podcasts")

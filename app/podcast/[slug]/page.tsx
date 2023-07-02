@@ -6,7 +6,7 @@ import Image from "next/image";
 import ExpandTextBlock from "@/components/ExpandTextBlock";
 import getEpisodesByRange from "@/actions/getEpisodesByRange";
 
-export const revalidate = 0
+// export const revalidate = 0
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const podcast_id = params.slug;

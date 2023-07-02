@@ -30,9 +30,10 @@ const Library = ({ pathname, showLiked = false, channelName, isPage=false}: Libr
   const {user, isLoadingUser} = useUser();
   const auth = useAuthModal();
   const [fetched, setFetched] = useState(false);
-  const router = useRouter()
+  const router = useRouter();
 
   useEffect(() => {
+    
       if (isPage && !isLoadingUser && !user) {
         auth.onOpen();
         router.replace("/");

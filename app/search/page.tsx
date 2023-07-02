@@ -23,7 +23,7 @@ const Search = ({ searchParams }: SearchProps) => {
                 overflow-y-auto
                 flex
                 flex-col
-            "
+                "
     >
 
       <div className="px-6 mb-2 flex flex-col gap-y-6">

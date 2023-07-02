@@ -5,7 +5,7 @@ import ChatWindow from "@/components/ChatWindow";
 import ExpandTextBlock from "@/components/ExpandTextBlock";
 import ScrollTopButton from "@/components/ScrollTopButton";
 
-export const revalidate = 0
+// export const revalidate = 0
 
 
 export default async function Page({ params }: { params: { slug: string } }) {
@@ -50,7 +50,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
               className="
               w-fit 
               p-6 
-              bg-amber-100
+              bg-white
               lg:translate-x-[110%] 
               lg:group-hover:translate-y-[4.5rem] 
               group-hover:translate-y-[2rem] 

@@ -1,14 +1,12 @@
 import { Episode } from "@/types";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
+
+import supabase from "./getSupabaseClient";
 
 const getEpisodesByTitle = async (title: string): Promise<Episode[]> => {
   if (!title) {
     return [];
   }
-  const supabase = createServerComponentClient({
-    cookies,
-  });
+
 
   const { data, error } = await supabase
     .from("episodes")

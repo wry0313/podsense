@@ -25,7 +25,7 @@ const Player = () => {
         .from("episodes")
         .select("title, host, audio_url, id, image_url")
         .eq("id", player.activeId)
-        .single();
+        .single();    
 
       if (error) {
         return toast.error(error.message);
@@ -36,7 +36,7 @@ const Player = () => {
     };
 
     fetchEpisode();
-  }, [player.activeId, supabase]);
+  }, [player.activeId, supabase]);  
 
   const episodeUrl = episode?.audio_url;
 

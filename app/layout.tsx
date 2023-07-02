@@ -5,7 +5,6 @@ import Header from "@/components/Header";
 import Player from "@/components/Player";
 
 import "./globals.css";
-import "cal-sans";
 
 // import { Inter } from "next/font/google";
 // const font = Inter({  subsets: ["latin"] });
@@ -21,7 +20,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en">  
+     <link
+            rel="preload"
+            href="/fonts/cal-sans.woff2"
+            as="font"
+            type="font/woff2"
+            crossOrigin="anonymous"
+        />
       <body
         // className={
         //   font.className

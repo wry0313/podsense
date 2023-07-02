@@ -1,11 +1,8 @@
 import { Episode } from "@/types";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
+
+import supabase from "./getSupabaseClient";
 
 const getEpisodesByRange = async (podcast_id: string, pageCount: number, sortAscending: boolean): Promise<Episode[]> => {
-  const supabase = createServerComponentClient({
-    cookies,
-  });
 
   const from = 0 * pageCount;
   const to = from + pageCount - 1;
