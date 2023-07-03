@@ -6,17 +6,17 @@ export default async function Home() {
   return (
     <div
       className="
-    rounded-lg
     h-full
     w-full
     overflow-hidden
     overflow-y-auto
     bg-white
+    dark:bg-dark-default
     "
     >
       <div className="mt-2 px-6">
         <div className="flex justify-between items-center">
-          <h1 className="text-black text-2xl font-semibold">Discover New Podcasts</h1>
+          <h1 className="text-2xl font-semibold">Discover New Podcasts</h1>
         </div>
         <div 
       className="

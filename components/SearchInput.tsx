@@ -35,6 +35,7 @@ const SearchInput = () => {
         w-full 
         rounded-md 
         bg-neutral-200
+        dark:bg-dark-200
         border
         border-transparent
         px-3 
@@ -45,6 +46,7 @@ const SearchInput = () => {
         file:text-sm 
         file:font-medium 
         placeholder:text-neutral-400
+        dark:placeholder:text-dark-400
         focus:outline-none"
     />
   );

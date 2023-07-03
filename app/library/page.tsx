@@ -24,7 +24,7 @@ const Library = () => {
   if (user) {
   return (
     
-    <div className="h-full w-full overflow-hidden overflow-y-auto">
+    <div className="h-full w-full overflow-hidden overflow-y-auto dark:bg-dark-default">
       <div className="px-10 mb-5">
         <div className="flex flex-col md:flex-row items-center gap-x-5" >
           <div className="relative h-32 w-32 lg:h-44 lg:w-44">

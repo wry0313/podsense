@@ -32,12 +32,13 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
             rounded-md
             transition
             text-neutral-400
+            dark:text-dark-600
             py-1
             px-2
             mx-3    
             mt-4
             `,
-            active && "text-black bg-neutral-400/5"
+            active && "text-black bg-neutral-100 dark:bg-dark-100 dark:text-white"
             )}
             >
                 {Icon&&<Icon size={30}></Icon>}

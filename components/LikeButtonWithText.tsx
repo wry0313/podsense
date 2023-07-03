@@ -86,7 +86,7 @@ const LikeButtonWithText = ({ podcast_id }: LikeButtonWithTextProps) => {
     <button
     aria-label='like button'
       onClick={handleLike}
-      className="flex flex-row gap-x-2 bg-neutral-100 rounded-md p-1 px-2 w-fit cursor-pointer"
+      className="flex flex-row gap-x-2 bg-neutral-100 dark:bg-dark-100 rounded-md p-1 px-2 w-fit cursor-pointer"
     >
       <div className="hover:opacity-75 transition">
         <Icon color={isLiked ? "#22c55e" : "gray"} size={25} />

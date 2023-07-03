@@ -21,6 +21,7 @@ const Search = ({ searchParams }: SearchProps) => {
                 overflow-y-auto
                 flex
                 flex-col
+                dark:bg-dark-50
                 "
     >
 

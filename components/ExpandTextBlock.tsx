@@ -32,16 +32,16 @@ const TextBlock = ({ htmlText }: { htmlText: string }) => {
       />
 
       {isClamped && !expanded && (
-        <div className="absolute bottom-7 left-0 right-0 bg-gradient-to-t from-white to-transparent h-12 w-full"></div>
+        <div className="absolute bottom-7 left-0 right-0 bg-gradient-to-t from-white dark:from-dark-default to-transparent h-12 w-full"></div>
       )}
 
       {isClamped && (
         <button
           aria-label="expand or collapse text"
-          className="w-full flex flex-row justify-center items-center mt-2"
+          className="w-fit flex flex-row justify-center items-center mt-2 mx-auto"
           onClick={toggleExpanded}
         >
-          <div className="text-neutral-600 bg-neutral-100 rounded-lg px-4">
+          <div className="text-neutral-600 bg-neutral-100 dark:bg-dark-100 rounded-lg px-4">
             <Icon size={28} />
           </div>
         </button>

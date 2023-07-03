@@ -121,7 +121,7 @@ const PageContent = ({
       <button
         aria-label="sort by time"
         onClick={toggleSort}
-        className="px-4 py-2 font-bold w-fit text-sm mb-4 text-black bg-neutral-100 hover:scale-105 transition rounded-lg"
+        className="px-4 py-2 font-bold w-fit text-sm mb-4 bg-neutral-100 dark:bg-dark-100 hover:scale-105 transition rounded-lg"
       >
         {sortAscending ? "Earlist to lastest" : "Latest to earliest"}
       </button>
@@ -130,7 +130,7 @@ const PageContent = ({
         return <MemoEpisodeItem episode={episode} key={i} />;
       })}
 
-      <div className="flex flex-row items-start justify-center h-[4rem] text-sm text-neutral-600">
+      <div className="flex flex-row items-start justify-center h-[4rem] text-sm text-neutral-600 dark:text-dark-600">
         {isLoading ? (
           <div className="animate-pulse font-bold text-xl">...</div>
         ) : isLast ? (

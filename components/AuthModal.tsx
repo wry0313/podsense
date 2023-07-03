@@ -8,11 +8,13 @@ import useAuthModal from "@/hooks/useAuthModal";
 import { useUser } from "@/hooks/useUser";
 import Modal from "./Modal";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { useTheme } from "next-themes";
 
 const AuthModal = () => {
   const supabaseClient = createClientComponentClient();
   const { onClose, isOpen } = useAuthModal();
   const {user} = useUser()
+  const {theme} = useTheme()
 
   useEffect(() => {
     if (user && isOpen) {
@@ -45,7 +47,7 @@ const AuthModal = () => {
             },
           },
         }}
-        theme="light"
+        theme={theme}
         providers={["google", "github"]}
       />
     </Modal>

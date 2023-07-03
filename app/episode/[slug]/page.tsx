@@ -32,7 +32,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
   return (
     <div
       id="scroll-box"
-      className="h-full px-6 bg-white rounded-lg  w-full overflow-hidden overflow-y-auto "
+      className="h-full px-6 bg-white dark:bg-dark-default w-full overflow-hidden overflow-y-auto "
     >
       <div className="flex flex-col">
         <div className="group flex flex-col md:flex-row items-center gap-x-5">
@@ -81,7 +81,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
         </div>
       </div>
 
-      <div className="mb-6">
+      <div className="mt-4 mb-10 max-w-[40rem] mx-auto ">
         {episode.transcript && <ChatWindow episode={episode} />}
       </div>
 
@@ -90,7 +90,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
         {episode.transcript ? (
           <ExpandTextBlock htmlText={episode.transcript} />
         ) : (
-          <p className="text-md mt-3 text-neutral-500">No transcript available yet.</p>
+          <p className="text-md mt-3 text-neutral-500 dark:text-dark-500">No transcript available yet.</p>
         )}
       </div>
 

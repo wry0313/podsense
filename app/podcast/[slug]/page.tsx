@@ -37,7 +37,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
   return (
     <div
       id="scroll-box"
-      className="h-full px-6 bg-white rounded-lg w-full overflow-y-auto"
+      className="h-full px-6 bg-white dark:bg-dark-default w-full overflow-y-auto"
     >
       <div className="flex flex-col">
         <div className="flex flex-col md:flex-row items-top gap-x-5">
@@ -59,7 +59,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
               {tags.map((tag) => (
                 <div
                   key={tag.tag}
-                  className="bg-neutral-100 rounded-md p-1 w-fit cursor-pointer text-sm font-semibold h-fit"
+                  className="bg-neutral-100 dark:bg-dark-100 rounded-md p-1 w-fit cursor-pointer text-sm font-semibold h-fit"
                 >
                   {tag.tag}
                 </div>

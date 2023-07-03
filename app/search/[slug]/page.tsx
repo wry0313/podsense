@@ -18,7 +18,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
     <div className="flex flex-col gap-y-2 w-full px-6 h-full overflow-hidden overflow-y-auto ">
       <div className="flex flex-col text-xl font-bold">Podcasts</div>
       {podcasts.length === 0 ? (
-        <div className=" text-neutral-600">No podcasts found.</div>
+        <div className=" text-neutral-600 dark:text-dark-600">No podcasts found.</div>
       ) : (
         <div className="flex flex-col gap-y-2 w-full h-fit">
           {podcasts.map((podcast) => (

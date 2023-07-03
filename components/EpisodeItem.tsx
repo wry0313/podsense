@@ -28,7 +28,7 @@ const EpisodeItem = ({ episode }: EpisodeItemProps) => {
   return (
     <Link
       href={"/episode/" + episode.id}
-      className="flex items-start gap-x-4 border-t-2 pt-3 pb-6 group hover:bg-neutral-100 cursor-pointer max-w-[1200px]"
+      className="flex items-start gap-x-4 border-t-2 pt-3 pb-6 dark:border-dark-500 group hover:bg-neutral-100 dark:hover:bg-dark-100 cursor-pointer max-w-[1200px]"
     >
 
        
@@ -62,16 +62,16 @@ const EpisodeItem = ({ episode }: EpisodeItemProps) => {
 
       <div className="flex-1">
         <h3 className="text-lg font-semibold overflow-x-clip">{episode.title}</h3>
-        <p className="text-gray-500 overflow-hidden h-[50px]">
+        <p className="text-neutral-500 dark:text-dark-500 overflow-hidden h-[50px]">
           {episode.description.replace(/<[^>]+>/g, "").replace(/&[^;]+;/g, "")}
         </p>
         <div className="flex flex-row items-baseline gap-x-2 text-sm mt-1">
-          <p className="text-gray-500">
+          <p className="text-neutral-500 dark:text-dark-500">
             {convertSecondsToTime(episode.duration)}
           </p>
-          <p className="text-gray-500">{episode.released_date}</p>
+          <p className="text-neutral-500 dark:text-dark-500">{episode.released_date}</p>
           {episode.processed && (
-            <p className="bg-neutral-50 rounded-md shadow-sm text-sm w-fit p-1 text-green-600">
+            <p className="bg-neutral-50 dark:bg-dark-50 rounded-md shadow-sm text-sm w-fit p-1 text-green-600">
               ✅ chatbot available
             </p>
           )}

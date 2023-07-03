@@ -28,7 +28,7 @@ const SearchContentWrapper = async ({
         <div className="flex flex-col gap-y-2 w-full px-6">
         <div className="flex flex-col text-xl font-bold">Podcasts</div>
         {podcasts.length === 0 ? (
-          <div className=" text-neutral-600">No podcasts found.</div>
+          <div className=" text-neutral-600 dark:text-dark-600">No podcasts found.</div>
         ) : (
           <div className="flex flex-col gap-y-2 w-full h-fit">
             {podcasts.map((podcast) => (
