@@ -65,13 +65,13 @@ const Header: React.FC<HeaderProps> = ({ children }) => {
             href="/"
             className="rounded-full p-2 bg-neutral-100 dark:bg-dark-100 flex items-center justify-center hover:opacity-75 transition"
           >
-            <HiHome className="text-black" size={20} aria-label="home" />
+            <HiHome className="text-black dark:text-white" size={20} aria-label="home" />
           </Link>
           <Link
             href="/search"
             className="rounded-full p-2 bg-neutral-100 dark:bg-dark-100 flex items-center justify-center hover:opacity-75 transition"
           >
-            <BiSearch className="text-black" size={20} aria-label="search" />
+            <BiSearch className="text-black dark:text-white" size={20} aria-label="search" />
           </Link>
         </div>
         <div
