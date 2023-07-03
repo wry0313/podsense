@@ -38,6 +38,7 @@ const EpisodeItem = ({ episode }: EpisodeItemProps) => {
                 relative
                 aspect-square
                 min-w-[112px]
+                hidden sm:block
                 ml-4
             "
       >
@@ -51,7 +52,7 @@ const EpisodeItem = ({ episode }: EpisodeItemProps) => {
         episode={episode}/>
 
         <Image
-          className="rounded-md"
+          className="rounded-md "
           src={episode.image_url}
           alt={episode.title}
           width={112}
@@ -60,7 +61,7 @@ const EpisodeItem = ({ episode }: EpisodeItemProps) => {
       </div>
 
       <div className="flex-1">
-        <h3 className="text-lg font-semibold">{episode.title}</h3>
+        <h3 className="text-lg font-semibold overflow-x-clip">{episode.title}</h3>
         <p className="text-gray-500 overflow-hidden h-[50px]">
           {episode.description.replace(/<[^>]+>/g, "").replace(/&[^;]+;/g, "")}
         </p>
