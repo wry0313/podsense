@@ -55,7 +55,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
               {podcast.title}
             </h1>
             <p className="text-xl font-semibold">{podcast.host}</p>
-            <div className="flex flex-row gap-x-2 overflow-x-auto flex-wrap">
+            <div className="flex flex-row gap-2 overflow-x-auto flex-wrap">
               {tags.map((tag) => (
                 <div
                   key={tag.tag}
