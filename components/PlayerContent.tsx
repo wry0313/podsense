@@ -67,7 +67,7 @@ const PlayerContent = ({
   }, [sound, isSliding]);
 
   const handleSeek = debounce(2000, (value) => {
-    sound.seek(value);
+    sound?.seek(value);
     setIsSliding(false);
     setIsLoading(false);
   });
@@ -139,7 +139,7 @@ const PlayerContent = ({
           <AiFillStepBackward
             onClick={onBackward}
             size={30}
-            className="text-black cursor-pointer hover:text-neutral-400 transition "
+            className="cursor-pointer hover:text-neutral-400 dark:hover:text-dark-400 transition "
           />
           <div
             onClick={handlePlay}
@@ -150,7 +150,8 @@ const PlayerContent = ({
                         h-10
                         w-10
                         rounded-full
-                        bg-amber-200
+                        bg-neutral-300
+                        dark:bg-neutral-100
                         p-1
                         cursor-pointer
                     "
@@ -160,11 +161,11 @@ const PlayerContent = ({
           <AiFillStepForward
             onClick={onForward}
             size={30}
-            className="text-black cursor-pointer hover:text-neutral-400 transition "
+            className="cursor-pointer hover:text-neutral-400 dark:hover:text-dark-400 transition "
           />
         </div>
 
-        <div className="flex flex-row gap-x-2 items-center text-sm text-neutral-600">
+        <div className="flex flex-row gap-x-2 items-center text-sm text-neutral-600 dark:text-dark-800">
           {convertSecondsToHMS(currTime)}
 
           <Slider

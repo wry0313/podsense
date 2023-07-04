@@ -11,14 +11,12 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 const Player = () => {
   const player = usePlayer();
-  const [isLoading, setIsLoading] = useState(false);
   const [episode, setEpisode] = useState<Episode | undefined>(undefined);
   const supabase = createClientComponentClient();
   useEffect(() => {
     if (!player.activeId) {
       return;
     }
-    setIsLoading(true);
 
     const fetchEpisode = async () => {
       const { data, error } = await supabase
@@ -32,7 +30,6 @@ const Player = () => {
       }
 
       setEpisode(data as Episode);
-      setIsLoading(false);
     };
 
     fetchEpisode();
@@ -55,6 +52,7 @@ const Player = () => {
         fixed
         bottom-0
         bg-neutral-100
+        dark:bg-dark-100
         w-full
         py-2
         h-[90px]
