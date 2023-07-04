@@ -65,13 +65,21 @@ const Header: React.FC<HeaderProps> = ({ children }) => {
             href="/"
             className="rounded-full p-2 bg-neutral-100 dark:bg-dark-100 flex items-center justify-center hover:opacity-75 transition"
           >
-            <HiHome className="text-black dark:text-white" size={20} aria-label="home" />
+            <HiHome
+              className="text-black dark:text-white"
+              size={20}
+              aria-label="home"
+            />
           </Link>
           <Link
             href="/search"
             className="rounded-full p-2 bg-neutral-100 dark:bg-dark-100 flex items-center justify-center hover:opacity-75 transition"
           >
-            <BiSearch className="text-black dark:text-white" size={20} aria-label="search" />
+            <BiSearch
+              className="text-black dark:text-white"
+              size={20}
+              aria-label="search"
+            />
           </Link>
         </div>
         <div
@@ -99,10 +107,11 @@ const Header: React.FC<HeaderProps> = ({ children }) => {
           </button>
         </div>
 
-        {(pathname === "/" ||
-          pathname.slice(0, 8) === "/search/" ||
-          pathname.slice(0, 9) === "/podcast/" ||
-          pathname.slice(0, 9) === "/episode/") && (
+        {(pathname.startsWith("/") ||
+          pathname.startsWith("/search/") ||
+          pathname.startsWith("/podcast/") ||
+          pathname.startsWith("/episode/"))
+        && (
           <div className="grow hidden xl:flex">
             <input
               type="search"
@@ -116,19 +125,22 @@ const Header: React.FC<HeaderProps> = ({ children }) => {
         <div className="w-[250px] flex-row flex items-center justify-end">
           <DarkModeToggle />
 
-            {!isLoadingUser &&
-              (user ? (
-                <div className="ml-5 ">
-                  <Button onClick={() => router.push("/account")} className="justify-end">
-                    <FaUserAlt size={20} />
-                  </Button>
-                </div>
-              ) : (
-                <>
-                  <div className="ml-3">
-                    <Button
-                      onClick={authModal.onOpen}
-                      className="
+          {!isLoadingUser &&
+            (user ? (
+              <div className="ml-5 ">
+                <Button
+                  onClick={() => router.push("/account")}
+                  className="justify-end"
+                >
+                  <FaUserAlt size={20} />
+                </Button>
+              </div>
+            ) : (
+              <>
+                <div className="ml-3">
+                  <Button
+                    onClick={authModal.onOpen}
+                    className="
 
                           bg-transparent
                           text-neutral-700
@@ -136,22 +148,21 @@ const Header: React.FC<HeaderProps> = ({ children }) => {
                           dark:text-dark-800
                           font-medium
                           "
-                    >
-                      Sign up
-                    </Button>
-                  </div>
-                  <div>
-                    <Button onClick={authModal.onOpen} className="px-6 py-2">
-                      Log in
-                    </Button>
-                  </div>
-                </>
-              ))}
-          </div>
+                  >
+                    Sign up
+                  </Button>
+                </div>
+                <div>
+                  <Button onClick={authModal.onOpen} className="px-6 py-2">
+                    Log in
+                  </Button>
+                </div>
+              </>
+            ))}
         </div>
+      </div>
 
-
-      <div className="h-[calc(100%-64px)] dark:bg-dark-default">{children}</div>
+      <div className="h-full sm:h-[calc(100%-64px)] dark:bg-dark-default">{children}</div>
     </>
   );
 };
