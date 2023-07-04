@@ -107,7 +107,7 @@ const Header: React.FC<HeaderProps> = ({ children }) => {
           </button>
         </div>
 
-        {(pathname.startsWith("/") ||
+        {(pathname === "/" ||
           pathname.startsWith("/search/") ||
           pathname.startsWith("/podcast/") ||
           pathname.startsWith("/episode/"))

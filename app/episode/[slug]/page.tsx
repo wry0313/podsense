@@ -81,7 +81,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
         </div>
       </div>
 
-      <div className="mt-4 mb-10 max-w-[40rem] mx-auto ">
+      <div className="mt-4 mb-10 max-w-[40rem]">
         {episode.transcript && <ChatWindow episode={episode} />}
       </div>
 

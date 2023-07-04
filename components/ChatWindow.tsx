@@ -50,9 +50,9 @@ export default function ChatWindow({episode} : {episode: Episode}) {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full bg-neutral-50 dark:bg-dark-50 rounded-lg p-5 shadow-sm">
       <p className="text-2xl font-bold text-neutral-900 dark:text-dark-900 mb-2">
-        Hello! I am {episode.host} AI. I can answer your questions base on the specifics details of this episode.
+        Hello! I am {episode.host} AI. I can answer your questions base on the specific details of this episode.
       </p>
       <div className="flex flex-row gap-x-6">
       <div className="relative h-20 w-20 lg:h-32 lg:w-32 flex-none">
