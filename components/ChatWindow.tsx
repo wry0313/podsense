@@ -89,7 +89,7 @@ export default function ChatWindow({ episode }: { episode: Episode }) {
   return (
     <div className="w-full bg-neutral-100 dark:bg-dark-100 rounded-lg p-5 shadow">
 
-        <div ref={scrollableDivRef} id="hide-scrollbar" className="overflow-y-auto h-[15rem]">
+        <div ref={scrollableDivRef} id="hide-scrollbar" className="overflow-y-auto h-[17rem]">
           {chatHistory &&
             chatHistory.map((msg, i) => (
               <ChatMessage key={i} message={msg} episode={episode} />
