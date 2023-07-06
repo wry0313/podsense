@@ -21,7 +21,7 @@ const AuthModal = () => {
       toast.success("Logged in successfully");
       onClose();
     }
-  }, [user]);
+  }, [user, isOpen, onClose]);
 
   const onChange = (open: boolean) => {
     if (!open) {

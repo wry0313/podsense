@@ -5,7 +5,7 @@ import { AiFillStepBackward, AiFillStepForward } from "react-icons/ai";
 import { HiSpeakerWave, HiSpeakerXMark } from "react-icons/hi2";
 import { Episode } from "@/types";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useMemo } from "react";
 
 import MediaItem from "./MediaItem";
 import LikeButton from "./LikeButton";
@@ -97,6 +97,8 @@ const PlayerContent = ({ episode }: { episode: Episode }) => {
     seekTo(newTime);
   };
 
+  const memoizedDuration = useMemo(() => convertSecondsToHMS(duration), [duration])
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-3 h-full">
       <audio ref={audioRef}></audio>
@@ -172,7 +174,7 @@ const PlayerContent = ({ episode }: { episode: Episode }) => {
             step={1}
           />
 
-          {convertSecondsToHMS(duration)}
+          {memoizedDuration}
         </div>
       </div>
       <div className="hidden sm:flex w-full justify-end pr-2">

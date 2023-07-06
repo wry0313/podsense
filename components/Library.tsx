@@ -50,7 +50,7 @@ const Library = ({ pathname, showLiked = false, channelName}: LibraryProps) => {
       fetchData();
       setFetched(true);
     }
-  }, [user]);
+  }, [user, fetched, supabase]);
 
   useEffect(() => {
     const addPodcast = async (newPodcastId : string) => {
@@ -83,7 +83,7 @@ const Library = ({ pathname, showLiked = false, channelName}: LibraryProps) => {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [supabase, setLikedPodcasts, likedPodcasts]);
+  }, [supabase, setLikedPodcasts, likedPodcasts, channelName]);
 
   return (
     <div className="flex flex-col gap-y-2 mt-4 px-3 h-fit overflow-y-auto">

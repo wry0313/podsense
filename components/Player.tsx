@@ -36,7 +36,7 @@ const Player = () => {
     };
 
     fetchEpisode();
-  }, [player.activeId, supabase]);  
+  }, [player.activeId, supabase, player]);  
 
   const episodeUrl = episode?.audio_url;
 

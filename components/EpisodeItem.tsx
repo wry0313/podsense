@@ -50,8 +50,8 @@ const EpisodeItem = ({ episode }: EpisodeItemProps) => {
 
         <Image
           className="rounded-md "
-          src={episode.image_url}
-          alt={episode.title}
+          src={episode.image_url!}
+          alt={episode.title!}
           width={112}
           height={112}
         />
@@ -60,11 +60,11 @@ const EpisodeItem = ({ episode }: EpisodeItemProps) => {
       <div className="flex-1">
         <h3 className="text-lg font-semibold overflow-x-clip">{episode.title}</h3>
         <p className="text-neutral-500 dark:text-dark-500 overflow-hidden h-[50px]">
-          {episode.description.replace(/<[^>]+>/g, "").replace(/&[^;]+;/g, "")}
+          {episode.description?.replace(/<[^>]+>/g, "").replace(/&[^;]+;/g, "")}
         </p>
         <div className="flex flex-row items-baseline gap-x-2 text-sm mt-1">
           <p className="text-neutral-500 dark:text-dark-500">
-            {convertSecondsToTime(episode.duration)}
+            {convertSecondsToTime(episode.duration!)}
           </p>
           <p className="text-neutral-500 dark:text-dark-500">{episode.released_date}</p>
           {episode.processed && (

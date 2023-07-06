@@ -2,7 +2,7 @@
 
 import EpisodeItem from "@/components/EpisodeItem";
 import { Episode } from "@/types";
-import { useRef, useState, useEffect, useCallback, memo } from "react";
+import { useRef, useState, useEffect, memo } from "react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 import ScrollTopButton from "@/components/ScrollTopButton";
@@ -44,6 +44,7 @@ const PageContent = ({
       const container = containerRef.current as HTMLElement;
       const { bottom } = container.getBoundingClientRect();
       const { innerHeight } = window;
+      console.log(bottom, innerHeight)
       setIsBottom(bottom <= innerHeight + 100);
     }
   };
@@ -55,10 +56,7 @@ const PageContent = ({
     }
   }, [isBottom]);
 
-  const handleDebouncedScroll = useCallback(
-    useDebounce(() => handleScroll(), 200),
-    []
-  );
+  const handleDebouncedScroll = useDebounce(() => handleScroll(), 200)
 
   useEffect(() => {
     if (isLast) {
