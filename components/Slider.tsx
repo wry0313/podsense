@@ -37,10 +37,10 @@ const Slider = ({
             step={step}
             aria-label={ariaLabel}
         >
-            <RadixSlider.Track className="relative grow rounded-full h-[4px] bg-white dark:bg-neutral-500">
-                <RadixSlider.Range className={"absolute bg-black dark:bg-white rounded-full h-full"} />
+            <RadixSlider.Track className="relative grow rounded-full h-[5px] bg-neutral-300 dark:bg-neutral-500">
+                <RadixSlider.Range className={"absolute bg-black dark:bg-white group-hover:bg-sky-600 rounded-full h-full"} />
             </RadixSlider.Track>
-            <RadixSlider.Thumb className="invisible group-hover:visible block w-[10px] h-[10px] bg-amber-200 shadow-md rounded-2xl" aria-label="Volume" />
+            <RadixSlider.Thumb className="invisible group-hover:visible block w-[12px] h-[12px] bg-sky-600 shadow-md rounded-2xl" aria-label="Volume" />
         </RadixSlider.Root>
      );
 }

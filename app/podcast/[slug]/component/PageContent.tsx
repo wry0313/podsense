@@ -44,7 +44,6 @@ const PageContent = ({
       const container = containerRef.current as HTMLElement;
       const { bottom } = container.getBoundingClientRect();
       const { innerHeight } = window;
-      console.log(bottom, innerHeight)
       setIsBottom(bottom <= innerHeight + 100);
     }
   };

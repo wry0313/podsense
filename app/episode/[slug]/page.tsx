@@ -7,7 +7,7 @@ import ScrollTopButton from "@/components/ScrollTopButton";
 import Transcript from "@/components/Transcript";
 import { Json } from "@/types";
 
-export const revalidate = 0
+// export const revalidate = 0
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const episode_id = params.slug;
@@ -48,7 +48,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
               fill
             />
             <PlayButton
-              episode={episode}
+              episode_id={episode_id}
+              podcast_id={episode.podcast_id!}
               className="
               w-fit 
               p-6 
@@ -91,7 +92,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
         <p className="font-semibold text-2xl mt-3">Episode Transcript</p>
         {episode.transcript ? (
           // <ExpandTextBlock htmlText={episode.transcript || ''} />
-          <Transcript transcript={episode.transcript as Json[]} episode_id={episode.id}/>
+          <Transcript transcript={episode.transcript as Json[]} episode_id={episode.id} podcast_id={episode.podcast_id!}/>
         ) : (
           <p className="text-md mt-3 text-neutral-500 dark:text-dark-500">No transcript available yet.</p>
         )}

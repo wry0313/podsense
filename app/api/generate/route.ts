@@ -23,10 +23,6 @@ const openAIConfig = new Configuration({
 
 export const runtime = 'nodejs' // 'nodejs' (default) | 'edge'
 
-const numTokens = (text: string) => {
-  return 0;
-};
-
 export async function POST(req: Request): Promise<Response | undefined> {
   try {
     const { query, namespace } = (await req.json()) as {
@@ -61,16 +57,14 @@ export async function POST(req: Request): Promise<Response | undefined> {
     };
     const queryResponse = await index.query({ queryRequest });
 
-    const introduction =
+    let message =
       "use the below transcript from a podcast interview to answer the question. if the exact answer cannot be found, use the transcript to help you answer the question. incorporate the text as quotation into your answer.";
-    const question = "\n\nQuestion: " + query;
-    let message = introduction;
     if (queryResponse["matches"]) {
       for (let vectorObj of queryResponse["matches"]) {
         message += "\n########\n" + (vectorObj["metadata"] as { text: string })["text"];
       }
     }
-    message = message + question;
+    message += "\n\nQuestion: " + query;
     console.log(message)
     const payload: OpenAIStreamPayload = {
       model: GPT_MODEL,

@@ -10,7 +10,7 @@ const getEpisodesByRange = async (podcast_id: string, pageCount: number, sortAsc
   const { data, error } = await supabase
   .from("episodes")
   .select(
-    "id, title, released_date, description, duration, audio_url, image_url, processed"
+    "id, title, released_date, description, duration, audio_url, image_url, processed, podcast_id"
   )
   .eq("podcast_id", podcast_id)
   .range(from, to)

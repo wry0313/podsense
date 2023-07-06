@@ -65,7 +65,6 @@ const Sidebar: React.FC<SidebarProps> = ({
         bg-neutral-50
         dark:bg-dark-50
         select-none
-        shadow-md
         "
       >
         <Link 

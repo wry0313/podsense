@@ -5,7 +5,7 @@ import MediaItem from "./MediaItem";
 
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, memo } from "react";
 import { useUser } from "@/hooks/useUser";
 import LoadingDots from "./LoadingDots";
 import LikeButton from "./LikeButton";
@@ -15,7 +15,6 @@ interface LibraryProps {
   showLiked?: boolean;
   channelName: string;
 }
-
 
 //https://github.com/supabase/supabase/blob/master/examples/auth/nextjs/app/realtime-posts.tsx
 const Library = ({ pathname, showLiked = false, channelName}: LibraryProps) => {
@@ -29,7 +28,6 @@ const Library = ({ pathname, showLiked = false, channelName}: LibraryProps) => {
 
 //https://devtrium.com/posts/async-functions-useeffect
   useEffect(() => {
-    // console.log(user)
     const fetchData = async () => {
       setIsLoading(true);
       if(user) {
@@ -60,7 +58,7 @@ const Library = ({ pathname, showLiked = false, channelName}: LibraryProps) => {
       .eq('id', newPodcastId)
       .single();
 
-      setLikedPodcasts((likedPodcasts) => [...likedPodcasts, data]);
+      setLikedPodcasts((likedPodcasts) => [data, ...likedPodcasts]);
     };
     const channel = supabase
       .channel(channelName)
@@ -107,7 +105,6 @@ const Library = ({ pathname, showLiked = false, channelName}: LibraryProps) => {
          className="overflow-hidden">
            <MediaItem
             data={podcast}
-            
             isPodcast={true}
             active={pathname === "/podcast/" + podcast.id}
           />

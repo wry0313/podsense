@@ -2,7 +2,7 @@ import { Json } from "@/types_db";
 import { convertSecondsToHMS } from "@/utils/timeUtils";
 import SeekButton from "./seekButton";
 
-const Transcript = ({ transcript, episode_id }: { transcript: Json[], episode_id : string }) => {
+const Transcript = ({ transcript, episode_id, podcast_id }: { transcript: Json[], episode_id : string, podcast_id: string}) => {
   const transcriptObj = JSON.parse(transcript?.toString() || '{}');
   return (
     <div>
@@ -18,6 +18,7 @@ const Transcript = ({ transcript, episode_id }: { transcript: Json[], episode_id
             <SeekButton 
               seekTime={item?.start}
               episode_id={episode_id}
+              podcast_id={podcast_id}
               />
           </div>
         );

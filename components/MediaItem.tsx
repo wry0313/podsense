@@ -1,5 +1,6 @@
 "use client";
 
+import usePlayer from "@/hooks/usePlayer";
 import { Episode, Podcast } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
@@ -21,6 +22,11 @@ const MediaItem = ({
   highlightPhrase = "",
 }: MediaItemProps) => {
 
+  const player = usePlayer();
+
+  const podcastActive = player.podcast_id === data.id;
+  const playing = podcastActive && player.playing;
+
   const link = isPodcast ? `/podcast/${data.id}` : `/episode/${data.id}`;
   return (
     <Link
@@ -36,7 +42,9 @@ const MediaItem = ({
         p-2
         rounded-md
             `,
-        active && "bg-neutral-400/10"
+        active  && "bg-neutral-400/10",
+        podcastActive && "text-sky-700",
+        playing && "bg-sky-100",
       )}
     >
       <div
@@ -66,8 +74,8 @@ const MediaItem = ({
           By {data.host}
         </p>
         {showProcess && !isPodcast && (data as Episode).processed && (
-          <p className="bg-neutral-50 px-1 rounded-md shadow-sm text-sm w-fit  text-green-600">
-            ✅ chatbot available
+          <p className="bg-neutral-50 px-1 rounded-md shadow-sm text-sm w-fit font-bold text-sky-600">
+            🤖 chatbot available
           </p>
         )}
       </div>

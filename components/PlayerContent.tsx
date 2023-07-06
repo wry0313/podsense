@@ -5,7 +5,7 @@ import { AiFillStepBackward, AiFillStepForward } from "react-icons/ai";
 import { HiSpeakerWave, HiSpeakerXMark } from "react-icons/hi2";
 import { Episode } from "@/types";
 
-import { useEffect, useState, useRef, useMemo } from "react";
+import { useEffect, useState, useRef, useMemo, memo } from "react";
 
 import MediaItem from "./MediaItem";
 import LikeButton from "./LikeButton";
@@ -14,10 +14,13 @@ import Slider from "./Slider";
 import { convertSecondsToHMS } from "@/utils/timeUtils";
 import usePlayer from "@/hooks/usePlayer";
 
+const MemoMediaItem = memo(MediaItem);
+const MemoLikeButton = memo(LikeButton);
+
 const PlayerContent = ({ episode }: { episode: Episode }) => {
   const player = usePlayer();
   const [volume, setVolume] = useState(1);
-  const [isPlaying, setIsPlaying] = useState(false);
+  // const [isPlaying, setIsPlaying] = useState(false);
   const [currTime, setCurrTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isSliding, setIsSliding] = useState(false);
@@ -56,14 +59,14 @@ const PlayerContent = ({ episode }: { episode: Episode }) => {
 
   const play = () => {
     audioRef.current!.play();
-    setIsPlaying(true);
+    player.setPlaying(true);
   };
   const pause = () => {
     audioRef.current!.pause();
-    setIsPlaying(false);
+    player.setPlaying(false);
   };
   const handlePlay = () => {
-    isPlaying ? pause() : play();
+    player.playing ? pause() : play();
   };
 
   const toggleMute = () => {
@@ -75,7 +78,7 @@ const PlayerContent = ({ episode }: { episode: Episode }) => {
     setVolume(volume);
   };
 
-  const Icon = isPlaying ? BsPauseFill : BsPlayFill;
+  const Icon = player.playing ? BsPauseFill : BsPlayFill;
   const VolumeIcon = volume === 0 ? HiSpeakerXMark : HiSpeakerWave;
 
   const onForward = () => {
@@ -105,9 +108,9 @@ const PlayerContent = ({ episode }: { episode: Episode }) => {
       {episode ? (
         <div className="hidden sm:flex w-full justify-cente pr-10">
           <div className="flex flex-col items-center mr-4 max-w-[300px] overflow-hidden">
-            <MediaItem data={episode} isPodcast={false} />
+            <MemoMediaItem data={episode} isPodcast={false} />
           </div>
-          <LikeButton podcast_id={episode.podcast_id!} />
+          <MemoLikeButton podcast_id={episode.podcast_id!} />
         </div>
       ) : (
         <div className="mr-4 max-w-[280px]"></div>

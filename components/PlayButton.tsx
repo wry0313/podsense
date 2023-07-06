@@ -1,39 +1,60 @@
 "use client"
 
 import useOnPlay from "@/hooks/useOnPlay"
-import { Episode } from "@/types"
-import { FaPlay } from "react-icons/fa"
+import usePlayer from "@/hooks/usePlayer"
+import { FaPlay, FaPause } from "react-icons/fa"
 import { twMerge } from "tailwind-merge"
-
 
 const PlayButton = ({
     className,
-    episode,
+    episode_id,
+    podcast_id,
     size = 20
 } : {
     className?: string
-    episode: Episode
+    episode_id: string
+    podcast_id: string
     size?: number
 }) => {
+    const player = usePlayer();
     const onPlay = useOnPlay();
+
+    const handleClick = () => {
+        if (player.activeId === episode_id) {
+            if (player.playing) {
+                player.audioRef!.current!.pause();
+                player.setPlaying(false);
+            } else {
+                player.audioRef!.current!.play();
+                player.setPlaying(true);
+            }
+        } else {
+            onPlay(episode_id, podcast_id);
+        }
+    }
+
     return (
         <button
         aria-label='play'
-        onClick={() => onPlay(episode.id)}
+        onClick={handleClick}
         className={twMerge(`
         transition
-        opacity-0
         rounded-full
         flex
         items-center
         bg-white
         p-4
         drop-shadow-md
+        opacity-0
         group-hover:opacity-100
-        group-hover:translate-y-0
         `, className)}
         >
-            <FaPlay className="text-black" size={size}/>
+            
+            {player.activeId === episode_id && player.playing ? (
+                <FaPause className="text-black" size={size}/>
+            ) : (
+                <FaPlay className="text-black" size={size}/>
+            )}
         </button>
     )
 }

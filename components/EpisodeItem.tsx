@@ -2,29 +2,19 @@ import Image from "next/image";
 import { Episode } from "@/types";
 import PlayButton from "./PlayButton";
 import Link from "next/link";
+import { convertSecondsToTime } from "@/utils/timeUtils";
 
 interface EpisodeItemProps {
   episode: Episode;
 }
 
-function convertSecondsToTime(seconds: number) {
-  const hours = Math.floor(seconds / 3600);
-  const minutes = Math.floor((seconds % 3600) / 60);
-  const remainingSeconds = seconds % 60;
-  let result = "";
-  if (hours > 0) {
-    result += hours + " hr ";
-  }
-  if (minutes > 0) {
-    result += minutes + " min ";
-  }
-  if (hours === 0 && minutes === 0) {
-    result += remainingSeconds + " sec";
-  }
-  return result.trim();
-}
 
 const EpisodeItem = ({ episode }: EpisodeItemProps) => {
+
+  const handlePlayClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.preventDefault();
+  };
+
   return (
     <Link
       href={"/episode/" + episode.id}
@@ -39,6 +29,8 @@ const EpisodeItem = ({ episode }: EpisodeItemProps) => {
                 ml-4
             "
       >
+       
+        <div onClick={handlePlayClick}>
         <PlayButton 
         className="
         mt-[-52px]
@@ -46,7 +38,10 @@ const EpisodeItem = ({ episode }: EpisodeItemProps) => {
         translate-y-24
         group-hover:translate-y-20
         "
-        episode={episode}/>
+        episode_id={episode.id!}
+        podcast_id={episode.podcast_id!}
+        />
+        </div>
 
         <Image
           className="rounded-md "
@@ -68,8 +63,8 @@ const EpisodeItem = ({ episode }: EpisodeItemProps) => {
           </p>
           <p className="text-neutral-500 dark:text-dark-500">{episode.released_date}</p>
           {episode.processed && (
-            <p className="bg-neutral-50 dark:bg-dark-50 rounded-md shadow-sm text-sm w-fit p-1 text-green-600">
-              ✅ chatbot available
+            <p className="bg-neutral-50 dark:bg-dark-50 rounded-md shadow-sm text-sm font-bold w-fit p-1 text-sky-600">
+             🤖 chatbot available
             </p>
           )}
         </div>
