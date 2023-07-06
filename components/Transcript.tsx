@@ -17,7 +17,7 @@ const Transcript = ({
       {transcript.map((item: any) => {
         return (
           <div
-            className="mt-5 flex flex-col gap-y-1 items-start"
+            className="mt-5 flex flex-col gap-y-1 items-start group"
             key={item?.start}
             id={item?.start}
           >
@@ -28,7 +28,7 @@ const Transcript = ({
                 podcast_id={podcast_id}
               />
               <div
-                className="flex flex-row gap-x-2 select-none cursor-pointer text-sm font-semibold h-fit"
+                className="flex flex-row gap-x-2 select-none cursor-pointer text-sm font-semibold h-fit opacity-0 group-hover:opacity-100 transition"
               >
                 <div
                   className="flex flex-row gap-x-1 text-neutral-500 hover:text-sky-500"
