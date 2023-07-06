@@ -10,7 +10,7 @@ export default function ChatWindow({ episode }: { episode: Episode }) {
   const [chatHistory, setChatHistory] = useState<Message[]>([
     {
       isUser: false,
-      text: "hey there! I'm " + episode.host + " AI. I am here to help you answer any question about this episode!"
+      text: "Hey there! I'm " + episode.host + " AI. I am here to help you answer any question about this episode!"
     },
   ]);
 
@@ -43,6 +43,8 @@ export default function ChatWindow({ episode }: { episode: Episode }) {
       body: JSON.stringify({
         query: input,
         namespace: episode.id,
+        host: episode.host,
+        title: episode.title,
       }),
     });
 

@@ -21,13 +21,15 @@ const openAIConfig = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-export const runtime = 'nodejs' // 'nodejs' (default) | 'edge'
+export const runtime = 'edge' // 'nodejs' (default) | 'edge'
 
 export async function POST(req: Request): Promise<Response | undefined> {
   try {
-    const { query, namespace } = (await req.json()) as {
+    const { query, namespace, host, title } = (await req.json()) as {
       query?: string;
       namespace?: string;
+      host?: string;
+      title?: string;
     };
     if (!query || !namespace) {
       return new Response("no query or namespace included", { status: 400 });
@@ -54,7 +56,7 @@ export async function POST(req: Request): Promise<Response | undefined> {
     const queryResponse = await index.query({ queryRequest });
 
     let message =
-      "use the below transcript from a podcast interview to answer the question. if the exact answer cannot be found, use the transcript to help you answer the question. incorporate the text as quotation into your answer.";
+      "Your job is to pretend to be " + host + " You are a podcast host and your purpose is to answer questions about an episode of your podcast. The title of the episode is " + title +  "Use the below transcript of the episode to answer the question. If the exact answer cannot be found, use the transcript to help you answer the question. incorporate the text as quotation into your answer.";
     if (queryResponse["matches"]) {
       for (let vectorObj of queryResponse["matches"]) {
         message += "\n########\n" + (vectorObj["metadata"] as { text: string })["text"];
