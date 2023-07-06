@@ -12,6 +12,7 @@ export default function Account() {
 
   useEffect(() => {
     if (!isLoadingUser && !user) {
+
       router.replace("/");
     }
   }, [isLoadingUser, user, router]);

@@ -5,15 +5,13 @@ import ChatWindow from "@/components/ChatWindow";
 import ExpandTextBlock from "@/components/ExpandTextBlock";
 import ScrollTopButton from "@/components/ScrollTopButton";
 import Transcript from "@/components/Transcript";
-import { Json } from "@/types";
 
-// export const revalidate = 0
+export const revalidate = 0
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const episode_id = params.slug;
 
   const episode = await getEpisodeByEpisodeId(episode_id);
-  
 
   if (!episode || !episode.id) {
     return (
@@ -84,15 +82,14 @@ export default async function Page({ params }: { params: { slug: string } }) {
         </div>
       </div>
 
-      <div className="mt-4 mb-10 max-w-[40rem]">
-        {episode.transcript && <ChatWindow episode={episode} />}
+      <div className="mt-4 mx-auto max-w-[60rem]">
+        {episode.processed && <ChatWindow episode={episode} />}
       </div>
 
       <div className="mb-[10rem]">
-        <p className="font-semibold text-2xl mt-3">Episode Transcript</p>
+        <p className="font-semibold text-3xl mt-5">Episode Transcript</p>
         {episode.transcript ? (
-          // <ExpandTextBlock htmlText={episode.transcript || ''} />
-          <Transcript transcript={episode.transcript as Json[]} episode_id={episode.id} podcast_id={episode.podcast_id!}/>
+          <Transcript transcript={episode.transcript} episode_id={episode.id} podcast_id={episode.podcast_id!}/>
         ) : (
           <p className="text-md mt-3 text-neutral-500 dark:text-dark-500">No transcript available yet.</p>
         )}

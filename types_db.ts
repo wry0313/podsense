@@ -44,7 +44,7 @@ export interface Database {
           processed: boolean | null
           released_date: string | null
           title: string | null
-          transcript: Json | null
+          transcript: object[] | null
         }
         Insert: {
           audio_url?: string | null
@@ -58,7 +58,7 @@ export interface Database {
           processed?: boolean | null
           released_date?: string | null
           title?: string | null
-          transcript?: Json | null
+          transcript?: object[] | null
         }
         Update: {
           audio_url?: string | null
@@ -72,7 +72,7 @@ export interface Database {
           processed?: boolean | null
           released_date?: string | null
           title?: string | null
-          transcript?: Json | null
+          transcript?: object[] | null
         }
         Relationships: [
           {

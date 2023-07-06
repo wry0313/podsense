@@ -89,7 +89,7 @@ const LikeButtonWithText = ({ podcast_id }: LikeButtonWithTextProps) => {
       className="flex flex-row gap-x-2 bg-neutral-100 dark:bg-dark-100 rounded-md p-1 px-2 w-fit cursor-pointer"
     >
       <div className="hover:opacity-75 transition">
-        <Icon color={isLiked ? "#85CDFD" : "gray"} size={25} />
+        <Icon color={isLiked ? "#22c55e" : "gray"} size={25} />
       </div>
       <p className="font-semibold text-md"> {isLiked ? "Following" : "Follow"} </p>
     </button>

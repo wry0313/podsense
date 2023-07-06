@@ -43,7 +43,7 @@ const MediaItem = ({
         rounded-md
             `,
         active  && "bg-neutral-400/10",
-        podcastActive && "text-sky-700 dark:text-sky-200",
+        podcastActive && "text-sky-500 dark:text-sky-200",
         playing && "bg-sky-100 dark:bg-sky-900",
       )}
     >

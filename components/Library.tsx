@@ -5,7 +5,7 @@ import MediaItem from "./MediaItem";
 
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
-import { useEffect, useState, memo } from "react";
+import { useEffect, useState } from "react";
 import { useUser } from "@/hooks/useUser";
 import LoadingDots from "./LoadingDots";
 import LikeButton from "./LikeButton";

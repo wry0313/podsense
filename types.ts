@@ -24,17 +24,17 @@ export interface Tag {
 
 export interface Episode {
   audio_url: string | null
-          created_at: string | null
-          description: string | null
-          duration: number | null
-          host: string | null
-          id: string
-          image_url: string | null
-          podcast_id: string | null
-          processed: boolean | null
-          released_date: string | null
-          title: string | null
-          transcript: Json | null
+  created_at: string | null
+  description: string | null
+  duration: number | null
+  host: string | null
+  id: string
+  image_url: string | null
+  podcast_id: string | null
+  processed: boolean | null
+  released_date: string | null
+  title: string | null
+  transcript: object[] | null
 }
 
 

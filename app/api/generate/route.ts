@@ -65,7 +65,7 @@ export async function POST(req: Request): Promise<Response | undefined> {
       }
     }
     message += "\n\nQuestion: " + query;
-    console.log(message)
+    // console.log(message)
     const payload: OpenAIStreamPayload = {
       model: GPT_MODEL,
       messages: [{ role: "user", content: message }],

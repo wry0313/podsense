@@ -91,7 +91,7 @@ const LikeButton = ({
         onClick={handleLike}
         className="hover:opacity-75 transition"
         >
-            <Icon color={isLiked ? '#85CDFD' : 'gray'}
+            <Icon color={isLiked ? '#22c55e' : 'gray'}
             size={25  }
             />
         </button>
