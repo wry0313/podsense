@@ -3,7 +3,7 @@ export type Json =
   | number
   | boolean
   | null
-  | { [key: string]: Json }
+  | { [key: string]: Json | undefined }
   | Json[]
 
 export interface Database {
@@ -41,8 +41,10 @@ export interface Database {
           id: string
           image_url: string | null
           podcast_id: string | null
+          processed: boolean | null
           released_date: string | null
           title: string | null
+          transcript: Json | null
         }
         Insert: {
           audio_url?: string | null
@@ -53,8 +55,10 @@ export interface Database {
           id: string
           image_url?: string | null
           podcast_id?: string | null
+          processed?: boolean | null
           released_date?: string | null
           title?: string | null
+          transcript?: Json | null
         }
         Update: {
           audio_url?: string | null
@@ -65,37 +69,14 @@ export interface Database {
           id?: string
           image_url?: string | null
           podcast_id?: string | null
+          processed?: boolean | null
           released_date?: string | null
           title?: string | null
+          transcript?: Json | null
         }
         Relationships: [
           {
             foreignKeyName: "episodes_podcast_id_fkey"
-            columns: ["podcast_id"]
-            referencedRelation: "podcasts"
-            referencedColumns: ["id"]
-          }
-        ]
-      }
-      hosts: {
-        Row: {
-          created_at: string | null
-          name: string
-          podcast_id: string | null
-        }
-        Insert: {
-          created_at?: string | null
-          name: string
-          podcast_id?: string | null
-        }
-        Update: {
-          created_at?: string | null
-          name?: string
-          podcast_id?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "hosts_podcast_id_fkey"
             columns: ["podcast_id"]
             referencedRelation: "podcasts"
             referencedColumns: ["id"]
@@ -136,21 +117,18 @@ export interface Database {
       podcast_tags: {
         Row: {
           created_at: string | null
-          id: number
-          podcast_id: string | null
-          tag: string | null
+          podcast_id: string
+          tag: string
         }
         Insert: {
           created_at?: string | null
-          id?: number
-          podcast_id?: string | null
-          tag?: string | null
+          podcast_id: string
+          tag: string
         }
         Update: {
           created_at?: string | null
-          id?: number
-          podcast_id?: string | null
-          tag?: string | null
+          podcast_id?: string
+          tag?: string
         }
         Relationships: [
           {
@@ -333,25 +311,22 @@ export interface Database {
       }
       users: {
         Row: {
+          avatar_color: Json | null
           avatar_url: string | null
-          billing_address: Json | null
           full_name: string | null
           id: string
-          payment_method: Json | null
         }
         Insert: {
+          avatar_color?: Json | null
           avatar_url?: string | null
-          billing_address?: Json | null
           full_name?: string | null
           id: string
-          payment_method?: Json | null
         }
         Update: {
+          avatar_color?: Json | null
           avatar_url?: string | null
-          billing_address?: Json | null
           full_name?: string | null
           id?: string
-          payment_method?: Json | null
         }
         Relationships: [
           {

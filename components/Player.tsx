@@ -30,6 +30,9 @@ const Player = () => {
       }
 
       setEpisode(data as Episode);
+      if (!data) {
+        player.setLoaded(true); 
+      }
     };
 
     fetchEpisode();
@@ -42,6 +45,7 @@ const Player = () => {
   if (!episode || !player.activeId) {
     return null;
   }
+
 
   // problem we have a client component and hook but all the ways we fetch song is with server components
   // great thing with supabase: we can avoid server client but we dont have to do that
@@ -62,7 +66,6 @@ const Player = () => {
     >
       <PlayerContent
         episode={episode!}
-        episodeUrl={episodeUrl!}
         key={episodeUrl} // key attribute, whenever it changes it will completely destroy the element and re-render a new one
         // we need key because we want to have a playlist and we want to allow the user to step the song
         // we wannna ensure that player component is completely destroyed and before we load the new song

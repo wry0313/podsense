@@ -3,8 +3,6 @@ import { PineconeClient } from "@pinecone-database/pinecone";
 import { Configuration, OpenAIApi } from "openai";
 // import { HttpsProxyAgent } from "https-proxy-agent";
 
-// import { encode } from 'gpt-3-encoder'
-
 if (!process.env.OPENAI_API_KEY || !process.env.PINECONE_API_KEY) {
   console.error("Missing .env API key");
 }
@@ -31,12 +29,11 @@ const numTokens = (text: string) => {
 
 export async function POST(req: Request): Promise<Response | undefined> {
   try {
-    const { query, tokenBudget, namespace } = (await req.json()) as {
+    const { query, namespace } = (await req.json()) as {
       query?: string;
-      tokenBudget?: number;
       namespace?: string;
     };
-    if (!query || !tokenBudget || !namespace) {
+    if (!query || !namespace) {
       return new Response("no query or namespace included", { status: 400 });
     }
     await initPinecone();
@@ -58,7 +55,7 @@ export async function POST(req: Request): Promise<Response | undefined> {
 
     const queryRequest = {
       vector: query_embedding,
-      topK: 5,
+      topK: 3,
       includeMetadata: true,
       namespace: namespace,
     };
@@ -70,13 +67,7 @@ export async function POST(req: Request): Promise<Response | undefined> {
     let message = introduction;
     if (queryResponse["matches"]) {
       for (let vectorObj of queryResponse["matches"]) {
-        let string = (vectorObj["metadata"] as { text: string })["text"];
-        let next_article = "\n########\n" + string;
-        if (numTokens(message + next_article + question) > tokenBudget) {
-          break;
-        } else {
-          message += next_article;
-        }
+        message += "\n########\n" + (vectorObj["metadata"] as { text: string })["text"];
       }
     }
     message = message + question;

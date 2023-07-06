@@ -1,3 +1,4 @@
+import { Database } from "@/types_db";
 import { User, createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
@@ -16,7 +17,7 @@ export interface Props{
 }
 
 export const MyUserContextProvider = (props: Props) => {
-    const supabase  = createClientComponentClient();
+    const supabase  = createClientComponentClient<Database>();
     const [isLoadingUser, setIsLoadingUser] = useState(true);
     const [user, setUser] = useState<User | null>(null);
     const router = useRouter();

@@ -7,7 +7,6 @@ const getEpisodesByTitle = async (title: string): Promise<Episode[]> => {
     return [];
   }
 
-
   const { data, error } = await supabase
     .from("episodes")
     .select("id, title, image_url, host, processed")

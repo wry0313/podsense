@@ -1,91 +1,78 @@
 "use client";
 
-import { Episode } from "@/types";
-import MediaItem from "./MediaItem";
-import LikeButton from "./LikeButton";
 import { BsPauseFill, BsPlayFill } from "react-icons/bs";
 import { AiFillStepBackward, AiFillStepForward } from "react-icons/ai";
 import { HiSpeakerWave, HiSpeakerXMark } from "react-icons/hi2";
+import { Episode } from "@/types";
+
+import { useEffect, useState, useRef } from "react";
+
+import MediaItem from "./MediaItem";
+import LikeButton from "./LikeButton";
 import Slider from "./Slider";
 
-import { useEffect, useState } from "react";
-import useSound from "use-sound";
+import { convertSecondsToHMS } from "@/utils/timeUtils";
+import usePlayer from "@/hooks/usePlayer";
 
-import { debounce } from "throttle-debounce";
-
-const PlayerContent = ({
-  episode,
-  episodeUrl,
-}: {
-  episode: Episode;
-  episodeUrl: string;
-}) => {
-  // const player = usePlayer();
+const PlayerContent = ({ episode }: { episode: Episode }) => {
+  const player = usePlayer();
   const [volume, setVolume] = useState(1);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [sliderValue, setSliderValue] = useState(0);
   const [currTime, setCurrTime] = useState(0);
-  const [fullTime, setFullTime] = useState("");
-
+  const [duration, setDuration] = useState(0);
   const [isSliding, setIsSliding] = useState(false);
 
-  const [isLoading, setIsLoading] = useState(false);
+  const audioRef = useRef<HTMLAudioElement>(null);
 
-  const [play, { pause, duration, sound }] = useSound(episodeUrl, {
-    volume: volume,
-    onplay: () => setIsPlaying(true),
-    onend: () => {
-      setIsPlaying(false);
-    },
-    onpause: () => setIsPlaying(false),
-    format: ["mp3"],
-    html5: true, // Force HTML5 so that we can stream large files. NEEDED
-    loop: true,
-  });
-
-  function convertSecondsToHMS(seconds: number | null) {
-    if (seconds === null) return "00:00";
-    const hours = Math.floor(seconds / 3600);
-    const minutes = Math.floor((seconds % 3600) / 60);
-    const remainingSeconds = Math.floor(seconds % 60);
-    const formattedHours =
-      hours > 0 ? hours.toString().padStart(1, "0") + ":" : "";
-    const formattedMinutes = minutes.toString().padStart(2, "0");
-    const formattedSeconds = remainingSeconds.toString().padStart(2, "0");
-    return formattedHours + formattedMinutes + ":" + formattedSeconds;
-  }
+  useEffect(() => {
+    audioRef.current!.src = episode.audio_url!;
+    audioRef.current!.load();
+    play();
+    player.setLoaded(true);
+    player.setAudioRef(audioRef);
+    audioRef.current!.onloadedmetadata = function () {
+      setDuration(audioRef.current!.duration);
+      if (player.needSet) {
+        seekTo(player.needSetTime!);
+        player.setNeedSet(false);
+        play();
+      }
+    };
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (sound && !isSliding) {
-        const currSec = sound.seek();
-        setSliderValue(currSec);
-        setCurrTime(currSec);
+      if (audioRef.current!.duration && !isSliding) {
+        const seekPosition = audioRef.current!.currentTime;
+        setCurrTime(seekPosition);
       }
     }, 1000);
     return () => clearInterval(interval);
-  }, [sound, isSliding]);
+  }, [isSliding]);
 
-  const handleSeek = debounce(2000, (value) => {
-    sound?.seek(value);
-    setIsSliding(false);
-    setIsLoading(false);
-  });
+  const seekTo = (value: number) => {
+    audioRef.current!.currentTime = value;
+  };
 
-  useEffect(() => {
-    sound?.play();
-    setFullTime(convertSecondsToHMS(duration! / 1000));
-    return () => {
-      sound?.unload();
-    };
-  }, [sound, duration]);
-
+  const play = () => {
+    audioRef.current!.play();
+    setIsPlaying(true);
+  };
+  const pause = () => {
+    audioRef.current!.pause();
+    setIsPlaying(false);
+  };
   const handlePlay = () => {
     isPlaying ? pause() : play();
   };
 
   const toggleMute = () => {
-    volume ? setVolume(0) : setVolume(1);
+    volume ? handleSetVolume(0) : handleSetVolume(1);
+  };
+
+  const handleSetVolume = (volume: number) => {
+    audioRef.current!.volume = volume;
+    setVolume(volume);
   };
 
   const Icon = isPlaying ? BsPauseFill : BsPlayFill;
@@ -94,11 +81,11 @@ const PlayerContent = ({
   const onForward = () => {
     let newTime = currTime + 15;
 
-    if (newTime > duration! / 1000) {
-      newTime = duration! / 1000;
+    if (newTime > duration!) {
+      newTime = duration!;
     }
     setCurrTime(newTime);
-    sound?.seek(newTime);
+    seekTo(newTime);
   };
 
   const onBackward = () => {
@@ -107,21 +94,21 @@ const PlayerContent = ({
       newTime = 0;
     }
     setCurrTime(newTime);
-    sound?.seek(newTime);
+    seekTo(newTime);
   };
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-3 h-full">
+      <audio ref={audioRef}></audio>
       {episode ? (
         <div className="hidden sm:flex w-full justify-cente pr-10">
           <div className="flex flex-col items-center mr-4 max-w-[300px] overflow-hidden">
             <MediaItem data={episode} isPodcast={false} />
           </div>
-          <LikeButton podcast_id={episode.podcast_id} />
+          <LikeButton podcast_id={episode.podcast_id!} />
         </div>
       ) : (
-        <div className="mr-4 max-w-[280px]">
-          </div>
+        <div className="mr-4 max-w-[280px]"></div>
       )}
 
       <div className="flex flex-col">
@@ -169,25 +156,23 @@ const PlayerContent = ({
           {convertSecondsToHMS(currTime)}
 
           <Slider
-            isLoading={isLoading}
-            value={sliderValue}
+            value={currTime}
             onChange={(value) => {
               setIsSliding(true);
               setCurrTime(value);
-              setSliderValue(value);
             }}
             onCommit={(value) => {
               setCurrTime(value);
-              handleSeek(value);
-              setIsLoading(true);
+              seekTo(value);
+              setIsSliding(false);
             }}
             defaultValue={[0]}
-            max={duration ? duration / 1000 : 0}
+            max={duration}
             ariaLabel="Timeline Slider"
             step={1}
           />
 
-          {fullTime}
+          {convertSecondsToHMS(duration)}
         </div>
       </div>
       <div className="hidden sm:flex w-full justify-end pr-2">
@@ -199,7 +184,7 @@ const PlayerContent = ({
           />
           <Slider
             value={volume}
-            onChange={(value) => setVolume(value)}
+            onChange={(value) => handleSetVolume(value)}
             defaultValue={[1]}
             max={1}
             step={0.05}

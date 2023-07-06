@@ -49,7 +49,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
   const player = usePlayer();
   // 90px is the player height
-  const height = player?.activeId ? "h-[calc(100%-90px)]" : "h-full";
+  const height = player?.loaded ? "h-[calc(100%-90px)]" : "h-full";
   
   return (
     <div className={"flex " + height}>

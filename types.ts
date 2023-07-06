@@ -1,4 +1,10 @@
-
+export type Json =
+  | string
+  | number
+  | boolean
+  | null
+  | { [key: string]: Json | undefined }
+  | Json[]
 
 export interface Podcast {
   created_at: string | null
@@ -17,19 +23,18 @@ export interface Tag {
 }
 
 export interface Episode {
-  audio_url: string 
-  image_url: string 
-  created_at: string 
-  description: string 
-  duration: number 
-  host: string 
-  id: string
-  podcast_id: string 
-  podcast_title: string 
-  released_date: string | null
-  title: string 
-  transcript: string | null
-  processed: boolean | null
+  audio_url: string | null
+          created_at: string | null
+          description: string | null
+          duration: number | null
+          host: string | null
+          id: string
+          image_url: string | null
+          podcast_id: string | null
+          processed: boolean | null
+          released_date: string | null
+          title: string | null
+          transcript: Json | null
 }
 
 

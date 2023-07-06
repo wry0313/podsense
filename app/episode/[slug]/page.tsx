@@ -4,14 +4,16 @@ import PlayButton from "@/components/PlayButton";
 import ChatWindow from "@/components/ChatWindow";
 import ExpandTextBlock from "@/components/ExpandTextBlock";
 import ScrollTopButton from "@/components/ScrollTopButton";
+import Transcript from "@/components/Transcript";
+import { Json } from "@/types";
 
-// export const revalidate = 0
-
+export const revalidate = 0
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const episode_id = params.slug;
 
   const episode = await getEpisodeByEpisodeId(episode_id);
+  
 
   if (!episode || !episode.id) {
     return (
@@ -38,7 +40,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
         <div className="group flex flex-col md:flex-row items-center gap-x-5">
           <div className="relative h-32 w-32 lg:h-56 lg:w-56 flex-none">
             <Image
-              src={episode.image_url}
+              src={episode.image_url!}
               alt="Episode cover image"
               sizes="(min-width: 1024px) 224px, 128px"
               quality={100}
@@ -77,7 +79,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
         <p className="font-semibold text-2xl mt-3">Episode Description</p>
         <div className="my-4">
-          <ExpandTextBlock htmlText={episode.description} />
+          <ExpandTextBlock htmlText={episode.description!} />
         </div>
       </div>
 
@@ -88,7 +90,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
       <div className="mb-[10rem]">
         <p className="font-semibold text-2xl mt-3">Episode Transcript</p>
         {episode.transcript ? (
-          <ExpandTextBlock htmlText={episode.transcript} />
+          // <ExpandTextBlock htmlText={episode.transcript || ''} />
+          <Transcript transcript={episode.transcript as Json[]} episode_id={episode.id}/>
         ) : (
           <p className="text-md mt-3 text-neutral-500 dark:text-dark-500">No transcript available yet.</p>
         )}

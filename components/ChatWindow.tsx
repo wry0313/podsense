@@ -21,7 +21,6 @@ export default function ChatWindow({episode} : {episode: Episode}) {
       },
       body: JSON.stringify({
         query: input,
-        tokenBudget: 1000,
         namespace: episode.id
       }),
     });
@@ -57,7 +56,7 @@ export default function ChatWindow({episode} : {episode: Episode}) {
       <div className="flex flex-row gap-x-6">
       <div className="relative h-20 w-20 lg:h-32 lg:w-32 flex-none">
             <Image
-              src={episode.image_url}
+              src={episode.image_url!}
               alt="Episode cover image"
               sizes="(min-width: 1024px) 224px, 128px"
               quality={100}
