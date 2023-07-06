@@ -38,9 +38,9 @@ const Slider = ({
             aria-label={ariaLabel}
         >
             <RadixSlider.Track className="relative grow rounded-full h-[5px] bg-neutral-300 dark:bg-neutral-500">
-                <RadixSlider.Range className={"absolute bg-black dark:bg-white group-hover:bg-sky-600 rounded-full h-full"} />
+                <RadixSlider.Range className={"absolute bg-black dark:bg-white group-hover:bg-sky-600 dark:group-hover:bg-sky-200 rounded-full h-full"} />
             </RadixSlider.Track>
-            <RadixSlider.Thumb className="invisible group-hover:visible block w-[12px] h-[12px] bg-sky-600 shadow-md rounded-2xl" aria-label="Volume" />
+            <RadixSlider.Thumb className="invisible group-hover:visible block w-[12px] h-[12px] bg-sky-600 dark:bg-sky-100 shadow-md rounded-2xl" aria-label="Volume" />
         </RadixSlider.Root>
      );
 }
