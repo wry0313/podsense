@@ -74,9 +74,9 @@ const MediaItem = ({
           By {data.host}
         </p>
         {showProcess && !isPodcast && (data as Episode).processed && (
-          <p className="bg-neutral-50 px-1 rounded-md shadow-sm text-sm w-fit font-bold text-sky-600">
-            🤖 chatbot available
-          </p>
+          <p className="bg-neutral-100 dark:bg-dark-100 rounded-sm text-sm font-semibold w-fit p-1 text-sky-700 dark:text-sky-100 font-mono">
+          🤖 chatbot available
+         </p>
         )}
       </div>
     </Link>

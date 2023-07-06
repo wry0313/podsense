@@ -157,7 +157,7 @@ const PlayerContent = ({ episode }: { episode: Episode }) => {
           />
         </div>
 
-        <div className="flex flex-row gap-x-2 items-center text-sm text-neutral-600 dark:text-dark-800">
+        <div className="flex flex-row gap-x-2 items-center text-sm text-neutral-600 dark:text-dark-800 mt-1">
           {convertSecondsToHMS(currTime)}
 
           <Slider

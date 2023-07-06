@@ -63,7 +63,7 @@ const EpisodeItem = ({ episode }: EpisodeItemProps) => {
           </p>
           <p className="text-neutral-500 dark:text-dark-500">{episode.released_date}</p>
           {episode.processed && (
-            <p className="bg-neutral-50 dark:bg-dark-50 rounded-md shadow-sm text-sm font-bold w-fit p-1 text-sky-600">
+            <p className="bg-neutral-100 dark:bg-dark-100 rounded-sm text-sm font-semibold w-fit p-1 text-sky-700 dark:text-sky-100 font-mono">
              🤖 chatbot available
             </p>
           )}

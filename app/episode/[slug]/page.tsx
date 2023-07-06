@@ -6,6 +6,7 @@ import ExpandTextBlock from "@/components/ExpandTextBlock";
 import ScrollTopButton from "@/components/ScrollTopButton";
 import Transcript from "@/components/Transcript";
 
+
 export const revalidate = 0
 
 export default async function Page({ params }: { params: { slug: string } }) {
@@ -15,7 +16,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   if (!episode || !episode.id) {
     return (
-      <div
+      <h1
         className="
     flex  
       font-bold
@@ -25,7 +26,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
     "
       >
         This episode doesn&apos;t exist... 😭
-      </div>
+      </h1>
     );
   }
 
@@ -38,8 +39,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
         <div className="group flex flex-col md:flex-row items-center gap-x-5">
           <div className="relative h-32 w-32 lg:h-56 lg:w-56 flex-none">
             <Image
-              src={episode.image_url!}
-              alt="Episode cover image"
+              src={episode.image_url || "/images/podcast.png"}
+              alt="Episode cover"
               sizes="(min-width: 1024px) 224px, 128px"
               quality={100}
               className="object-cover rounded-lg shadow-md"
@@ -76,18 +77,19 @@ export default async function Page({ params }: { params: { slug: string } }) {
           </div>
         </div>
 
-        <p className="font-semibold text-2xl mt-3">Episode Description</p>
-        <div className="my-4">
+        <h1 className="font-semibold text-2xl mt-3">Episode Description</h1>
+        <div className="my-4 ">
           <ExpandTextBlock htmlText={episode.description!} />
         </div>
       </div>
-
-      <div className="mt-4 mx-auto max-w-[60rem]">
+  <h1 className="font-semibold text-3xl my-5">{episode.host} AI</h1>
+      <div className=" mx-auto">
+    
         {episode.processed && <ChatWindow episode={episode} />}
       </div>
 
       <div className="mb-[10rem]">
-        <p className="font-semibold text-3xl mt-5">Episode Transcript</p>
+        <h1 className="font-semibold text-3xl mt-7">Episode Transcript</h1>
         {episode.transcript ? (
           <Transcript transcript={episode.transcript} episode_id={episode.id} podcast_id={episode.podcast_id!}/>
         ) : (

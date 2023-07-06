@@ -1,3 +1,8 @@
+export interface Message {
+  isUser: boolean
+  text: string
+}
+
 export type Json =
   | string
   | number

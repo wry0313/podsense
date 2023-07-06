@@ -41,11 +41,7 @@ export async function POST(req: Request): Promise<Response | undefined> {
         model: "text-embedding-ada-002",
         input: query,
       }
-      // ,{
-      //   proxy: false,
-      //   httpAgent: new HttpsProxyAgent("http://127.0.0.1:1087"),
-      //   httpsAgent: new HttpsProxyAgent("http://127.0.0.1:1087"),
-      // }
+      // ,{proxy: false,httpAgent: new HttpsProxyAgent("http://127.0.0.1:1087"),httpsAgent: new HttpsProxyAgent("http://127.0.0.1:1087"),}
     );
     const query_embedding = response.data["data"][0].embedding;
 

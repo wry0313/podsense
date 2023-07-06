@@ -1,39 +1,61 @@
 "use client";
 
-import { Episode } from "@/types";
-import Image from "next/image";
-import { useState } from "react";
+import { Episode, Message } from "@/types";
+import { useState, useEffect, useRef } from "react";
+import ChatMessage from "./ChatMessage";
 
-export default function ChatWindow({episode} : {episode: Episode}) {
+export default function ChatWindow({ episode }: { episode: Episode }) {
   const [loading, setLoading] = useState(false);
   const [input, setInput] = useState("");
-  const [response, setResponse] = useState<String>("");
+  const [chatHistory, setChatHistory] = useState<Message[]>([
+    {
+      isUser: false,
+      text: "hey there! I'm " + episode.host + " AI. I am here to help you answer any question about this episode!"
+    },
+  ]);
+
+
+  const scrollableDivRef = useRef<HTMLDivElement>(null);
+  
+  useEffect(() => {
+    if (chatHistory.length > 1) {
+      const scrollableDiv = scrollableDivRef.current;
+      if (scrollableDiv) {
+        scrollableDiv.scrollTo({
+          top: scrollableDiv.scrollHeight,
+          behavior: "smooth"
+        });
+      }
+    }
+  }, [chatHistory, loading]);
 
   const generateResponse = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    setResponse("");
-    setLoading(true);
 
-    const response = await fetch("/api/generate", {
+    setLoading(true);
+    setInput('')
+
+    const apiResponse = await fetch("/api/generate", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         query: input,
-        namespace: episode.id
+        namespace: episode.id,
       }),
     });
 
-    if (!response.ok) {
-      console.error(response.statusText);
+    if (!apiResponse.ok) {
+      console.error(apiResponse.statusText);
     }
 
     // This data is a ReadableStream
-    const data = response.body;
+    const data = apiResponse.body;
     if (!data) {
       return;
     }
+    setChatHistory((prev) => [...prev, { isUser: false, text: "" }]);
 
     const reader = data.getReader();
     const decoder = new TextDecoder();
@@ -43,62 +65,65 @@ export default function ChatWindow({episode} : {episode: Episode}) {
       const { value, done: doneReading } = await reader.read();
       done = doneReading;
       const chunkValue = decoder.decode(value);
-      setResponse((prev) => prev + chunkValue);
+      setChatHistory((prevChatHistory) => {
+        const updatedChatHistory = [...prevChatHistory];
+        const lastMessageIndex = updatedChatHistory.length - 1;
+        updatedChatHistory[lastMessageIndex] = {
+          ...updatedChatHistory[lastMessageIndex],
+          text: updatedChatHistory[lastMessageIndex].text + chunkValue,
+        };
+        return updatedChatHistory;
+      });
     }
     setLoading(false);
   };
 
+  const handleAsk = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setChatHistory((prev) => [...prev, { isUser: true, text: input }]);
+    generateResponse(e);
+  };
+
   return (
-    <div className="w-full bg-neutral-50 dark:bg-dark-50 rounded-lg p-5 shadow-sm">
-      <p className="text-2xl font-bold text-neutral-900 dark:text-dark-900 mb-2">
-        Hello! I am {episode.host} AI. I can answer your questions base on the specific details of this episode.
-      </p>
-      <div className="flex flex-row gap-x-6">
-      <div className="relative h-20 w-20 lg:h-32 lg:w-32 flex-none">
-            <Image
-              src={episode.image_url!}
-              alt="Episode cover image"
-              sizes="(min-width: 1024px) 224px, 128px"
-              quality={100}
-              className="object-cover rounded-full shadow-md"
-              fill
-            />
+    <div className="w-full bg-neutral-100 dark:bg-dark-100 rounded-lg p-5 shadow">
+
+        <div ref={scrollableDivRef} id="hide-scrollbar" className="overflow-y-auto h-[20rem]">
+          {chatHistory &&
+            chatHistory.map((msg, i) => (
+              <ChatMessage key={i} message={msg} episode={episode} />
+            ))}
         </div>
-        
-     <div className="w-full">
-     <textarea
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        rows={4}
-        maxLength={200}
-        className="focus:ring-neu w-full rounded-md border border-neutral-400 outline-none
-         p-4 text-neutral-900 shadow-sm placeholder:text-neutral-400 focus:border-neutral-500 dark:placeholder-text-dark-400 dark:focus:border-dark-400 dark:border-dark-300 dark:bg-dark-200 dark:text-dark-900"
-        placeholder={"e.g. What are Dr. Huberman's protocals to sleeping better?"}
-      />
-      {!loading ? (
-        <button
-        aria-label='generate response'
-          className="w-32 rounded-xl bg-neutral-900 dark:bg-dark-200 px-4 py-2 font-medium text-white hover:bg-black/80"
-          onClick={(e) => generateResponse(e)}
-        >
-          Ask &rarr;
-        </button>
-      ) : (
-        <button
-          disabled
-          aria-label='loading'
-          className=" w-32 rounded-xl bg-neutral-900 px-4 py-2 font-medium text-white"
-        >
-          <div className="animate-pulse font-bold tracking-widest">...</div>
-        </button>
-      )}
-      {response && (
-        <div className="mt-2 rounded-xl border bg-white dark:border-dark-200 dark:bg-dark-200 p-4 shadow-md transition hover:bg-gray-100">
-          {response}
+        <div className="flex flex-row gap-x-2">
+          <textarea
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            rows={1}
+            maxLength={200}
+            className="w-full rounded-md  outline-none
+         p-4 text-neutral-900 shadow placeholder:text-neutral-400 dark:placeholder-text-dark-400 dark:focus:border-dark-400  dark:bg-dark-200 dark:text-dark-900"
+            placeholder={
+              "e.g. What are Dr. Huberman's protocals to sleeping better?"
+            }
+          />
+          {!loading ? (
+            <button
+              aria-label="generate response"
+              className="w-32 rounded-xl bg-neutral-900 dark:bg-dark-200 px-4 py-2 font-medium text-white hover:bg-black/80"
+              onClick={(e) => handleAsk(e)}
+            >
+              Ask &rarr;
+            </button>
+          ) : (
+            <button
+              disabled
+              aria-label="loading"
+              className=" w-32 rounded-xl bg-neutral-900 px-4 py-2 font-medium text-white"
+            >
+              <div className="animate-pulse font-bold tracking-widest">...</div>
+            </button>
+          )}
         </div>
-      )}
-     </div>
       </div>
-    </div>
+
   );
 }

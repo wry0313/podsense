@@ -35,13 +35,16 @@ const Header: React.FC<HeaderProps> = ({ children }) => {
   const [value, setValue] = useState("");
   const debouncedValue = useDebounceValue(value, 300);
 
+  const [typing, setTyping] = useState(false);
+
   useEffect(() => {
-    if (debouncedValue === "") {
+    if (debouncedValue === "" && typing) {
       router.push("/");
-    } else {
+    } else if (debouncedValue !== "") {
       router.push("/search/" + debouncedValue);
+      setTyping(true)
     }
-  }, [debouncedValue, router]);
+  }, [debouncedValue, router, typing]);
 
   return (
     <>

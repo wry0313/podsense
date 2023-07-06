@@ -87,7 +87,7 @@ const Library = ({ pathname, showLiked = false, channelName}: LibraryProps) => {
     <div className="flex flex-col gap-y-2 mt-4 px-3 h-fit overflow-y-auto">
       {
         (!user && !isLoadingUser) ? (
-          <div className="flex justify-center items-center py-4 px-2 shadow-sm bg-neutral-100 dark:bg-dark-100 rounded-md text-md font-semibold text-neutral-500 dark:text-dark-500">
+          <div className="flex justify-center items-center py-4 px-2 shadow bg-neutral-100 dark:bg-dark-100 rounded-md text-md font-semibold text-neutral-500 dark:text-dark-500">
           <p>Sign in to access your library</p>
         </div>
         ) :
@@ -95,7 +95,7 @@ const Library = ({ pathname, showLiked = false, channelName}: LibraryProps) => {
       isLoading ? (
         <LoadingDots />
       ) : likedPodcasts.length === 0 ? (
-        <div className="flex justify-center items-center py-4 px-2 shadow-sm bg-neutral-100 dark:bg-dark-100 rounded-md text-md font-semibold text-neutral-500 dark:text-dark-500">
+        <div className="flex justify-center items-center py-4 px-2 shadow bg-neutral-100 dark:bg-dark-100 rounded-md text-md font-semibold text-neutral-500 dark:text-dark-500">
           <p>Add some podcasts to your library</p>
         </div>
       ) : !showLiked ? (

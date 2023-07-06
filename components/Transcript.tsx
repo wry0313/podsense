@@ -2,6 +2,7 @@
 import { MdOutlineContentCopy } from "react-icons/md";
 import SeekButton from "./seekButton";
 import { BiLink } from "react-icons/bi";
+import { open_sans } from "@/app/fonts";
 
 const Transcript = ({
   transcript,
@@ -13,7 +14,7 @@ const Transcript = ({
   podcast_id: string;
 }) => {
   return (
-    <div className="px-10">
+    <div className={open_sans.className + " px-10"}>
       {transcript.map((item: any) => {
         return (
           <div
@@ -37,7 +38,7 @@ const Transcript = ({
                   }}
                 >
                   <MdOutlineContentCopy size={16} className="relative top-[2px]" />
-                  copy
+                  Copy
                 </div>
 
                 <div 
