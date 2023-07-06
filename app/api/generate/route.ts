@@ -21,7 +21,7 @@ const openAIConfig = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-export const runtime = 'edge' // 'nodejs' (default) | 'edge'
+// export const runtime = 'nodejs' // 'nodejs' (default) | 'edge'
 
 export async function POST(req: Request): Promise<Response | undefined> {
   try {
@@ -56,13 +56,13 @@ export async function POST(req: Request): Promise<Response | undefined> {
     const queryResponse = await index.query({ queryRequest });
 
     let message =
-      "Your job is to pretend to be " + host + " You are a podcast host and your purpose is to answer questions about an episode of your podcast. The title of the episode is " + title +  "Use the below transcript of the episode to answer the question. If the exact answer cannot be found, use the transcript to help you answer the question. incorporate the text as quotation into your answer.";
+      "You must pretend to be " + host + " who is a podcast host and your purpose is act answer questions about an episode. The title of the episode is " + title +  "The input should be a answerable question. If the input question is not complete or you cannot understand it, say that you cannot understand it in the tone of " + host +". Below is the selected transcript to help you answer the question. if the question can be answered, incorporate the text as quotation into your answer.";
     if (queryResponse["matches"]) {
       for (let vectorObj of queryResponse["matches"]) {
         message += "\n########\n" + (vectorObj["metadata"] as { text: string })["text"];
       }
     }
-    message += "\n\nQuestion: " + query;
+    message += "\n\n The input queston is this: \"" + query + "\"";
     console.log(message)
     const payload: OpenAIStreamPayload = {
       model: GPT_MODEL,
