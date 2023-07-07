@@ -18,7 +18,7 @@ const EpisodeItem = ({ episode }: EpisodeItemProps) => {
   return (
     <Link
       href={"/episode/" + episode.id}
-      className="flex items-start gap-x-4 border-t-2 pt-3 pb-6 dark:border-dark-500 group hover:bg-neutral-100 dark:hover:bg-dark-100 cursor-pointer max-w-[1200px] overflow-x-hidden"
+      className="flex items-start gap-x-4 border-t-2 pt-3 pb-6 dark:border-dark-200 group hover:bg-neutral-100 dark:hover:bg-dark-100 cursor-pointer max-w-[1200px] overflow-x-hidden"
     >
       <div
         className="
@@ -63,7 +63,7 @@ const EpisodeItem = ({ episode }: EpisodeItemProps) => {
           </p>
           <p className="text-neutral-500 dark:text-dark-500">{episode.released_date}</p>
           {episode.processed && (
-            <p className="bg-neutral-100 dark:bg-dark-100 rounded-sm text-sm font-semibold w-fit p-1 text-sky-700 dark:text-sky-100 font-mono">
+            <p className="bg-neutral-100 dark:bg-dark-100 rounded-sm text-sm font-semibold w-fit p-1 text-sky-700 dark:text-sky-300 font-mono">
              🤖 chatbot available
             </p>
           )}

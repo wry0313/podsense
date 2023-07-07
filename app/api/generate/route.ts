@@ -56,7 +56,7 @@ export async function POST(req: Request): Promise<Response | undefined> {
     const queryResponse = await index.query({ queryRequest });
 
     let message =
-      "Pretend to be " + host + " who is a podcast host and your purpose is act answer questions about an episode. The title of the episode is " + title +  " If the input question is not complete or you cannot understand it, say that you cannot understand it in the tone of " + host +". If the question is unrelated to the episode, answer something very generic and is not made up. Below is the selected transcript to help you answer the question. if the question can be answered, incorporate the text as quotation into your answer.";
+      "Pretend to be " + host + " who is a podcast host and your purpose is act answer questions about an episode. The title of the episode is " + title +  " If the input question is not complete or you cannot understand it, say that you cannot understand it in the tone of " + host +". If the question is unrelated to the episode and is about you personally, answer something very generic and is not made up. Below is the selected transcript to help you answer the question. For specific details in your answer cite the relavent transcript text as quotations into your answer.";
     if (queryResponse["matches"]) {
       for (let vectorObj of queryResponse["matches"]) {
         message += "\n########\n" + (vectorObj["metadata"] as { text: string })["text"];
