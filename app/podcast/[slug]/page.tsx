@@ -20,24 +20,22 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   if (!podcast || !podcast.id) {
     return (
-      <div
+      <h1
         className="
-      flex  
       font-bold
       text-5xl
-      h-fit
-      px-6
+      h-full
     "
       >
         This podcast doesn&apos;t exist... 😣
-      </div>
+      </h1>
     );
   }
 
   return (
     <div
       id="scroll-box"
-      className="h-full px-6 bg-white dark:bg-dark-default w-full overflow-y-auto"
+      className="h-full px-6 bg-white dark:bg-dark-default w-full overflow-y-auto mx-auto max-w-[1200px]"
     >
       <div className="flex flex-col">
         <div className="flex flex-col md:flex-row items-top gap-x-5">

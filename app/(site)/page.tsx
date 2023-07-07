@@ -16,7 +16,7 @@ export default async function Home() {
     >
       <div className="mt-2 px-6">
         <div className="flex justify-between items-center">
-          <h1 className="text-2xl font-semibold">Discover New Podcasts</h1>
+          <h1 className="text-3xl">Discover New Podcasts</h1>
         </div>
         <div 
       className="

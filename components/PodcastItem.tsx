@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Podcast } from "@/types"
 import PlayButtonDecor from "./PlayButtonDecor";
-
+import { raleway, open_sans } from "@/app/fonts";
 interface PodcastItemProps {
     podcast: Podcast;
 }
@@ -29,7 +29,7 @@ const PodcastItem: React.FC<PodcastItemProps> = ({
                 cursor-pointer
                 transition
                 p-3
-                shadow-md
+                shadow
             "
         >
            <div 
@@ -53,10 +53,10 @@ const PodcastItem: React.FC<PodcastItemProps> = ({
             />
            </div>
            <div className=" flex flex-col items-start w-full pt-2 gap-y-1">
-                <h1 className="font-semibold truncate w-full">
+                <h1 className="truncate w-full">
                     {podcast.title}
                 </h1>
-                <p className="text-neutral-400 text-sm  w-full truncate">
+                <p className={"text-neutral-400 text-sm  w-full truncate " + open_sans.className}>
                     By {podcast.host}
                 </p>
            </div>

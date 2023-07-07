@@ -1,9 +1,8 @@
 import UserProvider from "@/providers/UserProvider";
 import ToasterProvider from "@/providers/ToasterProvider";
 import ColorModeProvider from "@/providers/ColorModeProvider";
-import Sidebar from "@/components/Sidebar";
+import SidebarLayout from "@/components/SidebarLayout";
 import Header from "@/components/Header";
-import Player from "@/components/Player";
 
 import "./globals.css";
 
@@ -30,10 +29,12 @@ export default function RootLayout({
         <ToasterProvider />
           <ColorModeProvider>
           <UserProvider>
-            <Sidebar>
-              <Header>{children}</Header>
-            </Sidebar>
-            <Player />
+            <SidebarLayout>
+              <Header>
+                {children}
+              </Header>
+              </SidebarLayout>
+           
           </UserProvider>
           </ColorModeProvider>
       </body>

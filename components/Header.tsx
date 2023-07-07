@@ -4,6 +4,7 @@ import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 
 import { RxCaretLeft, RxCaretRight } from "react-icons/rx";
+import { HiOutlineMenu } from "react-icons/hi";
 import { HiHome } from "react-icons/hi";
 import { BiSearch } from "react-icons/bi";
 import { FaUserAlt } from "react-icons/fa";
@@ -12,11 +13,15 @@ import { useUser } from "@/hooks/useUser";
 import useAuthModal from "@/hooks/useAuthModal";
 
 import Button from "./Button";
-import AuthModal from "@/components/AuthModal";
+// import AuthModal from "@/components/AuthModal";
 
 import useDebounceValue from "@/hooks/useDebounceValue";
 import { useEffect, useState } from "react";
 import DarkModeToggle from "./DarkModeToggle";
+
+import useSidebar from "@/hooks/useSidebar";
+
+import dynamic from "next/dynamic";
 
 interface HeaderProps {
   children?: React.ReactNode;
@@ -27,15 +32,15 @@ const Header: React.FC<HeaderProps> = ({ children }) => {
   const authModal = useAuthModal();
   const router = useRouter();
   const pathname = usePathname();
+  const sidebar = useSidebar();
+
 
   // IMPORTANT: we use useSupabaseClient when everything the reads are public to read for everyone (unathenticated users)
   // however if something can only be read with authenticated user, we use useSessionContext instead
   const { user, isLoadingUser } = useUser();
-
   const [value, setValue] = useState("");
-  const debouncedValue = useDebounceValue(value, 300);
-
   const [typing, setTyping] = useState(false);
+  const debouncedValue = useDebounceValue(value, 300);
 
   useEffect(() => {
     if (debouncedValue === "" && typing) {
@@ -46,9 +51,12 @@ const Header: React.FC<HeaderProps> = ({ children }) => {
     }
   }, [debouncedValue, router, typing]);
 
+  const DynamicAuthModal = dynamic(() => import("./AuthModal"));
+
   return (
     <>
-      <AuthModal />
+      {authModal.isOpen && <DynamicAuthModal />}
+
       <div
         className="
             w-full
@@ -66,7 +74,7 @@ const Header: React.FC<HeaderProps> = ({ children }) => {
         <div className="flex md:hidden gap-x-2 items-center">
           <Link
             href="/"
-            className="rounded-full p-2 bg-neutral-100 dark:bg-dark-100 flex items-center justify-center hover:opacity-75 transition"
+            className="rounded-xl p-2 bg-neutral-100 dark:bg-dark-100 flex items-center justify-center hover:opacity-75 transition"
           >
             <HiHome
               className="text-black dark:text-white"
@@ -76,7 +84,7 @@ const Header: React.FC<HeaderProps> = ({ children }) => {
           </Link>
           <Link
             href="/search"
-            className="rounded-full p-2 bg-neutral-100 dark:bg-dark-100 flex items-center justify-center hover:opacity-75 transition"
+            className="rounded-xl p-2 bg-neutral-100 dark:bg-dark-100 flex items-center justify-center hover:opacity-75 transition"
           >
             <BiSearch
               className="text-black dark:text-white"
@@ -94,6 +102,13 @@ const Header: React.FC<HeaderProps> = ({ children }) => {
 
             "
         >
+          <button
+            aria-label="sidebar"
+            className="rounded-xl bg-neutral-100 dark:bg-dark-100 flex items-center justify-center hover:opacity-75 transition p-[6px]"
+            onClick={() => {sidebar.toggle()}}
+          >
+            <HiOutlineMenu size={23}/>
+          </button>
           <button
             aria-label="back"
             className="rounded-xl bg-neutral-100 dark:bg-dark-100 flex items-center justify-center hover:opacity-75 transition"
@@ -165,7 +180,9 @@ const Header: React.FC<HeaderProps> = ({ children }) => {
         </div>
       </div>
 
-      <div className="h-[calc(100%-64px)] dark:bg-dark-default">{children}</div>
+      <div className="h-[calc(100%-64px)] dark:bg-dark-default " >
+            {children}
+        </div>
     </>
   );
 };

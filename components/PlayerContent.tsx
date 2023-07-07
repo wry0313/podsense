@@ -20,7 +20,6 @@ const MemoLikeButton = memo(LikeButton);
 const PlayerContent = ({ episode }: { episode: Episode }) => {
   const player = usePlayer();
   const [volume, setVolume] = useState(1);
-  // const [isPlaying, setIsPlaying] = useState(false);
   const [currTime, setCurrTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isSliding, setIsSliding] = useState(false);
@@ -33,8 +32,8 @@ const PlayerContent = ({ episode }: { episode: Episode }) => {
     play();
     player.setLoaded(true);
     player.setAudioRef(audioRef);
-    audioRef.current!.onloadedmetadata = function () {
-      setDuration(audioRef.current!.duration);
+    audioRef.current!.onloadedmetadata = () => {
+      setDuration(audioRef.current?.duration || 0);
       if (player.needSet) {
         seekTo(player.needSetTime!);
         player.setNeedSet(false);
@@ -104,7 +103,7 @@ const PlayerContent = ({ episode }: { episode: Episode }) => {
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-3 h-full">
-      <audio ref={audioRef}></audio>
+      <audio ref={audioRef} /> 
       {episode ? (
         <div className="hidden sm:flex w-full justify-cente pr-10">
           <div className="flex flex-col items-center mr-4 max-w-[300px] overflow-hidden">

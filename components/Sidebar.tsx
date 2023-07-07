@@ -1,4 +1,4 @@
-"use client"; // b/c this is dynamic also this doesn't mean that children will become client components too
+"use client";
 
 import { usePathname } from "next/navigation";
 import { useMemo } from "react";
@@ -7,19 +7,12 @@ import { BiSearch } from "react-icons/bi";
 import SidebarItem from "./SidebarItem";
 import SidebarLibrary from "./Library";
 
+
 import Link from "next/link";
-import usePlayer from "@/hooks/usePlayer";
 import { TbPlaylist } from "react-icons/tb";
 
 
-interface SidebarProps {
-  children: React.ReactNode;
-
-}
-const Sidebar: React.FC<SidebarProps> = ({ 
-  children,
-
- }) => {
+const Sidebar = () => {
   const pathname = usePathname();
 
   const routes = useMemo(
@@ -41,64 +34,49 @@ const Sidebar: React.FC<SidebarProps> = ({
         label: "Library",
         active: pathname === "/library",
         href: "/library",
-      }
+      },
     ],
     [pathname]
   );
 
-
-  const player = usePlayer();
-  // 90px is the player height
-  const height = player?.loaded ? "h-[calc(100%-90px)]" : "h-full";
-  
   return (
-    <div className={"flex " + height}>
-      <div
+    <div
+      className="
+          hidden
+          md:flex
+          flex-col
+          h-full
+          w-[300px]
+          flex-none
+          p-2
+          bg-neutral-50
+          dark:bg-dark-50
+          select-none
+          "
+    >
+      <Link
         className="
-        hidden
-        md:flex
-        flex-col
-        h-full
-        w-[300px]
-        flex-none
-        p-2
-        bg-neutral-50
-        dark:bg-dark-50
-        select-none
-        "
-      >
-        <Link 
-        className="
-        text-3xl 
-        font-bold 
-        flex 
-        items-center 
-        justify-center 
-        cursor-pointer 
-        hover:text-neutral-600
-        "
+          text-3xl 
+          font-bold 
+          flex 
+          items-center 
+          justify-center 
+          cursor-pointer 
+          "
         href="/"
-        >
-          <h1>
-          podsense
-          </h1>
-        </Link>
-        
+      >
+        <h1>podsense</h1>
+      </Link>
 
-          <div className="flex flex-col pt-1">
-            {routes.map((item) => (
-              <SidebarItem key={item.label} {...item} />
-            ))}
-          </div>
-
-
-        <div className="overflow-y-auto h-full">
-          <SidebarLibrary pathname={pathname} channelName="sidebar library"/>
-        </div>
+      <div className="flex flex-col pt-1">
+        {routes.map((item) => (
+          <SidebarItem key={item.label} {...item} />
+        ))}
       </div>
-      <main className="h-full w-full md:w-[calc(100%-300px)]">
-        {children}
-      </main>
+
+      <div className="overflow-y-auto h-full">
+        <SidebarLibrary pathname={pathname} channelName="sidebar library" />
+      </div>
     </div>
   );
 };

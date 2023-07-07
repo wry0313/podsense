@@ -14,6 +14,7 @@ const Player = () => {
   const [episode, setEpisode] = useState<Episode | undefined>(undefined);
   const supabase = createClientComponentClient();
   useEffect(() => {
+    console.log("mounted")
     if (!player.activeId) {
       return;
     }
@@ -55,7 +56,7 @@ const Player = () => {
       className="
         fixed
         bottom-0
-        bg-neutral-100
+        bg-neutral-50
         dark:bg-dark-100
         w-full
         py-2

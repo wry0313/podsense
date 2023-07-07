@@ -17,14 +17,12 @@ export default async function Page({ params }: { params: { slug: string } }) {
     return (
       <h1
         className="
-    flex  
-      font-bold
-      text-5xl
-      h-fit
-      px-6
+        font-bold
+        text-5xl
+        h-full
     "
       >
-        This episode doesn&apos;t exist... 😭
+        This episode doesn&apos;t exist...
       </h1>
     );
   }
@@ -32,7 +30,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
   return (
     <div
       id="scroll-box"
-      className="h-full px-6 bg-white dark:bg-dark-default w-full overflow-hidden overflow-y-auto "
+      className="h-full px-6 bg-white dark:bg-dark-default w-full overflow-hidden overflow-y-auto mx-auto max-w-[1200px]"
     >
       <div className="flex flex-col">
         <div className="group flex flex-col md:flex-row items-center gap-x-5">

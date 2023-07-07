@@ -14,6 +14,7 @@ const DarkModeToggle = () => {
             className={`hidden h-5 w-5 dark:block sm:h-6 sm:w-6 text-neutral-800`}
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
+
             viewBox="0 0 24 24"
             stroke="white"
           >

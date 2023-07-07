@@ -21,7 +21,7 @@ const Search = ({ searchParams }: SearchProps) => {
                 overflow-y-auto
                 flex
                 flex-col
-                dark:bg-dark-50
+                dark:bg-dark-default
                 "
     >
 
@@ -32,7 +32,7 @@ const Search = ({ searchParams }: SearchProps) => {
 
       <Suspense
         fallback={
-          <LoadingDots className="h-full"/>
+          <LoadingDots/>
         }
       >
         <SearchContent title={searchParams.title} />
