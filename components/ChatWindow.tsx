@@ -1,7 +1,7 @@
 "use client";
 
 import { Episode, Message } from "@/types";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, KeyboardEventHandler, KeyboardEvent } from "react";
 import ChatMessage from "./ChatMessage";
 
 export default function ChatWindow({ episode }: { episode: Episode }) {
@@ -29,9 +29,7 @@ export default function ChatWindow({ episode }: { episode: Episode }) {
     }
   }, [chatHistory, loading]);
 
-  const generateResponse = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-
+  const generateResponse = async () => {
     setLoading(true);
     setInput('')
 
@@ -80,11 +78,17 @@ export default function ChatWindow({ episode }: { episode: Episode }) {
     setLoading(false);
   };
 
-  const handleAsk = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  const handleAsk = async () => {
     setChatHistory((prev) => [...prev, { isUser: true, text: input }]);
-    generateResponse(e);
+    generateResponse();
   };
+
+  const handleKeyDown = (event : KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      handleAsk();
+    }
+  }
+
 
   return (
     <div className="w-full bg-neutral-100 dark:bg-dark-100 rounded-lg p-5 shadow">
@@ -96,10 +100,10 @@ export default function ChatWindow({ episode }: { episode: Episode }) {
             ))}
         </div>
         <div className="flex flex-row gap-x-2">
-          <textarea
+          <input
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            rows={1}
+            onKeyDown={handleKeyDown} 
             maxLength={200}
             className="w-full rounded-md  outline-none
          p-4 text-neutral-900 shadow placeholder:text-neutral-400 dark:placeholder-text-dark-400 dark:focus:border-dark-400  dark:bg-dark-200 dark:text-dark-900"
@@ -111,7 +115,7 @@ export default function ChatWindow({ episode }: { episode: Episode }) {
             <button
               aria-label="generate response"
               className="w-32 rounded-xl bg-neutral-900 dark:bg-dark-200 px-4 py-2 font-medium text-white hover:bg-black/80"
-              onClick={(e) => handleAsk(e)}
+              onClick={handleAsk}
             >
               Ask &rarr;
             </button>
