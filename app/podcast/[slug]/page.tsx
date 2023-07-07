@@ -72,6 +72,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
         <div
           className="
             mt-2
+            max-w-[1200px]
           "
         >
           <h1 className="font-semibold text-2xl">About</h1>

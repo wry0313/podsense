@@ -165,7 +165,7 @@ const Header: React.FC<HeaderProps> = ({ children }) => {
         </div>
       </div>
 
-      <div className="h-full sm:h-[calc(100%-64px)] dark:bg-dark-default">{children}</div>
+      <div className="h-[calc(100%-64px)] dark:bg-dark-default">{children}</div>
     </>
   );
 };

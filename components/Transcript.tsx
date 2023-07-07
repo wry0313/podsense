@@ -14,7 +14,7 @@ const Transcript = ({
   podcast_id: string;
 }) => {
   return (
-    <div className={open_sans.className + " px-10"}>
+    <div className={open_sans.className + " md:px-10"}>
       {transcript.map((item: any) => {
         return (
           <div
