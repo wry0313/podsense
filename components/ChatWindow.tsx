@@ -1,7 +1,7 @@
 "use client";
 
 import { Episode, Message } from "@/types";
-import { useState, useEffect, useRef, KeyboardEventHandler, KeyboardEvent } from "react";
+import { useState, useEffect, useRef, KeyboardEvent } from "react";
 import ChatMessage from "./ChatMessage";
 
 export default function ChatWindow({ episode }: { episode: Episode }) {
@@ -89,24 +89,24 @@ export default function ChatWindow({ episode }: { episode: Episode }) {
     }
   }
 
-
   return (
-    <div className="w-full bg-neutral-100 dark:bg-dark-100 rounded-lg p-5 shadow">
+    <div className="w-full bg-neutral-100 dark:bg-dark-100 rounded-lg p-5 pb-1 shadow">
 
-        <div ref={scrollableDivRef} id="hide-scrollbar" className="overflow-y-auto h-[17rem]">
+        <div ref={scrollableDivRef} id="hide-scrollbar" className="overflow-y-auto h-[20rem] rounded-md">
           {chatHistory &&
             chatHistory.map((msg, i) => (
               <ChatMessage key={i} message={msg} episode={episode} />
             ))}
         </div>
-        <div className="flex flex-row gap-x-2">
+
+        <div className="flex flex-row gap-x-2 my-3">
           <input
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown} 
             maxLength={200}
             className="w-full rounded-md  outline-none
-         p-4 text-neutral-900 shadow placeholder:text-neutral-400 dark:placeholder-text-dark-400 dark:focus:border-dark-400  dark:bg-dark-200 dark:text-dark-900"
+         p-3 text-neutral-900 shadow placeholder:text-neutral-400 dark:placeholder-text-dark-400 dark:focus:border-dark-400  dark:bg-dark-200 dark:text-dark-900"
             placeholder={
               "e.g. What are Dr. Huberman's protocals to sleeping better?"
             }

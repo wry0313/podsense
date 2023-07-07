@@ -91,7 +91,7 @@ const Header: React.FC<HeaderProps> = ({ children }) => {
                 md:flex
                 gap-x-2
                 items-center
-                grow
+
             "
         >
           <button
@@ -115,17 +115,17 @@ const Header: React.FC<HeaderProps> = ({ children }) => {
           pathname.startsWith("/podcast/") ||
           pathname.startsWith("/episode/"))
         && (
-          <div className="grow hidden xl:flex">
+          <div className=" hidden lg:flex mx-auto ">
             <input
               type="search"
               placeholder="Search podcasts or episodes"
-              className=" w-[30rem] rounded-md bg-neutral-100 dark:bg-dark-100 px-2 py-1 focus:border-neutral-300 dark:focus:border-dark-300 border-2 border-transparent outline-none placeholder:text-neutral-500 text-md"
+              className="w-[20rem] xl:w-[30rem] rounded-md bg-neutral-100 dark:bg-dark-100 px-2 py-1 focus:border-neutral-300 dark:focus:border-dark-300 border-2 border-transparent outline-none placeholder:text-neutral-500 text-md"
               onChange={(e) => setValue(e.target.value)}
             ></input>
           </div>
         )}
 
-        <div className="w-[250px] flex-row flex items-center justify-end">
+        <div className="w-[220px] flex-row flex items-center justify-end">
           <DarkModeToggle />
 
           {!isLoadingUser &&

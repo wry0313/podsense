@@ -6,7 +6,6 @@ import ExpandTextBlock from "@/components/ExpandTextBlock";
 import ScrollTopButton from "@/components/ScrollTopButton";
 import Transcript from "@/components/Transcript";
 
-
 export const revalidate = 0
 
 export default async function Page({ params }: { params: { slug: string } }) {

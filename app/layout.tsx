@@ -5,14 +5,11 @@ import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
 import Player from "@/components/Player";
 
-
-
 import "./globals.css";
-
 
 export const metadata = {
   title: "Podsense.net",
-  description: "Podcast experience supercharged with artificial intelligence. Podcast transcript, podcast chatbot, podcast searching, podcast streaming",
+  description: "Podcast experience supercharged with artificial intelligence. Podcast transcript, chatbot, searching, streaming",
 };
 
 export default function RootLayout({
