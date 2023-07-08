@@ -130,7 +130,7 @@ const Header: React.FC<HeaderProps> = ({ children }) => {
           pathname.startsWith("/podcast/") ||
           pathname.startsWith("/episode/"))
         && (
-          <div className=" hidden lg:flex mx-auto ">
+          <div className=" hidden md:flex mx-auto ">
             <input
               type="search"
               placeholder="Search podcasts or episodes"
@@ -140,7 +140,7 @@ const Header: React.FC<HeaderProps> = ({ children }) => {
           </div>
         )}
 
-        <div className="w-[220px] flex-row flex items-center justify-end">
+        <div className="flex-row flex items-center justify-end">
           <DarkModeToggle />
 
           {!isLoadingUser &&
@@ -180,7 +180,7 @@ const Header: React.FC<HeaderProps> = ({ children }) => {
         </div>
       </div>
 
-      <div className="h-[calc(100%-64px)] dark:bg-dark-default " >
+      <div className="md:h-[calc(100%-64px)] dark:bg-dark-default " >
             {children}
         </div>
     </>
