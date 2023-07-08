@@ -12,7 +12,7 @@ const Transcript = ({
   podcast_id: string;
 }) => {
   return (
-    <div className={open_sans.className + " md:px-10"}>
+    <div className={open_sans.className + " md:px-6"}>
       {transcript.map((item: any) => {
         return (
           <div

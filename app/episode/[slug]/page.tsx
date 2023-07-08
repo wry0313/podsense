@@ -30,9 +30,17 @@ export default async function Page({ params }: { params: { slug: string } }) {
   return (
     <div
       id="scroll-box"
-      className="h-full px-6 bg-white dark:bg-dark-default w-full overflow-hidden overflow-y-auto mx-auto max-w-[1200px]"
+      className="
+      h-full 
+      w-full 
+      overflow-y-auto
+      overflow-hidden
+      px-6
+      bg-white 
+      dark:bg-dark-default 
+      "
     >
-      <div className="flex flex-col">
+      <div className="flex flex-col max-w-[1200px] mx-auto">
         <div className="group flex flex-col md:flex-row items-center gap-x-5">
           <div className="relative h-32 w-32 lg:h-56 lg:w-56 flex-none">
             <Image
@@ -78,23 +86,27 @@ export default async function Page({ params }: { params: { slug: string } }) {
         <div className="my-4 ">
           <ExpandTextBlock htmlText={episode.description!} />
         </div>
-      </div>
-  <h1 className="font-semibold text-3xl my-5">{episode.host} AI</h1>
-      <div className=" mx-auto">
-    
-        {episode.processed && <ChatWindow episode={episode} />}
-      </div>
 
-      <div className="mb-[10rem]">
-        <h1 className="font-semibold text-3xl mt-7">Episode Transcript</h1>
-        {episode.transcript ? (
-          <Transcript transcript={episode.transcript} episode_id={episode.id} podcast_id={episode.podcast_id!}/>
-        ) : (
-          <p className="text-md mt-3 text-neutral-500 dark:text-dark-500">No transcript available yet.</p>
-        )}
+        <h1 className="font-semibold text-3xl my-5">{episode.host} AI</h1>
+        <div className=" mx-auto w-full">
+          {episode.processed && <ChatWindow episode={episode} />}
+        </div>
+        <div className="mb-[10rem]">
+          <h1 className="font-semibold text-3xl mt-7">Episode Transcript</h1>
+          {episode.transcript ? (
+            <Transcript
+              transcript={episode.transcript}
+              episode_id={episode.id}
+              podcast_id={episode.podcast_id!}
+            />
+          ) : (
+            <p className="text-md mt-3 text-neutral-500 dark:text-dark-500">
+              No transcript available yet.
+            </p>
+          )}
+        </div>
       </div>
-
-      <ScrollTopButton />
+        <ScrollTopButton />
     </div>
   );
 }

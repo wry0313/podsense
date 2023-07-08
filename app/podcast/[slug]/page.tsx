@@ -32,12 +32,22 @@ export default async function Page({ params }: { params: { slug: string } }) {
     );
   }
 
+
+
   return (
     <div
       id="scroll-box"
-      className="h-full px-6 bg-white dark:bg-dark-default w-full overflow-y-auto mx-auto max-w-[1200px]"
+      className="
+      h-full 
+      w-full 
+      overflow-y-auto 
+      overflow-hidden
+      px-6
+      bg-white 
+      dark:bg-dark-default 
+      "
     >
-      <div className="flex flex-col">
+      <div className="flex flex-col max-w-[1200px] mx-auto">
         <div className="flex flex-col md:flex-row items-top gap-x-5">
           <div className="relative h-32 w-32 lg:h-56 lg:w-56 shadow-lg flex-none">
             <Image
@@ -70,15 +80,16 @@ export default async function Page({ params }: { params: { slug: string } }) {
         <div
           className="
             mt-2
-            max-w-[1200px]
+            
           "
         >
           <h1 className="font-semibold text-2xl">About</h1>
           <ExpandTextBlock htmlText={podcast.description!} />
         </div>
+        <PageContent podcast_id={podcast_id} episodesDesc={episodesDesc} episodesAsc={episodesAsc} pageCount={PAGE_COUNT}/>
+
       </div>
 
-      <PageContent podcast_id={podcast_id} episodesDesc={episodesDesc} episodesAsc={episodesAsc} pageCount={PAGE_COUNT}/>
     </div>
   );
 }

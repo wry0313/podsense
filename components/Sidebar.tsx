@@ -6,8 +6,6 @@ import { HiHome } from "react-icons/hi";
 import { BiSearch } from "react-icons/bi";
 import SidebarItem from "./SidebarItem";
 import SidebarLibrary from "./Library";
-
-
 import Link from "next/link";
 import { TbPlaylist } from "react-icons/tb";
 
