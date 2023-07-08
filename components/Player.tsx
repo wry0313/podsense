@@ -62,6 +62,7 @@ const Player = () => {
         py-2
         h-[90px]
         px-4
+        z-10
         select-none
     "
     >

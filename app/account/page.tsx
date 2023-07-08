@@ -33,8 +33,8 @@ export default function Account() {
     }
   };
   return (
-    <div className="pt-2 px-6 dark:bg-dark-default">
-      <div className="flex justify-between items-center">
+    <>
+      <div className="mt-2 flex justify-between items-center">
         <h1 className="text-3xl font-semibold">
           Manage your account settings.
         </h1>
@@ -42,6 +42,6 @@ export default function Account() {
       <Button aria-label='log out' onClick={handleLogout} className="px-4 py-1 w-fit mt-4">
         Logout
       </Button>
-    </div>
+    </>
   );
 }

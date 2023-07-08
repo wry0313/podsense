@@ -13,7 +13,6 @@ import { useUser } from "@/hooks/useUser";
 import useAuthModal from "@/hooks/useAuthModal";
 
 import Button from "./Button";
-// import AuthModal from "@/components/AuthModal";
 
 import useDebounceValue from "@/hooks/useDebounceValue";
 import { useEffect, useState } from "react";
@@ -28,12 +27,11 @@ interface HeaderProps {
   className?: string;
 }
 
-const Header: React.FC<HeaderProps> = ({ children }) => {
+const Header: React.FC<HeaderProps> = () => {
   const authModal = useAuthModal();
   const router = useRouter();
   const pathname = usePathname();
   const sidebar = useSidebar();
-
 
   // IMPORTANT: we use useSupabaseClient when everything the reads are public to read for everyone (unathenticated users)
   // however if something can only be read with authenticated user, we use useSessionContext instead
@@ -179,10 +177,6 @@ const Header: React.FC<HeaderProps> = ({ children }) => {
             ))}
         </div>
       </div>
-
-      <div className="md:h-[calc(100%-64px)] dark:bg-dark-default " >
-            {children}
-        </div>
     </>
   );
 };

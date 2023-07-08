@@ -1,14 +1,14 @@
 import UserProvider from "@/providers/UserProvider";
 import ToasterProvider from "@/providers/ToasterProvider";
 import ColorModeProvider from "@/providers/ColorModeProvider";
-import SidebarLayout from "@/components/SidebarLayout";
-import Header from "@/components/Header";
+import PageLayout from "@/components/PageLayout";
 
 import "./globals.css";
 
 export const metadata = {
   title: "Podsense.net",
-  description: "Podcast experience supercharged with artificial intelligence. Podcast transcript, chatbot, searching, streaming",
+  description:
+    "Podcast experience supercharged with artificial intelligence. Podcast transcript, chatbot, searching, streaming",
 };
 
 export default function RootLayout({
@@ -27,16 +27,11 @@ export default function RootLayout({
       />
       <body>
         <ToasterProvider />
-          <ColorModeProvider>
+        <ColorModeProvider>
           <UserProvider>
-            <SidebarLayout>
-              <Header>
-                {children}
-              </Header>
-              </SidebarLayout>
-           
+            <PageLayout>{children}</PageLayout>
           </UserProvider>
-          </ColorModeProvider>
+        </ColorModeProvider>
       </body>
     </html>
   );

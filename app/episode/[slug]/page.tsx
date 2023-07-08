@@ -19,7 +19,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
         className="
         font-bold
         text-5xl
-        h-full
     "
       >
         This episode doesn&apos;t exist...
@@ -28,33 +27,21 @@ export default async function Page({ params }: { params: { slug: string } }) {
   }
 
   return (
-    <div
-      id="scroll-box"
-      className="
-      h-full 
-      w-full 
-      overflow-y-auto
-      overflow-hidden
-      px-6
-      bg-white 
-      dark:bg-dark-default 
-      "
-    >
-      <div className="flex flex-col max-w-[1200px] mx-auto">
-        <div className="group flex flex-col md:flex-row items-center gap-x-5">
-          <div className="relative h-32 w-32 lg:h-56 lg:w-56 flex-none">
-            <Image
-              src={episode.image_url || "/images/podcast.png"}
-              alt="Episode cover"
-              sizes="(min-width: 1024px) 224px, 128px"
-              quality={100}
-              className="object-cover rounded-lg shadow-md"
-              fill
-            />
-            <PlayButton
-              episode_id={episode_id}
-              podcast_id={episode.podcast_id!}
-              className="
+    <>
+      <div className="group flex flex-col md:flex-row items-center gap-x-5">
+        <div className="relative h-32 w-32 lg:h-56 lg:w-56 flex-none">
+          <Image
+            src={episode.image_url || "/images/podcast.png"}
+            alt="Episode cover"
+            sizes="(min-width: 1024px) 224px, 128px"
+            quality={100}
+            className="object-cover rounded-lg shadow-md"
+            fill
+          />
+          <PlayButton
+            episode_id={episode_id}
+            podcast_id={episode.podcast_id!}
+            className="
               w-fit 
               p-6 
               bg-white
@@ -69,44 +56,43 @@ export default async function Page({ params }: { params: { slug: string } }) {
               hover:scale-110
               lg:hover:scale-[1.65]
               "
-              size={20}
-            />
-          </div>
-
-          <div className="flex flex-col gap-y-2 mt-4 md:mt-4">
-            <p className="hidden md:block font-semibold">episode</p>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold">
-              {episode.title}
-            </h1>
-            <p className="text-xl font-semibold">{episode.host}</p>
-          </div>
+            size={20}
+          />
         </div>
 
-        <h1 className="font-semibold text-2xl mt-3">Episode Description</h1>
-        <div className="my-4 ">
-          <ExpandTextBlock htmlText={episode.description!} />
-        </div>
-
-        <h1 className="font-semibold text-3xl my-5">{episode.host} AI</h1>
-        <div className=" mx-auto w-full">
-          {episode.processed && <ChatWindow episode={episode} />}
-        </div>
-        <div className="mb-[10rem]">
-          <h1 className="font-semibold text-3xl mt-7">Episode Transcript</h1>
-          {episode.transcript ? (
-            <Transcript
-              transcript={episode.transcript}
-              episode_id={episode.id}
-              podcast_id={episode.podcast_id!}
-            />
-          ) : (
-            <p className="text-md mt-3 text-neutral-500 dark:text-dark-500">
-              No transcript available yet.
-            </p>
-          )}
+        <div className="flex flex-col gap-y-2 mt-4 md:mt-4">
+          <p className="hidden md:block font-semibold">episode</p>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold">
+            {episode.title}
+          </h1>
+          <p className="text-xl font-semibold">{episode.host}</p>
         </div>
       </div>
-        <ScrollTopButton />
-    </div>
+
+      <h1 className="font-semibold text-2xl mt-3">Episode Description</h1>
+      <div className="my-4 ">
+        <ExpandTextBlock htmlText={episode.description!} />
+      </div>
+
+      <h1 className="font-semibold text-3xl my-5">{episode.host} AI</h1>
+      <div className=" mx-auto w-full">
+        {episode.processed && <ChatWindow episode={episode} />}
+      </div>
+      <div className="mb-[10rem]">
+        <h1 className="font-semibold text-3xl mt-7">Episode Transcript</h1>
+        {episode.transcript ? (
+          <Transcript
+            transcript={episode.transcript}
+            episode_id={episode.id}
+            podcast_id={episode.podcast_id!}
+          />
+        ) : (
+          <p className="text-md mt-3 text-neutral-500 dark:text-dark-500">
+            No transcript available yet.
+          </p>
+        )}
+      </div>
+      <ScrollTopButton />
+    </>
   );
 }

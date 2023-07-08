@@ -15,8 +15,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
   const [podcasts, episodes] = await Promise.all([podcastsData, episodeData]);
   return (
    
-    <div className="flex flex-col gap-y-2 w-full px-6 h-full overflow-hidden overflow-y-auto dark:bg-dark-default">
-      <div className="flex flex-col text-xl font-bold">Podcasts</div>
+    <>
+      <div className="flex flex-col gap-y-2  text-xl font-bold">Podcasts</div>
       {podcasts.length === 0 ? (
         <div className=" text-neutral-600 dark:text-dark-600">No podcasts found.</div>
       ) : (
@@ -55,6 +55,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
           </div>
         ))}
       </div>
-    </div>
+    </>
   );
 }

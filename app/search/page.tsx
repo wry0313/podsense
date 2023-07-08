@@ -1,4 +1,3 @@
-
 import SearchInput from "@/components/SearchInput";
 
 import { Suspense } from "react";
@@ -13,31 +12,16 @@ interface SearchProps {
 
 const Search = ({ searchParams }: SearchProps) => {
   return (
-    <div
-      className="
-                h-full
-                w-full
-                overflow-hidden
-                overflow-y-auto
-                flex
-                flex-col
-                dark:bg-dark-default
-                "
-    >
-
-      <div className="px-6 mb-2 flex flex-col gap-y-6">
+    <>
+      <div className="mb-2 flex flex-col gap-y-6">
         <h1 className="text-3xl font-semibold">Search</h1>
         <SearchInput />
       </div>
 
-      <Suspense
-        fallback={
-          <LoadingDots/>
-        }
-      >
+      <Suspense fallback={<LoadingDots />}>
         <SearchContent title={searchParams.title} />
       </Suspense>
-    </div>
+    </>
   );
 };
 
