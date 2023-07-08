@@ -14,7 +14,6 @@ const Player = () => {
   const [episode, setEpisode] = useState<Episode | undefined>(undefined);
   const supabase = createClientComponentClient();
   useEffect(() => {
-    console.log("mounted")
     if (!player.activeId) {
       return;
     }
