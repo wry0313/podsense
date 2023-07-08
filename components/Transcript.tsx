@@ -1,7 +1,5 @@
-"use client";
-import { MdOutlineContentCopy } from "react-icons/md";
 import SeekButton from "./seekButton";
-import { BiLink } from "react-icons/bi";
+import CopyLinkButtons from "./CopyLInkButtons";
 import { open_sans } from "@/app/fonts";
 
 const Transcript = ({
@@ -31,27 +29,7 @@ const Transcript = ({
               <div
                 className="flex flex-row gap-x-2 select-none cursor-pointer text-sm font-semibold h-fit opacity-0 group-hover:opacity-100 transition"
               >
-                <div
-                  className="flex flex-row gap-x-1 text-neutral-500 hover:text-sky-500"
-                  onClick={() => {
-                    navigator.clipboard.writeText(item?.text);
-                  }}
-                >
-                  <MdOutlineContentCopy size={16} className="relative top-[2px]" />
-                  Copy
-                </div>
-
-                <div 
-                onClick={() => {
-                  window.location.hash = item?.start;
-                  navigator.clipboard.writeText("https://podsense.net/episode/"+episode_id+"#"+item?.start);
-                }}
-                className="flex flex-row gap-x-1 text-neutral-500 hover:text-sky-500">
-                  <BiLink
-                    size={19}
-                  />
-                  Link
-                </div>
+                <CopyLinkButtons text={item.text} start={item.start} episode_id={episode_id} />
               </div>
             </div>
             <p className="text-base">{item?.text}</p>

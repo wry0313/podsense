@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { useUser } from "@/hooks/useUser";
 import LoadingDots from "./LoadingDots";
 import LikeButton from "./LikeButton";
+import useAuthModal from "@/hooks/useAuthModal";
 
 interface LibraryProps {
   pathname?: string;
@@ -25,6 +26,7 @@ const Library = ({ pathname, showLiked = false, channelName}: LibraryProps) => {
   const {user, isLoadingUser} = useUser();
   const [fetched, setFetched] = useState(false);
 
+  const authModal = useAuthModal();
 
 //https://devtrium.com/posts/async-functions-useeffect
   useEffect(() => {
@@ -87,9 +89,9 @@ const Library = ({ pathname, showLiked = false, channelName}: LibraryProps) => {
     <div className="flex flex-col gap-y-2 mt-4 px-3 h-fit overflow-y-auto">
       {
         (!user && !isLoadingUser) ? (
-          <div className="flex justify-center items-center py-4 px-2 shadow bg-neutral-100 dark:bg-dark-100 rounded-md text-md font-semibold text-neutral-500 dark:text-dark-500">
+          <button onClick={authModal.onOpen} className="flex justify-center items-center py-4 px-2 shadow bg-neutral-100 dark:bg-dark-100 hover:bg-neutral-400/5 dark:hover:bg-dark-400/5 rounded-md text-md font-semibold text-neutral-500 dark:text-dark-500">
           <p>Sign in to access your library</p>
-        </div>
+        </button>
         ) :
       
       isLoading ? (

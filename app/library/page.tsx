@@ -1,27 +1,23 @@
-"use client"
+
 import Image from "next/image";
 
 import LibraryContent from "@/components/Library";
 
-import useAuthModal from "@/hooks/useAuthModal";
-import { useUser } from "@/hooks/useUser";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
 
 const Library = () => {
 
-  const {user, isLoadingUser} = useUser();
-  const auth = useAuthModal();
-  const router = useRouter();
-  useEffect(() => {
+//   const {user, isLoadingUser} = useUser();
+//   const auth = useAuthModal();
+//   const router = useRouter();
+//   useEffect(() => {
     
-    if (!isLoadingUser && !user) {
-      auth.onOpen();
-      router.replace("/");
-    }
-}, [user, isLoadingUser, router]);
+//     if (!isLoadingUser && !user) {
+//       auth.onOpen();
+//       router.replace("/");
+//     }
+// }, [user, isLoadingUser, router]);
 
-  if (user) {
+
   return (
     
     <div className="h-full w-full overflow-hidden overflow-y-auto dark:bg-dark-default">
@@ -50,7 +46,7 @@ const Library = () => {
       </div>
     </div>
   );
-  }
+
 };
 
 export default Library;
