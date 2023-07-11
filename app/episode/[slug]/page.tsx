@@ -5,7 +5,6 @@ import ChatWindow from "@/components/ChatWindow";
 import ExpandTextBlock from "@/components/ExpandTextBlock";
 import ScrollTopButton from "@/components/ScrollTopButton";
 import Transcript from "@/components/Transcript";
-import getPodcastById from "@/actions/getPodcastById";
 
 export const revalidate = 0
 
