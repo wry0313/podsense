@@ -1,7 +1,7 @@
 import { OpenAIStream, OpenAIStreamPayload } from "@/utils/openAIStream";
 import { PineconeClient } from "@pinecone-database/pinecone";
 import { Configuration, OpenAIApi } from "openai";
-// import { HttpsProxyAgent } from "https-proxy-agent";
+import { HttpsProxyAgent } from "https-proxy-agent";
 import { TextMetadata } from "@/types";
 
 if (!process.env.OPENAI_API_KEY || !process.env.PINECONE_API_KEY) {
@@ -25,7 +25,7 @@ const openAIConfig = new Configuration({
 // export const runtime = 'nodejs' // 'nodejs' (default) | 'edge'
 
 export async function POST(req: Request): Promise<Response | undefined> {
-  try {
+
     const { query, podcast_id, host, title } = (await req.json()) as {
       query?: string;
       podcast_id?: string;
@@ -44,7 +44,7 @@ export async function POST(req: Request): Promise<Response | undefined> {
         model: "text-embedding-ada-002",
         input: query,
       },
-      // {proxy: false,httpAgent: new HttpsProxyAgent("http://127.0.0.1:1087"),httpsAgent: new HttpsProxyAgent("http://127.0.0.1:1087"),}
+      {proxy: false,httpAgent: new HttpsProxyAgent("http://127.0.0.1:1087"),httpsAgent: new HttpsProxyAgent("http://127.0.0.1:1087"),}
     );
 
     const query_embedding = response.data["data"][0].embedding;
@@ -60,7 +60,7 @@ export async function POST(req: Request): Promise<Response | undefined> {
     console.log(queryResponse);
 
     let message =
-      `Pretend to be " + host + " who is a podcast host and your purpose is to answer questions directly using the clips from one or multiple episodes below. You can only use the episode titles and information in provided text below. For your answer you should use many episodes: for each episdoe you use to answer, include the episode title in quotation marks and guest name if applicable and breiefly talk about the information in that episode text that can help you answer the question. Make sure to include episode title. You are given access to a max of three different episodes title. If the user ask for mroe than three episode info you can only give three`;
+      `Pretend to be " + host + " who is a podcast host and your purpose is to answer questions directly using the clips from one or multiple episodes below. Keep your answer short. You can only use the episode titles and information in provided text below. For your answer you should use many episodes: for each episdoe you use to answer, include the episode title in quotation marks and guest name if you haven't used it before and breiefly talk about the information in that episode text that can help you answer the question. Make sure to include episode title. You are given access to a max of three different episodes title. If the user ask for mroe than three episode info you can only give three`;
 
     if (queryResponse["matches"]) {
       for (let match of queryResponse["matches"]) {
@@ -86,17 +86,7 @@ export async function POST(req: Request): Promise<Response | undefined> {
 
     const stream = await OpenAIStream(payload);
     return new Response(stream);
-  } catch (e) {
-    if (typeof e === "string") {
-      return new Response(e, {
-        status: 400,
-      });
-    } else if (e instanceof Error) {
-      return new Response((e as Error).message, {
-        status: 400,
-      });
-    }
-  }
+  
 }
 
 //https://levelup.gitconnected.com/how-to-stream-real-time-openai-api-responses-next-js-13-2-gpt-3-5-turbo-and-edge-functions-378fea4dadbd

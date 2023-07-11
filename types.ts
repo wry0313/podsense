@@ -47,7 +47,7 @@ export interface Episode {
   processed: boolean
   released_date: string
   title: string
-  transcript: Json | null
+  transcript: object[] | null
 }
 
 

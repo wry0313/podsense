@@ -4,8 +4,8 @@ import {
   ReconnectInterval,
 } from "eventsource-parser";
 
-// import { ProxyAgent, setGlobalDispatcher } from "undici";
-// setGlobalDispatcher(new ProxyAgent("http://127.0.0.1:1087"))
+import { ProxyAgent, setGlobalDispatcher } from "undici";
+setGlobalDispatcher(new ProxyAgent("http://127.0.0.1:1087"))
 
 export type ChatGPTAgent = "user" | "system";
 

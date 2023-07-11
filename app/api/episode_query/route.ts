@@ -1,7 +1,7 @@
 import { OpenAIStream, OpenAIStreamPayload } from "@/utils/openAIStream";
 import { PineconeClient } from "@pinecone-database/pinecone";
 import { Configuration, OpenAIApi } from "openai";
-// import { HttpsProxyAgent } from "https-proxy-agent";
+import { HttpsProxyAgent } from "https-proxy-agent";
 import { TextMetadata } from "@/types";
 
 if (!process.env.OPENAI_API_KEY || !process.env.PINECONE_API_KEY) {
@@ -25,7 +25,7 @@ const openAIConfig = new Configuration({
 // export const runtime = 'nodejs' // 'nodejs' (default) | 'edge'
 
 export async function POST(req: Request): Promise<Response | undefined> {
-  try {
+
     const { query, episode_id, host, title } = (await req.json()) as {
       query: string;
       episode_id: string;
@@ -44,7 +44,7 @@ export async function POST(req: Request): Promise<Response | undefined> {
         model: "text-embedding-ada-002",
         input: query,
       }
-      // ,{proxy: false,httpAgent: new HttpsProxyAgent("http://127.0.0.1:1087"),httpsAgent: new HttpsProxyAgent("http://127.0.0.1:1087"),}
+      ,{proxy: false,httpAgent: new HttpsProxyAgent("http://127.0.0.1:1087"),httpsAgent: new HttpsProxyAgent("http://127.0.0.1:1087"),}
     );
     const query_embedding = response.data["data"][0].embedding;
 
@@ -83,18 +83,7 @@ export async function POST(req: Request): Promise<Response | undefined> {
 
     const stream = await OpenAIStream(payload);
     return new Response(stream);
-  } catch (e) {
-    
-    if (typeof e === "string") {
-      return new Response(e, {
-        status: 400,
-      });
-    } else if (e instanceof Error) {
-      return new Response((e as Error).message, {
-        status: 400,
-      });
-    }
-  }
+ 
 }
 
 
