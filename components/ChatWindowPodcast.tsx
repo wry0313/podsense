@@ -64,7 +64,6 @@ const ChatWIndowPodcast = ({ podcast }: { podcast: Podcast }) => {
   }, [chatHistory, loading]);
 
   const generateResponse = async () => {
-    setLoading(true);
     if (!input) {
       return;
     }
@@ -131,13 +130,14 @@ const ChatWIndowPodcast = ({ podcast }: { podcast: Podcast }) => {
         return updatedChatHistory;
       });
     }
-    setLoading(false);
   };
 
   const handleAsk = async () => {
-    if (input) {
+    if (input.length > 10 && input.length < 200 && !loading) {
+      setLoading(true);
       setChatHistory((prev) => [...prev, { isUser: true, text: input }]);
       generateResponse();
+      setLoading(false)
     }
   };
 

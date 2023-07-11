@@ -35,7 +35,7 @@ export default function ChatWindow({ episode }: { episode: Episode }) {
   }, [chatHistory, loading]);
 
   const generateResponse = async () => {
-    setLoading(true);
+    
     if (!input) {
       return;
     }
@@ -102,13 +102,15 @@ export default function ChatWindow({ episode }: { episode: Episode }) {
         return updatedChatHistory;
       });
     }
-    setLoading(false);
   };
 
   const handleAsk = async () => {
-    if (input) {
+
+    if (input.length > 10 && input.length < 200 && !loading) {
+      setLoading(true);
       setChatHistory((prev) => [...prev, { isUser: true, text: input }]);
       generateResponse();
+      setLoading(false)
     }
   };
 
