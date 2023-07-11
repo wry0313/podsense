@@ -5,9 +5,7 @@ export default async function Home() {
   const podcasts = await getPodcasts();
   return (
     <>
-
-        <h1 className="mt-2 text-3xl">Discover New Podcasts</h1>
-
+      <h1 className="mt-2 text-3xl">Discover New Podcasts</h1>
       <div
         className="
         grid 
@@ -16,7 +14,7 @@ export default async function Home() {
         md:grid-cols-3
         lg:grid-cols-4
         xl:grid-cols-5
-        2xl:grid-cols-8
+        2xl:grid-cols-6
         gap-4 
         mt-4
       "

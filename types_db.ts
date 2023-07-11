@@ -33,46 +33,46 @@ export interface Database {
       }
       episodes: {
         Row: {
-          audio_url: string | null
-          created_at: string | null
+          audio_url: string
+          created_at: string
           description: string | null
-          duration: number | null
-          host: string | null
+          duration: number
+          host: string
           id: string
-          image_url: string | null
-          podcast_id: string | null
-          processed: boolean | null
-          released_date: string | null
-          title: string | null
-          transcript: object[] | null
+          image_url: string
+          podcast_id: string
+          processed: boolean
+          released_date: string
+          title: string
+          transcript: Json | null
         }
         Insert: {
-          audio_url?: string | null
-          created_at?: string | null
+          audio_url: string
+          created_at?: string
           description?: string | null
-          duration?: number | null
-          host?: string | null
+          duration: number
+          host: string
           id: string
-          image_url?: string | null
-          podcast_id?: string | null
-          processed?: boolean | null
-          released_date?: string | null
-          title?: string | null
-          transcript?: object[] | null
+          image_url: string
+          podcast_id: string
+          processed: boolean
+          released_date: string
+          title: string
+          transcript?: Json | null
         }
         Update: {
-          audio_url?: string | null
-          created_at?: string | null
+          audio_url?: string
+          created_at?: string
           description?: string | null
-          duration?: number | null
-          host?: string | null
+          duration?: number
+          host?: string
           id?: string
-          image_url?: string | null
-          podcast_id?: string | null
-          processed?: boolean | null
-          released_date?: string | null
-          title?: string | null
-          transcript?: object[] | null
+          image_url?: string
+          podcast_id?: string
+          processed?: boolean
+          released_date?: string
+          title?: string
+          transcript?: Json | null
         }
         Relationships: [
           {
@@ -141,28 +141,28 @@ export interface Database {
       }
       podcasts: {
         Row: {
-          created_at: string | null
-          description: string | null
-          host: string | null
+          created_at: string
+          description: string
+          host: string
           id: string
-          image_url: string | null
-          title: string | null
+          image_url: string
+          title: string
         }
         Insert: {
-          created_at?: string | null
-          description?: string | null
-          host?: string | null
+          created_at?: string
+          description: string
+          host: string
           id: string
-          image_url?: string | null
-          title?: string | null
+          image_url: string
+          title: string
         }
         Update: {
-          created_at?: string | null
-          description?: string | null
-          host?: string | null
+          created_at?: string
+          description?: string
+          host?: string
           id?: string
-          image_url?: string | null
-          title?: string | null
+          image_url?: string
+          title?: string
         }
         Relationships: []
       }

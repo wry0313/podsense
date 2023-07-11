@@ -5,8 +5,9 @@ import getPodcastTagsByPodcastId from "@/actions/getPodcastTagsByPodcastId";
 import Image from "next/image";
 import ExpandTextBlock from "@/components/ExpandTextBlock";
 import getEpisodesByRange from "@/actions/getEpisodesByRange";
+import ChatWIndowPodcast from "@/components/ChatWindowPodcast";
 
-// export const revalidate = 0;
+export const revalidate = 0;
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const podcast_id = params.slug;
@@ -70,6 +71,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
         <h1 className="font-semibold text-2xl">About</h1>
         <ExpandTextBlock htmlText={podcast.description!} />
       </div>
+      <h1 className="font-semibold text-3xl my-5">{podcast.host} AI</h1>
+      <ChatWIndowPodcast podcast={podcast} />
       <PageContent
         podcast_id={podcast_id}
         episodesDesc={episodesDesc}

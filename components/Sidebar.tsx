@@ -41,7 +41,7 @@ const Sidebar = () => {
     <div
       className="
           hidden
-          md:flex
+          lg:flex
           flex-col
           h-full
           w-[300px]

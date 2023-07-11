@@ -3,6 +3,14 @@ export interface Message {
   text: string
 }
 
+export interface TextMetadata {
+  episode_id: string
+  podcast_id: string
+  title: string
+  timestamp: number
+  text: string
+}
+
 export type Json =
   | string
   | number
@@ -12,34 +20,34 @@ export type Json =
   | Json[]
 
 export interface Podcast {
-  created_at: string | null
-  description: string | null
-  host: string | null
+  created_at: string
+  description: string
+  host: string
   id: string
-  image_url: string | null
-  title: string | null
+  image_url: string
+  title: string
 }
 
 export interface Tag {
-  created_at: string | null
+  created_at: string 
   id: number
-  podcast_id: string | null
-  tag: string | null
+  podcast_id: string 
+  tag: string
 }
 
 export interface Episode {
-  audio_url: string | null
-  created_at: string | null
+  audio_url: string
+  created_at: string
   description: string | null
-  duration: number | null
-  host: string | null
+  duration: number
+  host: string
   id: string
-  image_url: string | null
-  podcast_id: string | null
-  processed: boolean | null
-  released_date: string | null
-  title: string | null
-  transcript: object[] | null
+  image_url: string
+  podcast_id: string
+  processed: boolean
+  released_date: string
+  title: string
+  transcript: Json | null
 }
 
 

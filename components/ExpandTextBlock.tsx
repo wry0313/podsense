@@ -24,7 +24,7 @@ const TextBlock = ({ htmlText }: { htmlText: string }) => {
   return (
     <div className="relative" id="text-div">
       <div
-        className={`overflow-hidden ${
+        className={`overflow-hidden whitespace-pre-line ${
           expanded ? "line-clamp-none" : "line-clamp-3"
         }`}
         ref={textRef}

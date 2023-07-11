@@ -2,6 +2,7 @@ import { OpenAIStream, OpenAIStreamPayload } from "@/utils/openAIStream";
 import { PineconeClient } from "@pinecone-database/pinecone";
 import { Configuration, OpenAIApi } from "openai";
 // import { HttpsProxyAgent } from "https-proxy-agent";
+import { TextMetadata } from "@/types";
 
 if (!process.env.OPENAI_API_KEY || !process.env.PINECONE_API_KEY) {
   console.error("Missing .env API key");
@@ -25,18 +26,18 @@ const openAIConfig = new Configuration({
 
 export async function POST(req: Request): Promise<Response | undefined> {
   try {
-    const { query, namespace, host, title } = (await req.json()) as {
-      query?: string;
-      namespace?: string;
+    const { query, episode_id, host, title } = (await req.json()) as {
+      query: string;
+      episode_id: string;
       host?: string;
       title?: string;
     };
-    if (!query || !namespace) {
-      return new Response("no query or namespace included", { status: 400 });
+    if (!query || !episode_id) {
+      return new Response("no query or episode id included", { status: 400 });
     }
     await initPinecone();
     const openai = new OpenAIApi(openAIConfig);
-    const index = pinecone.Index("podcast");
+    const index = pinecone.Index("podsense");
 
     const response = await openai.createEmbedding(
       {
@@ -51,23 +52,27 @@ export async function POST(req: Request): Promise<Response | undefined> {
       vector: query_embedding,
       topK: 3,
       includeMetadata: true,
-      namespace: namespace,
+      filter: {
+        episode_id: episode_id
+      }
     };
     const queryResponse = await index.query({ queryRequest });
-
+    console.log(queryResponse)
     let message =
-      "Pretend to be " + host + " who is a podcast host and your purpose is act answer questions about an episode. The title of the episode is " + title +  " If the input question is not complete or you cannot understand it, say that you cannot understand it in the tone of " + host +". If the question is unrelated to the episode and is about you personally, answer something very generic and is not made up. Below is the selected transcript to help you answer the question. For specific details in your answer cite the relavent transcript text as quotations into your answer.";
+    "Pretend to be " + host + " who is a podcast host and your purpose is to answer questions directly using the content from an episode. The title of the episode is " + title +  " Your answer's info must be directly taking info from the given text below. If the below text doens't contain info to help you answer, say this is not discussed in the episode and end your answer. If the input question is not complete or you cannot understand it, say that you cannot understand it in the tone of " + host +". Below is the selected transcript to help you answer the questions. For your answer you must incorporate the relavent text as quotations into your answer. for example say 'in the episode I said .... '.";    
+    
     if (queryResponse["matches"]) {
-      for (let vectorObj of queryResponse["matches"]) {
-        message += "\n########\n" + (vectorObj["metadata"] as { text: string })["text"];
+      for (let match of queryResponse["matches"]) {
+        const metadata = match["metadata"] as TextMetadata;
+        message += "\n########\n" + metadata["text"];
       }
     }
-    message += "\n\n The input queston is this: \"" + query + "\"";
+    // message += "\n\n The input queston is this: \"" + query + "\"";
     console.log(message)
     const payload: OpenAIStreamPayload = {
       model: GPT_MODEL,
-      messages: [{ role: "user", content: message }],
-      // temperature: 0.7,
+      messages: [{ role: "system", content: message }, { role: "user", content: query }],
+      temperature: 0.3,
       // top_p: 1,
       // frequency_penalty: 0,
       // presence_penalty: 0,

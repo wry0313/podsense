@@ -1,18 +1,18 @@
-import { Episode, Message } from "@/types";
+import { Message } from "@/types";
 import Image from "next/image";
 
 const ChatMessage = ({
   message,
-  episode,
+  image_url,
 }: {
   message: Message;
-  episode: Episode;
+  image_url: string;
 }) => {
   return (
     <div
       className={`px-4 py-3 mb-3 bg-white dark:bg-dark-200 break-words w-fit flex ${
         message.isUser ? "flex-row-reverse ml-auto" : "flex-row"
-      } shadow rounded-xl`}
+      } shadow rounded-2xl`}
     >
       {message.isUser ? (
         <svg
@@ -29,13 +29,13 @@ const ChatMessage = ({
       ) : (
         <Image
           className="rounded-full h-fit"
-          src={episode.image_url!}
+          src={image_url}
           alt={message.isUser ? "my-user-profile" : "user-profile"}
           width={30}
           height={30}
         />
       )}
-      <p className={`${message.isUser ? "mr-3" : "ml-3"}`}>{message.text}</p>
+      <span className={`${message.isUser ? "mr-3" : "ml-3"} whitespace-pre-line`}>{message.text}</span>
     </div>
   );
 };

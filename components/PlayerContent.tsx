@@ -101,6 +101,7 @@ const PlayerContent = ({ episode }: { episode: Episode }) => {
 
   const memoizedDuration = useMemo(() => convertSecondsToHMS(duration), [duration])
 
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-3 h-full">
       <audio ref={audioRef} /> 

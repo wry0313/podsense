@@ -7,7 +7,6 @@ import useAuthModal from "@/hooks/useAuthModal";
 import { useUser } from "@/hooks/useUser";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { toast } from "react-hot-toast";
-import { useRouter } from "next/navigation";
 
 interface LikeButtonWithTextProps {
   podcast_id: string;
@@ -21,8 +20,6 @@ const LikeButtonWithText = ({ podcast_id }: LikeButtonWithTextProps) => {
   const { user } = useUser();
 
   const [isLiked, setIsLiked] = useState(false);
-
-  const router = useRouter();
 
   useEffect(() => {
     if (!user) {

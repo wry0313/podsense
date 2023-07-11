@@ -1,29 +1,30 @@
 "use client";
 
-import { Episode, Message } from "@/types";
-import { useState, useEffect, useRef, KeyboardEvent } from "react";
+import { Message, Podcast } from "@/types";
+import { useEffect, useRef, useState, KeyboardEvent} from "react";
 import ChatMessage from "./ChatMessage";
 
-export default function ChatWindow({ episode }: { episode: Episode }) {
+const ChatWIndowPodcast = ({ podcast }: { podcast: Podcast }) => {
   const [loading, setLoading] = useState(false);
   const [input, setInput] = useState("");
   const [chatHistory, setChatHistory] = useState<Message[]>([
     {
       isUser: false,
-      text: "Hey there! I'm " + episode.host + " AI. I am here to help you answer any question about this episode!"
+      text:
+        "Hey there! I'm " +
+        podcast.host +
+        " AI. I am here to help answer any of your questions!",
     },
   ]);
 
-
   const scrollableDivRef = useRef<HTMLDivElement>(null);
-  
   useEffect(() => {
     if (chatHistory.length > 1) {
       const scrollableDiv = scrollableDivRef.current;
       if (scrollableDiv) {
         scrollableDiv.scrollTo({
           top: scrollableDiv.scrollHeight,
-          behavior: "smooth"
+          behavior: "smooth",
         });
       }
     }
@@ -31,18 +32,18 @@ export default function ChatWindow({ episode }: { episode: Episode }) {
 
   const generateResponse = async () => {
     setLoading(true);
-    setInput('')
+    setInput("");
 
-    const apiResponse = await fetch("/api/episode_query", {
+    const apiResponse = await fetch("/api/podcast_query", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         query: input,
-        episode_id: episode.id,
-        host: episode.host,
-        title: episode.title,
+        podcast_id: podcast.id,
+        host: podcast.host,
+        title: podcast.title,
       }),
     });
 
@@ -83,19 +84,19 @@ export default function ChatWindow({ episode }: { episode: Episode }) {
     generateResponse();
   };
 
-  const handleKeyDown = (event : KeyboardEvent) => {
-    if (event.key === 'Enter') {
+  const handleKeyDown = (event: KeyboardEvent) => {
+    if (event.key === "Enter") {
       handleAsk();
     }
-  }
+  };
 
   return (
     <div className="w-full bg-neutral-100 dark:bg-dark-100 rounded-lg p-5 pb-1 shadow">
 
-        <div ref={scrollableDivRef} id="hide-scrollbar" className="overflow-y-auto h-[20rem] rounded-md">
+        <div ref={scrollableDivRef} id="hide-scrollbar" className="overflow-y-auto h-[24rem] rounded-md">
           {chatHistory &&
             chatHistory.map((msg, i) => (
-              <ChatMessage key={i} message={msg} image_url={episode.image_url!} />
+              <ChatMessage key={i} message={msg} image_url={podcast.image_url!} />
             ))}
         </div>
 
@@ -103,7 +104,7 @@ export default function ChatWindow({ episode }: { episode: Episode }) {
           <input
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            onKeyDown={handleKeyDown} 
+            onKeyDown={handleKeyDown}
             maxLength={200}
             className="w-full rounded-md  outline-none
          p-3 text-neutral-900 shadow placeholder:text-neutral-400 dark:placeholder-text-dark-400 dark:focus:border-dark-400  dark:bg-dark-200 dark:text-dark-900"
@@ -132,4 +133,6 @@ export default function ChatWindow({ episode }: { episode: Episode }) {
       </div>
 
   );
-}
+};
+
+export default ChatWIndowPodcast;

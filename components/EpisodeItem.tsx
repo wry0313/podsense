@@ -55,7 +55,7 @@ const EpisodeItem = ({ episode }: EpisodeItemProps) => {
       <div className="flex-1">
         <h3 className="text-lg font-semibold overflow-x-clip">{episode.title}</h3>
         <p className="text-neutral-500 dark:text-dark-500 overflow-clip h-[50px]">
-          {episode.description?.replace(/<[^>]+>/g, "").replace(/&[^;]+;/g, "")}
+          {episode.description?.replace(/<[^>]+>/g, "").replace(/&[^;]+;/g, "").substring(0, 250) + "..."}
         </p>
         <div className="flex flex-row items-baseline gap-x-2 text-sm mt-1">
           <p className="text-neutral-500 dark:text-dark-500">
