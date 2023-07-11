@@ -1,29 +1,34 @@
 "use client";
 
-import { Episode, Message } from "@/types";
+import { Episode, EpisodeClipMetadata, Message } from "@/types";
 import { useState, useEffect, useRef, KeyboardEvent } from "react";
 import ChatMessage from "./ChatMessage";
 
 export default function ChatWindow({ episode }: { episode: Episode }) {
   const [loading, setLoading] = useState(false);
   const [input, setInput] = useState("");
+  const [episodeMetadata, setEpisodeMetadata] =
+    useState<EpisodeClipMetadata[]>();
+  const [episodes, setEpisodes] = useState<Episode[]>();
   const [chatHistory, setChatHistory] = useState<Message[]>([
     {
       isUser: false,
-      text: "Hey there! I'm " + episode.host + " AI. I am here to help you answer any question about this episode!"
+      text:
+        "Hey there! I'm " +
+        episode.host +
+        " AI. I am here to help you answer any question about this episode!",
     },
   ]);
 
-
   const scrollableDivRef = useRef<HTMLDivElement>(null);
-  
+
   useEffect(() => {
     if (chatHistory.length > 1) {
       const scrollableDiv = scrollableDivRef.current;
       if (scrollableDiv) {
         scrollableDiv.scrollTo({
           top: scrollableDiv.scrollHeight,
-          behavior: "smooth"
+          behavior: "smooth",
         });
       }
     }
@@ -31,7 +36,7 @@ export default function ChatWindow({ episode }: { episode: Episode }) {
 
   const generateResponse = async () => {
     setLoading(true);
-    setInput('')
+    setInput("");
 
     const apiResponse = await fetch("/api/episode_query", {
       method: "POST",
@@ -60,9 +65,28 @@ export default function ChatWindow({ episode }: { episode: Episode }) {
     const reader = data.getReader();
     const decoder = new TextDecoder();
     let done = false;
-
+    let metadataIsLoaded = false;
     while (!done) {
       const { value, done: doneReading } = await reader.read();
+
+      if (!metadataIsLoaded) {
+        metadataIsLoaded = true;
+        const chunk = decoder.decode(value);
+        const splitChunk = chunk.split("\n");
+        const metadataJson: EpisodeClipMetadata[] = JSON.parse(splitChunk[0]);
+        setEpisodeMetadata(metadataJson);
+        setChatHistory((prevChatHistory) => {
+          const updatedChatHistory = [...prevChatHistory];
+          const lastMessageIndex = updatedChatHistory.length - 1;
+          updatedChatHistory[lastMessageIndex] = {
+            ...updatedChatHistory[lastMessageIndex],
+            text: updatedChatHistory[lastMessageIndex].text + splitChunk[1],
+          };
+          return updatedChatHistory;
+        });
+        continue;
+      }
+
       done = doneReading;
       const chunkValue = decoder.decode(value);
       setChatHistory((prevChatHistory) => {
@@ -83,27 +107,31 @@ export default function ChatWindow({ episode }: { episode: Episode }) {
     generateResponse();
   };
 
-  const handleKeyDown = (event : KeyboardEvent) => {
-    if (event.key === 'Enter') {
+  const handleKeyDown = (event: KeyboardEvent) => {
+    if (event.key === "Enter") {
       handleAsk();
     }
-  }
+  };
 
   return (
     <div className="w-full bg-neutral-100 dark:bg-dark-100 rounded-lg p-5 pb-1 shadow">
+      <div
+        ref={scrollableDivRef}
+        id="hide-scrollbar"
+        className="overflow-y-auto h-[20rem] rounded-md"
+      >
+        {chatHistory &&
+          chatHistory.map((msg, i) => (
+            <ChatMessage key={i} message={msg} image_url={episode.image_url!} />
+          ))}
+      </div>
 
-        <div ref={scrollableDivRef} id="hide-scrollbar" className="overflow-y-auto h-[20rem] rounded-md">
-          {chatHistory &&
-            chatHistory.map((msg, i) => (
-              <ChatMessage key={i} message={msg} image_url={episode.image_url!} />
-            ))}
-        </div>
-
+      <div>
         <div className="flex flex-row gap-x-2 my-3">
           <input
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            onKeyDown={handleKeyDown} 
+            onKeyDown={handleKeyDown}
             maxLength={200}
             className="w-full rounded-md  outline-none
          p-3 text-neutral-900 shadow placeholder:text-neutral-400 dark:placeholder-text-dark-400 dark:focus:border-dark-400  dark:bg-dark-200 dark:text-dark-900"
@@ -130,6 +158,6 @@ export default function ChatWindow({ episode }: { episode: Episode }) {
           )}
         </div>
       </div>
-
+    </div>
   );
 }

@@ -2,7 +2,7 @@ import { OpenAIStream, OpenAIStreamPayload } from "@/utils/openAIStream";
 import { PineconeClient } from "@pinecone-database/pinecone";
 import { Configuration, OpenAIApi } from "openai";
 // import { HttpsProxyAgent } from "https-proxy-agent";
-import { TextMetadata } from "@/types";
+import { EpisodeClipMetadata, TextMetadata } from "@/types";
 
 if (!process.env.OPENAI_API_KEY || !process.env.PINECONE_API_KEY) {
   console.error("Missing .env API key");
@@ -46,6 +46,8 @@ export async function POST(req: Request): Promise<Response | undefined> {
       }
       // ,{proxy: false,httpAgent: new HttpsProxyAgent("http://127.0.0.1:1087"),httpsAgent: new HttpsProxyAgent("http://127.0.0.1:1087"),}
     );
+    
+    const episodes : EpisodeClipMetadata[] = [];
     const query_embedding = response.data["data"][0].embedding;
 
     const queryRequest = {
@@ -57,18 +59,21 @@ export async function POST(req: Request): Promise<Response | undefined> {
       }
     };
     const queryResponse = await index.query({ queryRequest });
-    console.log(queryResponse)
+    console.log(query)
     let message =
     "Pretend to be " + host + " who is a podcast host and your purpose is to answer questions directly using the content from an episode. The title of the episode is " + title +  " Your answer's info must be directly taking info from the given text below. If the below text doens't contain info to help you answer, say this is not discussed in the episode and end your answer. If the input question is not complete or you cannot understand it, say that you cannot understand it in the tone of " + host +". Below is the selected transcript to help you answer the questions. For your answer you must incorporate the relavent text as quotations into your answer. for example say 'in the episode I said .... '.";    
     
     if (queryResponse["matches"]) {
       for (let match of queryResponse["matches"]) {
         const metadata = match["metadata"] as TextMetadata;
+        episodes.push({
+          episode_id: metadata.episode_id,
+          episode_title: metadata.title,
+          timestamp: metadata["timestamp"],
+        });
         message += "\n########\n" + metadata["text"];
       }
     }
-    // message += "\n\n The input queston is this: \"" + query + "\"";
-    console.log(message)
     const payload: OpenAIStreamPayload = {
       model: GPT_MODEL,
       messages: [{ role: "system", content: message }, { role: "user", content: query }],
@@ -81,7 +86,7 @@ export async function POST(req: Request): Promise<Response | undefined> {
       // n: 1,
     };
 
-    const stream = await OpenAIStream(payload);
+    const stream = await OpenAIStream(payload, episodes);
     return new Response(stream);
  
 }

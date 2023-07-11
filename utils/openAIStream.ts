@@ -4,6 +4,8 @@ import {
   ReconnectInterval,
 } from "eventsource-parser";
 
+import { EpisodeClipMetadata } from "@/types";
+
 // import { ProxyAgent, setGlobalDispatcher } from "undici";
 // setGlobalDispatcher(new ProxyAgent("http://127.0.0.1:1087"))
 
@@ -26,12 +28,9 @@ export interface OpenAIStreamPayload {
   n?: number;
 }
 
-export async function OpenAIStream(payload: OpenAIStreamPayload) {
+export async function OpenAIStream(payload: OpenAIStreamPayload, Episodes: EpisodeClipMetadata[]) {
   const encoder = new TextEncoder();
   const decoder = new TextDecoder();
-
-  let counter = 0;
-
 
   const res = await fetch("https://api.openai.com/v1/chat/completions", {
     headers: {
@@ -44,6 +43,9 @@ export async function OpenAIStream(payload: OpenAIStreamPayload) {
 
   const stream = new ReadableStream({
     async start(controller) {
+      controller.enqueue(encoder.encode(JSON.stringify(Episodes)));
+      controller.enqueue(encoder.encode("\n"));
+      
       // callback
       function onParse(event: ParsedEvent | ReconnectInterval) {
         if (event.type === "event") {
@@ -56,13 +58,8 @@ export async function OpenAIStream(payload: OpenAIStreamPayload) {
           try {
             const json = JSON.parse(data);
             const text = json.choices[0].delta?.content || "";
-            if (counter < 2 && (text.match(/\n/) || []).length) {
-              // this is a prefix character (i.e., "\n\n"), do nothing
-              return;
-            }
             const queue = encoder.encode(text);
             controller.enqueue(queue);
-            counter++;
           } catch (e) {
             // maybe parse error
             controller.error(e);
@@ -74,7 +71,7 @@ export async function OpenAIStream(payload: OpenAIStreamPayload) {
       // this ensures we properly read chunks and invoke an event for each SSE event stream
       const parser = createParser(onParse);
       // https://web.dev/streams/#asynchronous-iteration
-      for await (const chunk of res.body as any) {
+        for await (const chunk of res.body as any) {
         parser.feed(decoder.decode(chunk));
       }
     },

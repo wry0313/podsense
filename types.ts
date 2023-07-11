@@ -11,6 +11,12 @@ export interface TextMetadata {
   text: string
 }
 
+export interface EpisodeClipMetadata {
+  episode_title: string;
+  episode_id: string;
+  timestamp: number;
+}
+
 export type Json =
   | string
   | number
