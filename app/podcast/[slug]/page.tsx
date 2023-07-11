@@ -7,7 +7,7 @@ import ExpandTextBlock from "@/components/ExpandTextBlock";
 import getEpisodesByRange from "@/actions/getEpisodesByRange";
 import ChatWIndowPodcast from "@/components/ChatWindowPodcast";
 
-export const revalidate = 0;
+// export const revalidate = 0;
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const podcast_id = params.slug;
