@@ -65,6 +65,9 @@ const ChatWIndowPodcast = ({ podcast }: { podcast: Podcast }) => {
 
   const generateResponse = async () => {
     setLoading(true);
+    if (!input) {
+      return;
+    }
     setInput("");
 
     const apiResponse = await fetch("/api/podcast_query", {

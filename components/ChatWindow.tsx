@@ -36,6 +36,9 @@ export default function ChatWindow({ episode }: { episode: Episode }) {
 
   const generateResponse = async () => {
     setLoading(true);
+    if (!input) {
+      return;
+    }
     setInput("");
 
     const apiResponse = await fetch("/api/episode_query", {
