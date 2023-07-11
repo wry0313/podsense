@@ -135,8 +135,10 @@ const ChatWIndowPodcast = ({ podcast }: { podcast: Podcast }) => {
   };
 
   const handleAsk = async () => {
-    setChatHistory((prev) => [...prev, { isUser: true, text: input }]);
-    generateResponse();
+    if (input) {
+      setChatHistory((prev) => [...prev, { isUser: true, text: input }]);
+      generateResponse();
+    }
   };
 
   const handleKeyDown = (event: KeyboardEvent) => {

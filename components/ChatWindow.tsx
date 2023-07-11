@@ -106,8 +106,10 @@ export default function ChatWindow({ episode }: { episode: Episode }) {
   };
 
   const handleAsk = async () => {
-    setChatHistory((prev) => [...prev, { isUser: true, text: input }]);
-    generateResponse();
+    if (input) {
+      setChatHistory((prev) => [...prev, { isUser: true, text: input }]);
+      generateResponse();
+    }
   };
 
   const handleKeyDown = (event: KeyboardEvent) => {
