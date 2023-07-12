@@ -1,5 +1,6 @@
 import { Message } from "@/types";
 import Image from "next/image";
+import { open_sans } from "@/app/fonts";
 
 const ChatMessage = ({
   message,
@@ -35,7 +36,7 @@ const ChatMessage = ({
           height={30}
         />
       )}
-      <span className={`${message.isUser ? "mr-3" : "ml-3"} whitespace-pre-line`}>{message.text}</span>
+      <span className={`${message.isUser ? "mr-3" : "ml-3"} max-w-[45rem]  text-lg whitespace-pre-line break-words ` + open_sans.className}>{message.text}</span>
     </div>
   );
 };

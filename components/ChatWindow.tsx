@@ -40,7 +40,8 @@ export default function ChatWindow({ episode }: { episode: Episode }) {
       return;
     }
     setInput("");
-
+    setLoading(true);
+    
     const apiResponse = await fetch("/api/episode_query", {
       method: "POST",
       headers: {
@@ -102,15 +103,13 @@ export default function ChatWindow({ episode }: { episode: Episode }) {
         return updatedChatHistory;
       });
     }
+    setLoading(false)
   };
 
   const handleAsk = async () => {
-
-    if (input.length > 10 && input.length < 200 && !loading) {
-      setLoading(true);
+    if (input.trim().length > 5 && !loading) {
       setChatHistory((prev) => [...prev, { isUser: true, text: input }]);
-      generateResponse();
-      setLoading(false)
+      await generateResponse();
     }
   };
 

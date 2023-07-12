@@ -68,6 +68,7 @@ const ChatWIndowPodcast = ({ podcast }: { podcast: Podcast }) => {
       return;
     }
     setInput("");
+    setLoading(true);
 
     const apiResponse = await fetch("/api/podcast_query", {
       method: "POST",
@@ -130,19 +131,20 @@ const ChatWIndowPodcast = ({ podcast }: { podcast: Podcast }) => {
         return updatedChatHistory;
       });
     }
+    setLoading(false);
   };
 
   const handleAsk = async () => {
-    if (input.length > 10 && input.length < 200 && !loading) {
-      setLoading(true);
+    if (input.trim().length && !loading) {
+      
       setChatHistory((prev) => [...prev, { isUser: true, text: input }]);
       generateResponse();
-      setLoading(false)
+
     }
   };
 
   const handleKeyDown = (event: KeyboardEvent) => {
-    if (event.key === "Enter") {
+    if (event.key === "Enter" && !loading) {
       handleAsk();
     }
   };
